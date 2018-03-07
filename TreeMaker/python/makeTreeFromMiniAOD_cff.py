@@ -189,7 +189,7 @@ def makeTreeFromMiniAOD(self,process):
 				1000021,1000022,1000023,1000024,1000025,1000035,1000037,1000039,
 				1000001,1000002,1000003,1000004,1000005,1000006,
 				2000001,2000002,2000003,2000004,2000005,2000006,
-				4900023,4900101,4900111,4900211,
+				4900023,4900101,4900111,4900211,3000001,3000002,3000003
 			),
 		)
 		# store gluons for signals with Higgs
@@ -213,6 +213,18 @@ def makeTreeFromMiniAOD(self,process):
 		)
 		self.VectorRecoCand.append("genTops(GenTops)")
 		self.VarsDouble.append("genTops:weight(GenTopWeight)")
+	
+		if privateSample:
+			process.genParticles2 = cms.EDProducer("GenParticlesProducer",
+												   genCollection = cms.untracked.InputTag("genParticlePlusGeant"),
+												   debug = cms.untracked.bool(False)
+			)
+			VectorTLorentzVector.append("genParticles2(GenParticlesGeant)")
+			VectorInt.append("genParticles2:PdgId(GenParticlesGeant_PdgId)")
+			VectorInt.append("genParticles2:Status(GenParticlesGeant_Status)")
+			VectorInt.append("genParticles2:LabXYmm(GenParticlesGeant_LabXYmm)")
+			VectorInt.append("genParticles2:Parent(GenParticlesGeant_ParentIdx)")
+			VectorInt.append("genParticles2:ParentId(GenParticlesGeant_ParentId)") 
 
 	## ----------------------------------------------------------------------------------------------
 	## JECs

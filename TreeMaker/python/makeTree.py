@@ -65,7 +65,8 @@ class makeTree:
 
 		self.getParamDefault("inputFilesConfig","")
 		self.getParamDefault("dataset",[])
-		self.getParamDefault("sidecar",[])#SB        
+		self.getParamDefault("sidecar",[])#SB     
+		self.getParamDefault("privateSample",False)
 		self.getParamDefault("nstart",0)
 		self.getParamDefault("nfiles",-1)
 		self.getParamDefault("numevents",-1)
@@ -129,15 +130,14 @@ class makeTree:
 			self.readFiles.extend( [self.dataset] )
 	
 		if self.sidecar!=[] :    #SB
-			self.readFiles_sidecar.extend( [self.sidecar] )            #SB
+			for rf in self.readFiles:
+				self.readFiles_sidecar += getAODfromMiniAODPath(rf)
 
 		self.readFiles = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles]
 		self.readFiles_sidecar = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles_sidecar]
-
-		for rf in self.readFiles:
-			self.readFiles_sidecar += getAODfromMiniAODPath(rf)
+			
 		print 'readFiles', self.readFiles
-		print 'readFiles_sidecar', self.readFiles_sidecar				
+		print 'readFiles_sidecar', self.readFiles_sidecar	
 	
 
 		# branches for treemaker
