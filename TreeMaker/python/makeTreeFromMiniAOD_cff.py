@@ -214,7 +214,7 @@ def makeTreeFromMiniAOD(self,process):
 		self.VectorRecoCand.append("genTops(GenTops)")
 		self.VarsDouble.append("genTops:weight(GenTopWeight)")
 	
-		if privateSample:
+		if self.privateSample:
 			process.genParticles2 = cms.EDProducer("GenParticlesProducer",
 												   genCollection = cms.untracked.InputTag("genParticlePlusGeant"),
 												   debug = cms.untracked.bool(False)

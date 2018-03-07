@@ -21,8 +21,8 @@ def getAODfromMiniAODPath(datasetPathMiniAOD):
 
 	#parentfiles = check_output(["./data/das_client.py", '--query=parent file=%s' % datasetPathMiniAOD, '--limit=0']) .split()
 	parentfiles = []
-	print 'python data/das_client.py --query="parent file='+filepathbits[1]+'" --limit=0 > '+'tmp.txt'
-	os.system('python data/das_client.py --query="parent file='+filepathbits[1]+'" --limit=0 > '+'tmp.txt')
+	print 'dasgoclient --query="parent file='+filepathbits[1]+'" --limit=0 > '+'tmp.txt'
+	os.system('dasgoclient --query="parent file='+filepathbits[1]+'" --limit=0 > '+'tmp.txt')
 	ftmp = open('tmp.txt')
 	lines = ftmp.readlines()
 	ftmp.close()
@@ -39,7 +39,7 @@ def getAODfromMiniAODPath(datasetPathMiniAOD):
 
 			# childFiles = check_output(["./data/das_client.py", "--query=child file=%s" % parentfile, '--limit=0']).split()
 			childFiles = []
-			os.system('python data/das_client.py --query="child file='+parentfile+'" --limit=0 > '+'tmp.txt')
+			os.system('dasgoclient --query="child file='+parentfile+'" --limit=0 > '+'tmp.txt')
 			ftmp = open('tmp.txt')
 			lines = ftmp.readlines()
 			ftmp.close()
@@ -129,9 +129,9 @@ class makeTree:
 		if self.dataset!=[] :    
 			self.readFiles.extend( [self.dataset] )
 	
-		if self.sidecar!=[] :    #SB
-			for rf in self.readFiles:
-				self.readFiles_sidecar += getAODfromMiniAODPath(rf)
+
+		for rf in self.readFiles:
+			self.readFiles_sidecar += getAODfromMiniAODPath(rf)
 
 		self.readFiles = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles]
 		self.readFiles_sidecar = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles_sidecar]
