@@ -375,7 +375,7 @@ void DisappearingTrackProducer::produce(edm::Event& iEvent, const edm::EventSetu
   std::unique_ptr<std::vector<bool> > chiCands_trackQualityHighPuritySetWithPV(new std::vector<bool>);
   std::unique_ptr<std::vector<bool> > chiCands_trackQualityDiscarded(new std::vector<bool>);
   std::unique_ptr<std::vector<bool> > chiCands_trackQualitySize(new std::vector<bool>);
-  std::unique_ptr<std::vector<double> > chiCands_charge(new std::vector<double>);
+  std::unique_ptr<std::vector<int> > chiCands_charge(new std::vector<int>);
 
   int itrack = -1;
   for( const auto& track : *tracks){
