@@ -44,7 +44,7 @@ def makeGoodJets(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInpu
         maxPhotonFractionHF       = cms.double(0.90),
         minChargedFraction        = cms.double(0),
         maxChargedEMFraction      = cms.double(0.99),
-        jetPtFilter               = cms.double(30),
+        jetPtFilter               = cms.double(25),
         ExcludeLepIsoTrackPhotons = cms.bool(True),
         JetConeSize               = cms.double(0.4),
         SkipTag                   = SkipTag,
@@ -130,7 +130,7 @@ def makeJetVars(self, process, JetTag, suff, skipGoodJets, storeProperties, Skip
             JetTag = GoodJetsTag,
             JetLeptonTag  = cms.InputTag(GoodJetsTag.value()+':JetLeptonMask'),
             GenPartTag = cms.InputTag("prunedGenParticles"),
-            MinPt  = cms.double(30),
+            MinPt  = cms.double(25),
             MaxEta = cms.double(2.4),
         )
         setattr(process,"ISRJets"+suff,ISRJets)
