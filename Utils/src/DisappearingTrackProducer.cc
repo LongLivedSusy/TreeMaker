@@ -63,7 +63,7 @@ private:
   virtual void beginLuminosityBlock(edm::LuminosityBlock&, edm::EventSetup const&);
   virtual void endLuminosityBlock(edm::LuminosityBlock&, edm::EventSetup const&);
 
-  edm::EDGetTokenT<std::vector<reco::Track>> tracksToken;
+  edm::EDGetTokenT<std::vector<reco::Track>> selectedTracksToken;
   edm::EDGetTokenT<std::vector<reco::GsfElectron>> electronsToken;
   edm::EDGetTokenT<std::vector<reco::Muon>> muonsToken;
   edm::EDGetTokenT<std::vector<reco::PFJet>> jetsToken;
@@ -120,54 +120,54 @@ private:
 DisappearingTrackProducer::DisappearingTrackProducer(const edm::ParameterSet& iConfig)
 {
   //register your product    
-  produces<std::vector<TLorentzVector> > ("chiCands");
-  produces<std::vector<double> >         ("chiCands@dxyVtx");
-  produces<std::vector<double> >         ("chiCands@dzVtx");
-  produces<std::vector<int> >            ("chiCands@nMissingOuterHits");
-  produces<std::vector<int> >            ("chiCands@pixelLayersWithMeasurement");
-  produces<std::vector<int> >            ("chiCands@trackerLayersWithMeasurement");
-  produces<std::vector<int> >            ("chiCands@nMissingInnerHits");
-  produces<std::vector<int> >            ("chiCands@nMissingMiddleHits");
-  produces<std::vector<int> >            ("chiCands@nValidPixelHits");
-  produces<std::vector<int> >            ("chiCands@nValidTrackerHits");
-  produces<std::vector<double> >         ("chiCands@ptError");
-  produces<std::vector<double> >         ("chiCands@chi2perNdof");
-  produces<std::vector<double> >         ("chiCands@trkRelIso");
-  produces<std::vector<double> >         ("chiCands@trkMiniRelIso");
-  produces<std::vector<double> >         ("chiCands@trackLeptonIso");
-  produces<std::vector<double> >         ("chiCands@trackJetIso");
-  produces<std::vector<double> >         ("chiCands@matchedCaloEnergy");
-  produces<std::vector<double> >         ("chiCands@matchedCaloEnergyJets");
-  produces<std::vector<double> >         ("chiCands@deDxHarmonic2");
-  produces<std::vector<double> >         ("chiCands@chargedPtSum");
-  produces<std::vector<double> >         ("chiCands@neutralPtSum");
-  produces<std::vector<double> >         ("chiCands@neutralWithoutGammaPtSum");
-  produces<std::vector<bool> >           ("chiCands@passExo16044GapsVeto");
-  produces<std::vector<bool> >           ("chiCands@passExo16044DeadNoisyECALVeto");
-  produces<std::vector<bool> >           ("chiCands@passExo16044Tag");
-  produces<std::vector<bool> >           ("chiCands@passExo16044JetIso");
-  produces<std::vector<bool> >           ("chiCands@passExo16044LepIso");
-  produces<std::vector<bool> >           ("chiCands@passPFCandVeto");
-  produces<std::vector<bool> >           ("chiCands@trackQualityUndef");
-  produces<std::vector<bool> >           ("chiCands@trackQualityLoose");
-  produces<std::vector<bool> >           ("chiCands@trackQualityTight");
-  produces<std::vector<bool> >           ("chiCands@trackQualityHighPurity");
-  produces<std::vector<bool> >           ("chiCands@trackQualityConfirmed");
-  produces<std::vector<bool> >           ("chiCands@trackQualityGoodIterative");
-  produces<std::vector<bool> >           ("chiCands@trackQualityLooseSetWithPV");
-  produces<std::vector<bool> >           ("chiCands@trackQualityHighPuritySetWithPV");
-  produces<std::vector<bool> >           ("chiCands@trackQualityDiscarded");
-  produces<std::vector<bool> >           ("chiCands@trackQualitySize");
-  produces<std::vector<double> >         ("chiCands@charge");
+  produces<std::vector<TLorentzVector> > ("tracks");
+  produces<std::vector<double> >         ("tracks@dxyVtx");
+  produces<std::vector<double> >         ("tracks@dzVtx");
+  produces<std::vector<int> >            ("tracks@nMissingOuterHits");
+  produces<std::vector<int> >            ("tracks@pixelLayersWithMeasurement");
+  produces<std::vector<int> >            ("tracks@trackerLayersWithMeasurement");
+  produces<std::vector<int> >            ("tracks@nMissingInnerHits");
+  produces<std::vector<int> >            ("tracks@nMissingMiddleHits");
+  produces<std::vector<int> >            ("tracks@nValidPixelHits");
+  produces<std::vector<int> >            ("tracks@nValidTrackerHits");
+  produces<std::vector<double> >         ("tracks@ptError");
+  produces<std::vector<double> >         ("tracks@chi2perNdof");
+  produces<std::vector<double> >         ("tracks@trkRelIso");
+  produces<std::vector<double> >         ("tracks@trkMiniRelIso");
+  produces<std::vector<double> >         ("tracks@trackLeptonIso");
+  produces<std::vector<double> >         ("tracks@trackJetIso");
+  produces<std::vector<double> >         ("tracks@matchedCaloEnergy");
+  produces<std::vector<double> >         ("tracks@matchedCaloEnergyJets");
+  produces<std::vector<double> >         ("tracks@deDxHarmonic2");
+  produces<std::vector<double> >         ("tracks@chargedPtSum");
+  produces<std::vector<double> >         ("tracks@neutralPtSum");
+  produces<std::vector<double> >         ("tracks@neutralWithoutGammaPtSum");
+  produces<std::vector<bool> >           ("tracks@passExo16044GapsVeto");
+  produces<std::vector<bool> >           ("tracks@passExo16044DeadNoisyECALVeto");
+  produces<std::vector<bool> >           ("tracks@passExo16044Tag");
+  produces<std::vector<bool> >           ("tracks@passExo16044JetIso");
+  produces<std::vector<bool> >           ("tracks@passExo16044LepIso");
+  produces<std::vector<bool> >           ("tracks@passPFCandVeto");
+  produces<std::vector<bool> >           ("tracks@trackQualityUndef");
+  produces<std::vector<bool> >           ("tracks@trackQualityLoose");
+  produces<std::vector<bool> >           ("tracks@trackQualityTight");
+  produces<std::vector<bool> >           ("tracks@trackQualityHighPurity");
+  produces<std::vector<bool> >           ("tracks@trackQualityConfirmed");
+  produces<std::vector<bool> >           ("tracks@trackQualityGoodIterative");
+  produces<std::vector<bool> >           ("tracks@trackQualityLooseSetWithPV");
+  produces<std::vector<bool> >           ("tracks@trackQualityHighPuritySetWithPV");
+  produces<std::vector<bool> >           ("tracks@trackQualityDiscarded");
+  produces<std::vector<bool> >           ("tracks@trackQualitySize");
+  produces<std::vector<double> >         ("tracks@charge");
 
 
   PrimVtxToken = consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("PrimaryVertex"));
 
-  tracksToken = consumes<std::vector<reco::Track>>(iConfig.getParameter<edm::InputTag>("selectedTracks"));
+  selectedTracksToken = consumes<std::vector<reco::Track>>(iConfig.getParameter<edm::InputTag>("selectedTracks"));
   electronsToken = consumes<std::vector<reco::GsfElectron>>(iConfig.getParameter<edm::InputTag>("selectedElectrons"));
   muonsToken = consumes<std::vector<reco::Muon>>(iConfig.getParameter<edm::InputTag>("selectedMuons"));
   jetsToken = consumes<std::vector<reco::PFJet>>(iConfig.getParameter<edm::InputTag>("selectedPFJets"));
-  tracksToken = consumes<std::vector<reco::Track>>(iConfig.getParameter<edm::InputTag>("selectedTracks"));
+  selectedTracksToken = consumes<std::vector<reco::Track>>(iConfig.getParameter<edm::InputTag>("selectedTracks"));
   reducedEcalRecHitsEBToken = consumes<edm::SortedCollection<EcalRecHit,edm::StrictWeakOrdering<EcalRecHit> >>(iConfig.getParameter<edm::InputTag>("selectedEcalRecHitsEB"));
   reducedEcalRecHitsEEToken = consumes<edm::SortedCollection<EcalRecHit,edm::StrictWeakOrdering<EcalRecHit> >>(iConfig.getParameter<edm::InputTag>("selectedEcalRecHitsEE"));
   reducedEcalRecHitsESToken = consumes<edm::SortedCollection<EcalRecHit,edm::StrictWeakOrdering<EcalRecHit> >>(iConfig.getParameter<edm::InputTag>("selectedEcalRecHitsES"));
@@ -293,8 +293,8 @@ void DisappearingTrackProducer::produce(edm::Event& iEvent, const edm::EventSetu
   using namespace edm;
   
   // register input collections:
-  Handle<std::vector<reco::Track>> tracks;
-  iEvent.getByToken( tracksToken, tracks);
+  Handle<std::vector<reco::Track>> selectedTracks;
+  iEvent.getByToken( selectedTracksToken, selectedTracks);
   Handle<std::vector<reco::GsfElectron>> electrons;
   iEvent.getByToken( electronsToken, electrons);
   Handle<std::vector<reco::Muon>> muons;
@@ -335,50 +335,50 @@ void DisappearingTrackProducer::produce(edm::Event& iEvent, const edm::EventSetu
   const reco::Vertex vtx = vtx_h->at(0);
 
   // register output:
-  std::unique_ptr<std::vector<TLorentzVector> > chiCands(new std::vector<TLorentzVector>);
+  std::unique_ptr<std::vector<TLorentzVector> > tracks(new std::vector<TLorentzVector>);
 
-  std::unique_ptr<std::vector<double> > chiCands_dxyVtx(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_dzVtx(new std::vector<double>);
-  std::unique_ptr<std::vector<int> > chiCands_trackQuality(new std::vector<int>);
-  std::unique_ptr<std::vector<int> > chiCands_nMissingOuterHits(new std::vector<int>);
-  std::unique_ptr<std::vector<int> > chiCands_pixelLayersWithMeasurement(new std::vector<int>);
-  std::unique_ptr<std::vector<int> > chiCands_trackerLayersWithMeasurement(new std::vector<int>);
-  std::unique_ptr<std::vector<int> > chiCands_nMissingInnerHits(new std::vector<int>);
-  std::unique_ptr<std::vector<int> > chiCands_nMissingMiddleHits(new std::vector<int>);
-  std::unique_ptr<std::vector<int> > chiCands_nValidPixelHits(new std::vector<int>);
-  std::unique_ptr<std::vector<int> > chiCands_nValidTrackerHits(new std::vector<int>);
-  std::unique_ptr<std::vector<double> > chiCands_ptError(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_chi2perNdof(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_trkRelIso(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_trkMiniRelIso(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_trackJetIso(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_trackLeptonIso(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_matchedCaloEnergy(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_matchedCaloEnergyJets(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_deDxHarmonic2(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_chargedPtSum(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_neutralPtSum(new std::vector<double>);
-  std::unique_ptr<std::vector<double> > chiCands_neutralWithoutGammaPtSum(new std::vector<double>);
-  std::unique_ptr<std::vector<bool> > chiCands_passExo16044GapsVeto(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_passExo16044DeadNoisyECALVeto(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_passPFCandVeto(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_passExo16044JetIso(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_passExo16044LepIso(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_passExo16044Tag(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualityUndef(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualityLoose(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualityTight(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualityHighPurity(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualityConfirmed(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualityGoodIterative(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualityLooseSetWithPV(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualityHighPuritySetWithPV(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualityDiscarded(new std::vector<bool>);
-  std::unique_ptr<std::vector<bool> > chiCands_trackQualitySize(new std::vector<bool>);
-  std::unique_ptr<std::vector<int> > chiCands_charge(new std::vector<int>);
+  std::unique_ptr<std::vector<double> > selectedTracks_dxyVtx(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_dzVtx(new std::vector<double>);
+  std::unique_ptr<std::vector<int> > selectedTracks_trackQuality(new std::vector<int>);
+  std::unique_ptr<std::vector<int> > selectedTracks_nMissingOuterHits(new std::vector<int>);
+  std::unique_ptr<std::vector<int> > selectedTracks_pixelLayersWithMeasurement(new std::vector<int>);
+  std::unique_ptr<std::vector<int> > selectedTracks_trackerLayersWithMeasurement(new std::vector<int>);
+  std::unique_ptr<std::vector<int> > selectedTracks_nMissingInnerHits(new std::vector<int>);
+  std::unique_ptr<std::vector<int> > selectedTracks_nMissingMiddleHits(new std::vector<int>);
+  std::unique_ptr<std::vector<int> > selectedTracks_nValidPixelHits(new std::vector<int>);
+  std::unique_ptr<std::vector<int> > selectedTracks_nValidTrackerHits(new std::vector<int>);
+  std::unique_ptr<std::vector<double> > selectedTracks_ptError(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_chi2perNdof(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_trkRelIso(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_trkMiniRelIso(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_trackJetIso(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_trackLeptonIso(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_matchedCaloEnergy(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_matchedCaloEnergyJets(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_deDxHarmonic2(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_chargedPtSum(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_neutralPtSum(new std::vector<double>);
+  std::unique_ptr<std::vector<double> > selectedTracks_neutralWithoutGammaPtSum(new std::vector<double>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_passExo16044GapsVeto(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_passExo16044DeadNoisyECALVeto(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_passPFCandVeto(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_passExo16044JetIso(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_passExo16044LepIso(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_passExo16044Tag(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualityUndef(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualityLoose(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualityTight(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualityHighPurity(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualityConfirmed(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualityGoodIterative(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualityLooseSetWithPV(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualityHighPuritySetWithPV(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualityDiscarded(new std::vector<bool>);
+  std::unique_ptr<std::vector<bool> > selectedTracks_trackQualitySize(new std::vector<bool>);
+  std::unique_ptr<std::vector<int> > selectedTracks_charge(new std::vector<int>);
 
   int itrack = -1;
-  for( const auto& track : *tracks){
+  for( const auto& track : *selectedTracks){
     itrack+=1;
 
     // track kinematics:
@@ -398,41 +398,41 @@ void DisappearingTrackProducer::produce(edm::Event& iEvent, const edm::EventSetu
     if ((std::abs(track.eta()) > 0.15) && (std::abs(track.eta()) < 0.35) &&
         (std::abs(track.eta()) > 1.55) && (std::abs(track.eta()) < 1.85) &&
         (std::abs(track.eta()) > 1.42) && (std::abs(track.eta()) < 1.65)) passExo16044GapsVeto = false;
-    chiCands_passExo16044GapsVeto->push_back(passExo16044GapsVeto);
+    selectedTracks_passExo16044GapsVeto->push_back(passExo16044GapsVeto);
 
     // check dead or noisy calo cells:
     passExo16044DeadNoisyECALVeto = checkNoDeadNoisyECALInTrackCone(reducedEcalRecHitsEB, track, CaloGeomHandle, deadNoisyDR) &&
                                     checkNoDeadNoisyECALInTrackCone(reducedEcalRecHitsEE, track, CaloGeomHandle, deadNoisyDR) &&
                                     checkNoDeadNoisyECALInTrackCone(reducedEcalRecHitsES, track, CaloGeomHandle, deadNoisyDR);
-    chiCands_passExo16044DeadNoisyECALVeto->push_back(passExo16044DeadNoisyECALVeto);
+    selectedTracks_passExo16044DeadNoisyECALVeto->push_back(passExo16044DeadNoisyECALVeto);
 
     //now fill the products depending only on track object
     TLorentzVector tlv;
     tlv.SetPxPyPzE(track.px(),track.py(),track.pz(),track.pt()*cosh(track.eta()));
-    chiCands->push_back(tlv);
-    chiCands_dxyVtx->push_back(std::abs(track.dxy(vtx.position())));
-    chiCands_dzVtx->push_back(std::abs(track.dz(vtx.position())));
+    tracks->push_back(tlv);
+    selectedTracks_dxyVtx->push_back(std::abs(track.dxy(vtx.position())));
+    selectedTracks_dzVtx->push_back(std::abs(track.dz(vtx.position())));
     reco::HitPattern hitpattern = track.hitPattern();
-    chiCands_pixelLayersWithMeasurement->push_back(hitpattern.pixelLayersWithMeasurement());
-    chiCands_trackerLayersWithMeasurement->push_back(hitpattern.trackerLayersWithMeasurement());
-    chiCands_nMissingOuterHits->push_back(hitpattern.trackerLayersWithoutMeasurement(hitpattern.MISSING_OUTER_HITS));
-    chiCands_nMissingInnerHits->push_back(hitpattern.trackerLayersWithoutMeasurement(hitpattern.MISSING_INNER_HITS));
-    chiCands_nMissingMiddleHits->push_back(hitpattern.trackerLayersWithoutMeasurement(hitpattern.TRACK_HITS));
-    chiCands_nValidPixelHits->push_back(hitpattern.numberOfValidPixelHits());
-    chiCands_nValidTrackerHits->push_back(hitpattern.numberOfValidTrackerHits());
-    chiCands_ptError->push_back(track.ptError());
-    chiCands_chi2perNdof->push_back(1.0*track.chi2()/track.ndof());
-    chiCands_trackQualityUndef->push_back(track.quality(track.undefQuality));
-    chiCands_trackQualityLoose->push_back(track.quality(track.loose));
-    chiCands_trackQualityTight->push_back(track.quality(track.tight));
-    chiCands_trackQualityHighPurity->push_back(track.quality(track.highPurity));
-    chiCands_trackQualityConfirmed->push_back(track.quality(track.confirmed));
-    chiCands_trackQualityGoodIterative->push_back(track.quality(track.goodIterative));
-    chiCands_trackQualityLooseSetWithPV->push_back(track.quality(track.looseSetWithPV));
-    chiCands_trackQualityHighPuritySetWithPV->push_back(track.quality(track.highPuritySetWithPV));
-    chiCands_trackQualityDiscarded->push_back(track.quality(track.discarded));
-    chiCands_trackQualitySize->push_back(track.quality(track.qualitySize));
-    chiCands_charge->push_back(track.charge());
+    selectedTracks_pixelLayersWithMeasurement->push_back(hitpattern.pixelLayersWithMeasurement());
+    selectedTracks_trackerLayersWithMeasurement->push_back(hitpattern.trackerLayersWithMeasurement());
+    selectedTracks_nMissingOuterHits->push_back(hitpattern.trackerLayersWithoutMeasurement(hitpattern.MISSING_OUTER_HITS));
+    selectedTracks_nMissingInnerHits->push_back(hitpattern.trackerLayersWithoutMeasurement(hitpattern.MISSING_INNER_HITS));
+    selectedTracks_nMissingMiddleHits->push_back(hitpattern.trackerLayersWithoutMeasurement(hitpattern.TRACK_HITS));
+    selectedTracks_nValidPixelHits->push_back(hitpattern.numberOfValidPixelHits());
+    selectedTracks_nValidTrackerHits->push_back(hitpattern.numberOfValidTrackerHits());
+    selectedTracks_ptError->push_back(track.ptError());
+    selectedTracks_chi2perNdof->push_back(1.0*track.chi2()/track.ndof());
+    selectedTracks_trackQualityUndef->push_back(track.quality(track.undefQuality));
+    selectedTracks_trackQualityLoose->push_back(track.quality(track.loose));
+    selectedTracks_trackQualityTight->push_back(track.quality(track.tight));
+    selectedTracks_trackQualityHighPurity->push_back(track.quality(track.highPurity));
+    selectedTracks_trackQualityConfirmed->push_back(track.quality(track.confirmed));
+    selectedTracks_trackQualityGoodIterative->push_back(track.quality(track.goodIterative));
+    selectedTracks_trackQualityLooseSetWithPV->push_back(track.quality(track.looseSetWithPV));
+    selectedTracks_trackQualityHighPuritySetWithPV->push_back(track.quality(track.highPuritySetWithPV));
+    selectedTracks_trackQualityDiscarded->push_back(track.quality(track.discarded));
+    selectedTracks_trackQualitySize->push_back(track.quality(track.qualitySize));
+    selectedTracks_charge->push_back(track.charge());
     // save charged/neutral pt sum within DR cone (without selected track):
     double chargedPtSum = 0;
     double neutralPtSum = 0;
@@ -449,10 +449,10 @@ void DisappearingTrackProducer::produce(edm::Event& iEvent, const edm::EventSetu
         if (dR > 0.01) passPFCandVeto = true;
         else passPFCandVeto = false;
     }
-    chiCands_chargedPtSum->push_back(chargedPtSum);
-    chiCands_neutralPtSum->push_back(neutralPtSum);
-    chiCands_neutralWithoutGammaPtSum->push_back(neutralWithoutGammaPtSum);
-    chiCands_passPFCandVeto->push_back(passPFCandVeto);
+    selectedTracks_chargedPtSum->push_back(chargedPtSum);
+    selectedTracks_neutralPtSum->push_back(neutralPtSum);
+    selectedTracks_neutralWithoutGammaPtSum->push_back(neutralWithoutGammaPtSum);
+    selectedTracks_passPFCandVeto->push_back(passPFCandVeto);
 
     // now perform the tight selection:
 
@@ -478,7 +478,7 @@ void DisappearingTrackProducer::produce(edm::Event& iEvent, const edm::EventSetu
     if (reducedHcalRecHitsHO.isValid()) energyDeposited += LoopOverRecHits(reducedHcalRecHitsHO, track, CaloGeomHandle, caloEnergyDepositionMaxDR); //check input
     bool passedCaloEnergy = false;
     if (energyDeposited < caloEnergyDepositionMaxE) passedCaloEnergy = true;
-    chiCands_matchedCaloEnergy->push_back(energyDeposited);
+    selectedTracks_matchedCaloEnergy->push_back(energyDeposited);
 
     // optional cross-check, loop over calojets:
     double energyDepositedJets = 0;
@@ -487,7 +487,7 @@ void DisappearingTrackProducer::produce(edm::Event& iEvent, const edm::EventSetu
              energyDepositedJets += jet.maxEInEmTowers() + jet.maxEInHadTowers();
          }
     }
-    chiCands_matchedCaloEnergyJets->push_back(energyDepositedJets);
+    selectedTracks_matchedCaloEnergyJets->push_back(energyDepositedJets);
 
     // check minimum of missing outer hits:
     bool passedMissingOuterHits = false;
@@ -504,7 +504,7 @@ void DisappearingTrackProducer::produce(edm::Event& iEvent, const edm::EventSetu
     double miniConeDr = 0.2;
     if (track.pt()>50) miniConeDr = 10.0/track.pt();
     else if (track.pt()>200) miniConeDr = 0.05;
-    for (const auto& othertrack : *tracks){
+    for (const auto& othertrack : *selectedTracks){
         if (!(std::abs(othertrack.dxy(vtx.position()))<0.03 && std::abs(othertrack.dz(vtx.position()))<0.05)) continue;
         if (deltaR(track, othertrack) == 0) continue;
         if (deltaR(track, othertrack) < coneRelIsoDR) conePtSum_rel += othertrack.pt();
@@ -514,82 +514,82 @@ void DisappearingTrackProducer::produce(edm::Event& iEvent, const edm::EventSetu
     relIso = conePtSum_rel / track.pt();
     miniIso = conePtSum_mini / track.pt();
 
-    chiCands_trkRelIso->push_back(relIso);
-    chiCands_trkMiniRelIso->push_back(miniIso);
+    selectedTracks_trkRelIso->push_back(relIso);
+    selectedTracks_trkMiniRelIso->push_back(miniIso);
 
 
     // check track/jet isolation:
     double trackIsoDR = getParticleIsolation(track, jets);
-    chiCands_trackJetIso->push_back(trackIsoDR);
+    selectedTracks_trackJetIso->push_back(trackIsoDR);
 
     bool passedTrackJetIso = false;
     if (trackIsoDR > minTrackJetDR) passedTrackJetIso = true;
-    chiCands_passExo16044JetIso->push_back(passedTrackJetIso);
+    selectedTracks_passExo16044JetIso->push_back(passedTrackJetIso);
 
 
     // check track / lepton isolation:
     double trackLeptonIso = std::min(getParticleIsolation(track, electrons), getParticleIsolation(track, muons));
-    chiCands_trackLeptonIso->push_back(trackLeptonIso);
+    selectedTracks_trackLeptonIso->push_back(trackLeptonIso);
 
     bool passedTrackLeptonIso = false;
     if (trackLeptonIso > minTrackLeptonDR) passedTrackLeptonIso = true;
-    chiCands_passExo16044LepIso->push_back(passedTrackLeptonIso);
+    selectedTracks_passExo16044LepIso->push_back(passedTrackLeptonIso);
   
 
     // save dE/dx:
     double dedx = -1;
-    if (doDeDx) dedx = dEdxTrack[reco::TrackRef(tracks, itrack)].dEdx();
-    chiCands_deDxHarmonic2->push_back(dedx);
+    if (doDeDx) dedx = dEdxTrack[reco::TrackRef(selectedTracks, itrack)].dEdx();
+    selectedTracks_deDxHarmonic2->push_back(dedx);
 
 
     // check if EXO-16-044 selection criteria are satisfied:
     if (passExo16044Kinematics && passExo16044GapsVeto && passExo16044DeadNoisyECALVeto && passedTrackTrackerIso &&
         passExo16044NoFakes && passedTrackLeptonIso && passedTrackJetIso && 
-        passedCaloEnergy && passedMissingOuterHits) chiCands_passExo16044Tag->push_back(true);
-    else chiCands_passExo16044Tag->push_back(false);
+        passedCaloEnergy && passedMissingOuterHits) selectedTracks_passExo16044Tag->push_back(true);
+    else selectedTracks_passExo16044Tag->push_back(false);
 
   }
 
   // save track collection in event:
-  iEvent.put(std::move(chiCands),                                 "chiCands");
-  iEvent.put(std::move(chiCands_dxyVtx),                          "chiCands@dxyVtx");
-  iEvent.put(std::move(chiCands_dzVtx),                           "chiCands@dzVtx");
-  iEvent.put(std::move(chiCands_pixelLayersWithMeasurement),      "chiCands@pixelLayersWithMeasurement");
-  iEvent.put(std::move(chiCands_trackerLayersWithMeasurement),    "chiCands@trackerLayersWithMeasurement");
-  iEvent.put(std::move(chiCands_nMissingOuterHits),               "chiCands@nMissingOuterHits");
-  iEvent.put(std::move(chiCands_nMissingInnerHits),               "chiCands@nMissingInnerHits");
-  iEvent.put(std::move(chiCands_nMissingMiddleHits),              "chiCands@nMissingMiddleHits");
-  iEvent.put(std::move(chiCands_nValidPixelHits),                 "chiCands@nValidPixelHits");
-  iEvent.put(std::move(chiCands_nValidTrackerHits),               "chiCands@nValidTrackerHits");
-  iEvent.put(std::move(chiCands_ptError),                         "chiCands@ptError");
-  iEvent.put(std::move(chiCands_chi2perNdof),                     "chiCands@chi2perNdof");
-  iEvent.put(std::move(chiCands_trkRelIso),                       "chiCands@trkRelIso");
-  iEvent.put(std::move(chiCands_trkMiniRelIso),                   "chiCands@trkMiniRelIso");
-  iEvent.put(std::move(chiCands_trackJetIso),                     "chiCands@trackJetIso");
-  iEvent.put(std::move(chiCands_trackLeptonIso),                  "chiCands@trackLeptonIso");
-  iEvent.put(std::move(chiCands_matchedCaloEnergy),               "chiCands@matchedCaloEnergy");
-  iEvent.put(std::move(chiCands_matchedCaloEnergyJets),           "chiCands@matchedCaloEnergyJets");
-  iEvent.put(std::move(chiCands_deDxHarmonic2),                   "chiCands@deDxHarmonic2");
-  iEvent.put(std::move(chiCands_chargedPtSum),                    "chiCands@chargedPtSum");
-  iEvent.put(std::move(chiCands_neutralPtSum),                    "chiCands@neutralPtSum");
-  iEvent.put(std::move(chiCands_neutralWithoutGammaPtSum),        "chiCands@neutralWithoutGammaPtSum");
-  iEvent.put(std::move(chiCands_passExo16044GapsVeto),            "chiCands@passExo16044GapsVeto");
-  iEvent.put(std::move(chiCands_passExo16044DeadNoisyECALVeto),   "chiCands@passExo16044DeadNoisyECALVeto");
-  iEvent.put(std::move(chiCands_passPFCandVeto),                  "chiCands@passPFCandVeto");
-  iEvent.put(std::move(chiCands_passExo16044JetIso),              "chiCands@passExo16044JetIso");
-  iEvent.put(std::move(chiCands_passExo16044LepIso),              "chiCands@passExo16044LepIso");
-  iEvent.put(std::move(chiCands_passExo16044Tag),                 "chiCands@passExo16044Tag");
-  iEvent.put(std::move(chiCands_trackQualityUndef),               "chiCands@trackQualityUndef");
-  iEvent.put(std::move(chiCands_trackQualityLoose),               "chiCands@trackQualityLoose");
-  iEvent.put(std::move(chiCands_trackQualityTight),               "chiCands@trackQualityTight");
-  iEvent.put(std::move(chiCands_trackQualityHighPurity),          "chiCands@trackQualityHighPurity");
-  iEvent.put(std::move(chiCands_trackQualityConfirmed),           "chiCands@trackQualityConfirmed");
-  iEvent.put(std::move(chiCands_trackQualityGoodIterative),       "chiCands@trackQualityGoodIterative");
-  iEvent.put(std::move(chiCands_trackQualityLooseSetWithPV),      "chiCands@trackQualityLooseSetWithPV");
-  iEvent.put(std::move(chiCands_trackQualityHighPuritySetWithPV), "chiCands@trackQualityHighPuritySetWithPV");
-  iEvent.put(std::move(chiCands_trackQualityDiscarded),           "chiCands@trackQualityDiscarded");
-  iEvent.put(std::move(chiCands_trackQualitySize),                "chiCands@trackQualitySize");
-  iEvent.put(std::move(chiCands_charge),                          "chiCands@charge");
+  iEvent.put(std::move(tracks),                                 "tracks");
+  iEvent.put(std::move(selectedTracks_dxyVtx),                          "tracks@dxyVtx");
+  iEvent.put(std::move(selectedTracks_dzVtx),                           "tracks@dzVtx");
+  iEvent.put(std::move(selectedTracks_pixelLayersWithMeasurement),      "tracks@pixelLayersWithMeasurement");
+  iEvent.put(std::move(selectedTracks_trackerLayersWithMeasurement),    "tracks@trackerLayersWithMeasurement");
+  iEvent.put(std::move(selectedTracks_nMissingOuterHits),               "tracks@nMissingOuterHits");
+  iEvent.put(std::move(selectedTracks_nMissingInnerHits),               "tracks@nMissingInnerHits");
+  iEvent.put(std::move(selectedTracks_nMissingMiddleHits),              "tracks@nMissingMiddleHits");
+  iEvent.put(std::move(selectedTracks_nValidPixelHits),                 "tracks@nValidPixelHits");
+  iEvent.put(std::move(selectedTracks_nValidTrackerHits),               "tracks@nValidTrackerHits");
+  iEvent.put(std::move(selectedTracks_ptError),                         "tracks@ptError");
+  iEvent.put(std::move(selectedTracks_chi2perNdof),                     "tracks@chi2perNdof");
+  iEvent.put(std::move(selectedTracks_trkRelIso),                       "tracks@trkRelIso");
+  iEvent.put(std::move(selectedTracks_trkMiniRelIso),                   "tracks@trkMiniRelIso");
+  iEvent.put(std::move(selectedTracks_trackJetIso),                     "tracks@trackJetIso");
+  iEvent.put(std::move(selectedTracks_trackLeptonIso),                  "tracks@trackLeptonIso");
+  iEvent.put(std::move(selectedTracks_matchedCaloEnergy),               "tracks@matchedCaloEnergy");
+  iEvent.put(std::move(selectedTracks_matchedCaloEnergyJets),           "tracks@matchedCaloEnergyJets");
+  iEvent.put(std::move(selectedTracks_deDxHarmonic2),                   "tracks@deDxHarmonic2");
+  iEvent.put(std::move(selectedTracks_chargedPtSum),                    "tracks@chargedPtSum");
+  iEvent.put(std::move(selectedTracks_neutralPtSum),                    "tracks@neutralPtSum");
+  iEvent.put(std::move(selectedTracks_neutralWithoutGammaPtSum),        "tracks@neutralWithoutGammaPtSum");
+  iEvent.put(std::move(selectedTracks_passExo16044GapsVeto),            "tracks@passExo16044GapsVeto");
+  iEvent.put(std::move(selectedTracks_passExo16044DeadNoisyECALVeto),   "tracks@passExo16044DeadNoisyECALVeto");
+  iEvent.put(std::move(selectedTracks_passPFCandVeto),                  "tracks@passPFCandVeto");
+  iEvent.put(std::move(selectedTracks_passExo16044JetIso),              "tracks@passExo16044JetIso");
+  iEvent.put(std::move(selectedTracks_passExo16044LepIso),              "tracks@passExo16044LepIso");
+  iEvent.put(std::move(selectedTracks_passExo16044Tag),                 "tracks@passExo16044Tag");
+  iEvent.put(std::move(selectedTracks_trackQualityUndef),               "tracks@trackQualityUndef");
+  iEvent.put(std::move(selectedTracks_trackQualityLoose),               "tracks@trackQualityLoose");
+  iEvent.put(std::move(selectedTracks_trackQualityTight),               "tracks@trackQualityTight");
+  iEvent.put(std::move(selectedTracks_trackQualityHighPurity),          "tracks@trackQualityHighPurity");
+  iEvent.put(std::move(selectedTracks_trackQualityConfirmed),           "tracks@trackQualityConfirmed");
+  iEvent.put(std::move(selectedTracks_trackQualityGoodIterative),       "tracks@trackQualityGoodIterative");
+  iEvent.put(std::move(selectedTracks_trackQualityLooseSetWithPV),      "tracks@trackQualityLooseSetWithPV");
+  iEvent.put(std::move(selectedTracks_trackQualityHighPuritySetWithPV), "tracks@trackQualityHighPuritySetWithPV");
+  iEvent.put(std::move(selectedTracks_trackQualityDiscarded),           "tracks@trackQualityDiscarded");
+  iEvent.put(std::move(selectedTracks_trackQualitySize),                "tracks@trackQualitySize");
+  iEvent.put(std::move(selectedTracks_charge),                          "tracks@charge");
 }
 
 void DisappearingTrackProducer::beginJob() {}
