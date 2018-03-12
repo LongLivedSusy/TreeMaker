@@ -158,7 +158,7 @@ DisappearingTrackProducer::DisappearingTrackProducer(const edm::ParameterSet& iC
   produces<std::vector<bool> >           ("tracks@trackQualityHighPuritySetWithPV");
   produces<std::vector<bool> >           ("tracks@trackQualityDiscarded");
   produces<std::vector<bool> >           ("tracks@trackQualitySize");
-  produces<std::vector<double> >         ("tracks@charge");
+  produces<std::vector<int> >         ("tracks@charge");
 
 
   PrimVtxToken = consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("PrimaryVertex"));
