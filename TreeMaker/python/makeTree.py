@@ -79,7 +79,7 @@ class makeTree:
 		self.getParamDefault("lostlepton", True)
 		self.getParamDefault("hadtau", True)
 		self.getParamDefault("hadtaurecluster", 0)
-		self.getParamDefault("doZinv", True)
+		self.getParamDefault("doZinv", False)
 
 		# special signal stuff
 		self.getParamDefault("systematics",True);
