@@ -4,7 +4,7 @@ from optparse import OptionParser
 import commands
 
 # create miniAOD file from AOD file, e.g.:
-# ./createMiniAOD.py --aodfile=root://cmsxrootd.fnal.gov//store/data/Run2018A/MET/AOD/17Sep2018-v1/120000/8B09BCD4-ACB4-D343-823F-9FFF2EC9472E.root
+# ./createMiniAOD.py --aodfile=root://cmsxrootd.fnal.gov//store/data/Run2018A/MET/AOD/17Sep2018-v1/120000/8B09BCD4-ACB4-D343-823F-9FFF2EC9472E.root --outfile miniaod.root
 
 parser = OptionParser()
 parser.add_option('--infile', dest='infile')
