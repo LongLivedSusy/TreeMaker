@@ -151,8 +151,16 @@ class maker:
         if self.dataset!=[] :    
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
-            quitIfFileAlreadyProcessed(self.outfile)
-            if '/store/' in rf: self.readFiles_sidecar += getAODfromMiniAODPath(rf)
+            #quitIfFileAlreadyProcessed(self.outfile)
+            if '/store/' in rf:
+                # check if miniAOD file is present:
+                if not os.path.exists("miniaod.root"):
+                    os.system("echo %s > aodfile" % rf)
+                    quit(78)
+                else:
+                    #self.readFiles_sidecar += getAODfromMiniAODPath(rf)
+                    self.readFiles_sidecar += ["file:miniaod.root"]
+                    print "Found miniAOD file"
             else: 
             	shpingy = rf.replace('mini','').replace('step4','step3')
             	self.readFiles_sidecar.append(shpingy)
