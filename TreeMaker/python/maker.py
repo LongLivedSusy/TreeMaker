@@ -8,64 +8,7 @@ from TreeMaker.TreeMaker.doHadTauBkg import doHadTauBkg, makeJetVarsHadTau
 from TreeMaker.TreeMaker.doLostLeptonBkg import doLostLeptonBkg
 from TreeMaker.TreeMaker.doZinvBkg import doZinvBkg, reclusterZinv
 
-
 import os
-def getAODfromMiniAODPath(datasetPathMiniAOD):
-    print "getAODfromMiniAODPath" , datasetPathMiniAOD
-    filepathbits = datasetPathMiniAOD.split('/store')
-    if len(filepathbits)==2:
-        filepathbits[1] = '/store'+filepathbits[1]
-    # get AOD file(s) from MiniAOD file path
-    # fix SSL site configuration for DAS client:
-    os.environ['SSL_CERT_DIR'] = '/etc/pki/tls/certs:/etc/grid-security/certificates'
-    #parentfiles = check_output(["./data/das_client.py", '--query=parent file=%s' % datasetPathMiniAOD, '--limit=0']) .split()
-    parentfiles = []
-    os.system('dasgoclient --query="parent file='+filepathbits[1]+'" --limit=0 > '+'tmp.txt')
-    ftmp = open('tmp.txt')
-    lines = ftmp.readlines()
-    ftmp.close()
-    os.system('rm tmp.txt')
-    for line in lines: parentfiles.append(line.strip())
-
-    aodFiles = []
-    for parentfile in parentfiles:
-        if "/AOD" in parentfile:
-            # parent file is already AOD file
-            aodFiles.append(parentfile)
-        else:
-            # parent file is e.g. RAW, so check its children:
-            # childFiles = check_output(["./data/das_client.py", "--query=child file=%s" % parentfile, '--limit=0']).split()
-            childFiles = []
-            os.system('dasgoclient --query="child file='+parentfile+'" --limit=0 > '+'tmp.txt')
-            ftmp = open('tmp.txt')
-            lines = ftmp.readlines()
-            ftmp.close()
-            os.system('rm tmp.txt')
-            for line in lines: childFiles.append(line.strip())
-
-            for childFile in childFiles:
-                if "/AOD" in childFile:
-                    aodFiles.append(childFile)
-
-    # avoid duplicate entries:
-    print 'obtained ',len(aodFiles),',file-long aod set:', aodFiles
-    return list(set(aodFiles))
-
-
-def quitIfFileAlreadyProcessed(output_filename):
-
-    import commands
-    print "Checking if output file has been already processed"
-    status_sam, output = commands.getstatusoutput("xrdfs root://dcache-cms-xrootd.desy.de/ stat /pnfs/desy.de/cms/tier2/store/user/sbein/NtupleHub/Production2016v2/" + output_filename + ".root")
-    status_viktor, output = commands.getstatusoutput("xrdfs root://dcache-cms-xrootd.desy.de/ stat /pnfs/desy.de/cms/tier2/store/user/vkutzner/NtupleHub/" + output_filename + ".root")
-    
-    # the exit code of xrdfs is zero if the file exists:
-    if status_sam == 0 or status_viktor == 0:
-        print "Output file already exists. Exiting"
-        quit(77)
-    else:
-        print "Proceeding..."
-
 
 class maker:
     def __init__(self,parameters):
@@ -151,14 +94,12 @@ class maker:
         if self.dataset!=[] :    
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
-            #quitIfFileAlreadyProcessed(self.outfile)
             if '/store/' in rf:
                 # check if miniAOD file is present:
                 if not os.path.exists("miniaod.root"):
                     os.system("echo %s > aodfile" % rf)
                     quit(78)
                 else:
-                    #self.readFiles_sidecar += getAODfromMiniAODPath(rf)
                     self.readFiles_sidecar += ["file:miniaod.root"]
                     print "Found miniAOD file"
             else: 
