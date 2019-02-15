@@ -7,22 +7,22 @@ import commands
 # ./createMiniAOD.py --aodfile=root://cmsxrootd.fnal.gov//store/data/Run2018A/MET/AOD/17Sep2018-v1/120000/8B09BCD4-ACB4-D343-823F-9FFF2EC9472E.root
 
 parser = OptionParser()
-parser.add_option("--infile", dest="infile")
-parser.add_option("--outfile", dest="outfile")
+parser.add_option('--infile', dest='infile')
+parser.add_option('--outfile', dest='outfile')
 (options, args) = parser.parse_args()
 
-print "Creating miniAOD file for AOD:", options.infile
+print 'Creating miniAOD file for AOD:', options.infile
 
-if not "root://" in options.infile:
-    options.infile = "root://cmsxrootd.fnal.gov/" + options.infile
+if not 'root://' in options.infile:
+    options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
 
-if "/data/" in options.infile:
+if '/data/' in options.infile:
     is_data = True
 else:
     is_data = False
 
 conditions = {
-                "17Sep2018": ["CMSSW_10_2_4_patch1", "102X_dataRun2_Sep2018Rereco_v1", "Run2_2018"]
+                '17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018']
              }
 
 for condition in conditions:
@@ -32,9 +32,9 @@ for condition in conditions:
         era = conditions[condition][2]
 
 if is_data:
-    command = "cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n -1" % (global_tag, era, options.infile, options.outfile)
+    command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n -1' % (global_tag, era, options.infile, options.outfile)
 else:
-    command = "cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n -1" % (global_tag, era, options.infile, options.outfile)
+    command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n -1' % (global_tag, era, options.infile, options.outfile)
 
 jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh
@@ -51,8 +51,8 @@ fjob = open('createMiniAOD.sh','w')
 fjob.write(jobscript.replace('CMSBASE',cmssw_version).replace('COMMAND',command))
 fjob.close()
 
-status, text = commands.getstatusoutput("sh createMiniAOD.sh")
+status, text = commands.getstatusoutput('sh createMiniAOD.sh')
 
-print "Output:\n", status, text
+print 'Output:\n', status, text
 
 exit(status)
