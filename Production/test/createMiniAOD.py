@@ -53,6 +53,6 @@ fjob.close()
 
 status, text = commands.getstatusoutput('sh createMiniAOD.sh')
 
-print 'Output:\n', status, text
+print 'Output status:', status
 
 exit(status)

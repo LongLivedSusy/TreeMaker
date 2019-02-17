@@ -107,6 +107,12 @@ class maker:
             	self.readFiles_sidecar.append(shpingy)
         self.readFiles = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles]
         self.readFiles_sidecar = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles_sidecar]
+
+        # switch primary and secondary files, as the secondary file has to be an ancestor of the primary file:
+        aod_list = self.readFiles
+        miniaod_list = self.readFiles_sidecar
+        self.readFiles = miniaod_list
+        self.readFiles_sidecar = aod_list
         print 'readFiles', self.readFiles
         print 'readFiles_sidecar', self.readFiles_sidecar
         

@@ -42,10 +42,6 @@ echo ""
 ln -s ${CMSSWVER}/src/TreeMaker/Production/test/data
 ln -s ${CMSSWVER}/src/TreeMaker/Production/test/runMakeTreeFromMiniAOD_cfg.py
 
-# if input is given in AOD, convert to miniAOD:
-cmsDriver.py step3 --filein file:%s --fileout file:%s --mc --eventcontent MINIAODSIM --runUnscheduled --datatier MINIAODSIM --conditions 100X_upgrade2018_realistic_v10 --step PAT --nThreads 1 --era Run2_2017 -n -1
-
-
 # run CMSSW
 ARGS=$(cat args_${JOBNAME}_${PROCESS}.txt)
 if [[ -n "$REDIR" ]]; then
@@ -62,6 +58,7 @@ cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1
 
 echo "first need to create miniAOD file"
 oldbase=$CMSSW_BASE
+cp "$CMSSW_VERSION/src/TreeMaker/Production/test/createMiniAOD.py" .
 chmod +x createMiniAOD.py
 ./createMiniAOD.py --infile="$(cat aodfile)" --outfile=miniaod.root
 echo "running again cmsRun..."
@@ -75,6 +72,7 @@ cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1
 CMSEXIT=$?
 
 rm runMakeTreeFromMiniAOD_cfg.py
+rm miniaod.root
 
 if [[ $CMSEXIT -eq 77 ]]; then
   echo "file already processed"
