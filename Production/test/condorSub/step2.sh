@@ -60,7 +60,12 @@ echo "first need to create miniAOD file"
 oldbase=$CMSSW_BASE
 cp "$CMSSW_VERSION/src/TreeMaker/Production/test/createMiniAOD.py" .
 chmod +x createMiniAOD.py
-./createMiniAOD.py --infile="$(cat aodfile)" --outfile=miniaod.root
+./createMiniAOD.py --infile="$(cat info_aodfilename)" --outfile=miniaod.root --nev="$(cat info_nev)"
+MINIAODEXIT=$?
+if [[ $MINIAODEXIT -ne 0 ]]; then
+  echo "exit code $MINIAODEXIT, error in miniAOD production!"
+  exit $MINIAODEXIT
+fi
 echo "running again cmsRun..."
 
 cd $oldbase

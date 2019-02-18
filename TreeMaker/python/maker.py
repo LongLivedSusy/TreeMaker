@@ -100,7 +100,8 @@ class maker:
                 # grid production: AOD as primary file
                 # check if miniAOD file is present:
                 if not os.path.exists("miniaod.root"):
-                    os.system("echo %s > aodfile" % rf)
+                    os.system("echo %s > info_aodfilename" % rf)
+                    os.system("echo %s > info_nev" % self.numevents)
                     quit(78)
                 else:
                     self.readFiles_sidecar += ["file:miniaod.root"]

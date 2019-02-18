@@ -9,6 +9,7 @@ import commands
 parser = OptionParser()
 parser.add_option('--infile', dest='infile')
 parser.add_option('--outfile', dest='outfile')
+parser.add_option('--nev', dest='nev')
 (options, args) = parser.parse_args()
 
 print 'Creating miniAOD file for AOD:', options.infile
@@ -22,19 +23,36 @@ else:
     is_data = False
 
 conditions = {
-                '17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018']
+                'RunIIFall17': ['CMSSW_9_4_6_patch1', '94X_mc2017_realistic_v11', 'Run2_2017'],
+                'Run2018A*17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018'],
+                'Run2018B*17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018'],
+                'Run2018C*17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018'],
+                'Run2018D*PromptReco': ['CMSSW_10_2_0', '102X_dataRun2_Prompt_v1', 'Run2_2018'],
              }
 
+cmssw_version = ""
+global_tag = ""
+era = ""
 for condition in conditions:
-    if condition in options.infile:
+    count = 0
+    for subcondition in condition.split("*"):
+        if subcondition in options.infile:
+            count += 1
+    if count == len(condition.split("*")):
+        # passed all conditions
         cmssw_version = conditions[condition][0]
         global_tag = conditions[condition][1]
         era = conditions[condition][2]
 
+print cmssw_version, global_tag, era
+if cmssw_version == "":
+    print "Cannot determine which conditions to use for file", options.infile
+    exit(50)
+
 if is_data:
-    command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n -1' % (global_tag, era, options.infile, options.outfile)
+    command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
 else:
-    command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n -1' % (global_tag, era, options.infile, options.outfile)
+    command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
 
 jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh
@@ -51,8 +69,10 @@ fjob = open('createMiniAOD.sh','w')
 fjob.write(jobscript.replace('CMSBASE',cmssw_version).replace('COMMAND',command))
 fjob.close()
 
-status, text = commands.getstatusoutput('sh createMiniAOD.sh')
+status, output = commands.getstatusoutput('sh createMiniAOD.sh')
 
 print 'Output status:', status
+with open("miniaod.log", "w+") as fout:
+    fout.write(output)
 
 exit(status)
