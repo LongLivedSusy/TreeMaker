@@ -185,7 +185,8 @@ class Scenario:
         elif sname == "2018B26Sep":
             self.set_vars(
                 globaltag="102X_dataRun2_PromptLike_v7",
-                tagname="RECO",
+                #tagname="RECO",
+                tagname="PAT",
                 hlttagname="HLT",
                 jsonfile="data/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt",
                 jecfile="data/jec/Fall17_17Nov2017_V32_102X_DATA",
@@ -196,7 +197,8 @@ class Scenario:
         elif sname == "2018B26SepHEM":
             self.set_vars(
                 globaltag="102X_dataRun2_PromptLike_HEfail_v1",
-                tagname="RECO",
+                #tagname="RECO",
+                tagname="PAT",
                 hlttagname="HLT",
                 jsonfile="data/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt",
                 jecfile="data/jec/Fall17_17Nov2017_V32_102X_DATA",
@@ -207,7 +209,8 @@ class Scenario:
         elif sname == "2018PromptReco":
             self.set_vars(
                 globaltag="102X_dataRun2_Prompt_v11",
-                tagname="RECO",
+                #tagname="RECO",
+                tagname="PAT",
                 hlttagname="HLT",
                 jsonfile="data/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt",
                 jecfile="data/jec/Fall17_17Nov2017_V32_102X_DATA",
