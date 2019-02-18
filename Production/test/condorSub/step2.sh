@@ -74,11 +74,6 @@ CMSEXIT=$?
 rm runMakeTreeFromMiniAOD_cfg.py
 rm miniaod.root
 
-if [[ $CMSEXIT -eq 77 ]]; then
-  echo "file already processed"
-  exit 0
-fi
-
 if [[ $CMSEXIT -ne 0 ]]; then
   rm *.root
   echo "exit code $CMSEXIT, skipping xrdcp"
@@ -95,24 +90,13 @@ if [[ $vomsident = *"cmsgli"* ]]; then
 	exit 60322
 fi
 
-# write short test script to check if output file has track collection:
-echo "
-import os, sys, glob
-from ROOT import *
-output_filename = glob.glob('*.root')[0]
-fin = TFile(output_filename, 'read')
-tree = fin.Get('TreeMaker2/PreSelection')
-if tree.GetBranch('tracks'):
-    print 'File OK'
-else:
-    print 'no tracks collection, deleting output file'
-    os.system('rm ' + output_filename)
-    sys.exit(919191)
-" > check.py
-python check.py
+# run test script to check if output file has a tracks collection:
+cp "$CMSSW_VERSION/src/TreeMaker/Production/test/check_if_tracks_present.py" .
+chmod +x check_if_tracks_present.py
+python check_if_tracks_present.py
 if [[ $? -ne 0 ]]; then
 	# this is the exit code for missing branch "tracks" in output file:
-    exit 51919
+    exit 519
 fi
 
 # copy output to eos
