@@ -68,7 +68,7 @@ if [[ $MINIAODEXIT -ne 0 ]]; then
 fi
 echo "running again cmsRun..."
 
-cd $oldbase
+cd $oldbase/src
 eval `scramv1 runtime -sh`
 cd -
 

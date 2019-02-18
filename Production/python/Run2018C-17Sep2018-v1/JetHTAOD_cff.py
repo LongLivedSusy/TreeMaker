@@ -1,9 +1,9 @@
 import FWCore.ParameterSet.Config as cms
 
-maxEvents =cms.untracked.PSet( input = cms.untracked.int32(-1) )
-readFiles =cms.untracked.vstring()
-secFiles = ms.untracked.vstring()
-source = cm.Source ("PoolSource",fileNames = readFiles, secondaryFileNames = secFiles)
+maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+readFiles = cms.untracked.vstring()
+secFiles = cms.untracked.vstring()
+source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
 '/store/data/Run2018C/JetHT/AOD/17Sep2018-v1/120000/1E327441-8CDB-6742-976A-9E423BAE53EB.root',
 '/store/data/Run2018C/JetHT/AOD/17Sep2018-v1/120000/D20943AA-08D4-DB4D-ABA7-B435FDD5BF3E.root',
