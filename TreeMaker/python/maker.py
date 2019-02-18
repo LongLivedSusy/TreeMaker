@@ -91,10 +91,13 @@ class maker:
             else:
                 self.readFiles.extend( readFilesImport[self.nstart:(self.nstart+self.nfiles)] )
 
+        switch_primary_secondary_files = False
+
         if self.dataset!=[] :    
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
             if '/store/' in rf:
+                # grid production: AOD as primary file
                 # check if miniAOD file is present:
                 if not os.path.exists("miniaod.root"):
                     os.system("echo %s > aodfile" % rf)
@@ -102,17 +105,20 @@ class maker:
                 else:
                     self.readFiles_sidecar += ["file:miniaod.root"]
                     print "Found miniAOD file"
+                    switch_primary_secondary_files = True
             else: 
+                # private production: now miniAOD as primary file
             	shpingy = rf.replace('mini','').replace('step4','step3')
             	self.readFiles_sidecar.append(shpingy)
         self.readFiles = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles]
         self.readFiles_sidecar = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles_sidecar]
 
-        # switch primary and secondary files, as the secondary file has to be an ancestor of the primary file:
-        aod_list = self.readFiles
-        miniaod_list = self.readFiles_sidecar
-        self.readFiles = miniaod_list
-        self.readFiles_sidecar = aod_list
+        if switch_primary_secondary_files:
+            # switch primary and secondary files, as the secondary file has to be an ancestor of the primary file:
+            aod_list = self.readFiles
+            miniaod_list = self.readFiles_sidecar
+            self.readFiles = miniaod_list
+            self.readFiles_sidecar = aod_list
         print 'readFiles', self.readFiles
         print 'readFiles_sidecar', self.readFiles_sidecar
         
