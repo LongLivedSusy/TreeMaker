@@ -75,4 +75,7 @@ print 'Output status:', status
 with open("miniaod.log", "w+") as fout:
     fout.write(output)
 
+if status != 0:
+    print output
+
 exit(status)
