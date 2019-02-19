@@ -7,9 +7,11 @@ import commands
 
 check_dataset_availablity = False
 datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
+
 #campaign = "Run2018*"
 #campaign = "Run2016*"
-campaign = "Run2017*"
+#campaign = "Run2017*"
+campaign = "Run201*"
 
 # Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
 #
@@ -53,9 +55,9 @@ for datastream in datastreams:
         else:
             promptreco_rereco_identifier = cff_folder
 
-        print "parents:", parent_dataset.replace("\n", ",")
-        print "childs:", child_datasets.replace("\n", ",")
-        print "select by:", promptreco_rereco_identifier
+        #print "parents:", parent_dataset.replace("\n", ",")
+        #print "childs:", child_datasets.replace("\n", ",")
+        #print "select by:", promptreco_rereco_identifier
 
         def get_aod_dataset(child_datasets, production):
             output = []
@@ -109,38 +111,45 @@ for datastream in datastreams:
             all_filenames += "\n" + filenames
         
         # Create a function called "chunks" with two arguments, l and n:
-        def chunks(l, n):
+        def dochunks(l, n):
             # For item i in a range that is a length of l,
             for i in range(0, len(l), n):
                 # Create an index range for l of n items:
                 yield l[i:i+n]
         
-        chunks = list(chunks(all_filenames.split("\n"), 254))
+        chunks = list(dochunks(all_filenames.split("\n"), 254))
 
         cff_folder = cff_folder + "-AOD"
         os.system("mkdir -p %s" % cff_folder)
-        os.system("touch %s/__init__.py" % cff_folder)
+        os.system("echo placeholder >> %s/__init__.py" % cff_folder)
 
-        pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "_cff.py"
+        # don't submit more than 78 chunks at once (close to 20k jobs which is the limit):
+        chunks_per_submission_file = list(dochunks(chunks, 78))
+        for ichunk, filechunks in enumerate(chunks_per_submission_file):
 
-        with open(pyfilename, "w+") as fout:
-            header = """import FWCore.ParameterSet.Config as cms
+            if len(chunks_per_submission_file) == 1:
+                pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "_cff.py"
+            else:
+                pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "%s_cff.py" % ichunk
+
+            with open(pyfilename, "w+") as fout:
+                header = """import FWCore.ParameterSet.Config as cms
 
 maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 readFiles = cms.untracked.vstring()
 secFiles = cms.untracked.vstring()
 source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
 """
-   
-            fout.write(header)
-   
-            for chunk in chunks:
-                fout.write("readFiles.extend( [\n")
-                for ifile in chunk:
-                    if ifile != "":
-                        fout.write("'%s',\n" % ifile)
-                fout.write("] )\n")
-                
-        print pyfilename, "written!"
+       
+                fout.write(header)
+       
+                for chunk in filechunks:
+                    fout.write("readFiles.extend( [\n")
+                    for ifile in chunk:
+                        if ifile != "":
+                            fout.write("'%s',\n" % ifile)
+                    fout.write("] )\n")
+                    
+            print pyfilename, "written!"
         print "++++++++++++++++++++++++++++++++++++++++++++++++"
         
