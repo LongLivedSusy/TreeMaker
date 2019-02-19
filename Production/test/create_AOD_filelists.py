@@ -3,8 +3,22 @@ import os
 import glob
 import commands
 
-for datastream in ["MET", "SingleElectron", "SingleMuon", "JetHT"]:
-    input_files = glob.glob("../python/Run2018*/%s_cff.py" % datastream)
+# create AOD file lists from exisiting miniAOD file lists. Configuration:
+
+check_dataset_availablity = False
+datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
+campaign = "Run2018*"
+
+# Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
+#
+# (1) For Run2018A-17Sep2018-v1.SingleMuon, cannot find files => correct parent is /SingleMuon/Run2018A-17Sep2018-v2/AOD ("v2" instead of "v1")
+#       --> solved, marked below
+# (2) For Run2018B-17Sep2018-v1.MET, DAS cannot find the AOD re-reco files (only prompt reco). Use prompt reco here
+#       --> solved, marked below
+
+for datastream in datastreams:
+
+    input_files = glob.glob("../python/%s/%s_cff.py" % (campaign, datastream))
 
     for ifile in sorted(input_files):
 
@@ -26,14 +40,6 @@ for datastream in ["MET", "SingleElectron", "SingleMuon", "JetHT"]:
         status, parent_dataset = commands.getstatusoutput('dasgoclient -query="parent dataset=%s"' % dataset)
         status, child_datasets = commands.getstatusoutput('dasgoclient -query="child dataset=%s"' % parent_dataset)
 
-        def get_aod_dataset(child_datasets, production):
-            output = []
-            for item in child_datasets.split("\n"):
-                if "/AOD" in item and production in item:                  
-                    if not "pilot" in item:
-                        output.append(item)
-            return output
-
         # promptreco_rereco_identifier is something like 17Sep2018, PromptReco etc:
         if "Run201" in cff_folder:
             promptreco_rereco_identifier = cff_folder.split("-")[1] + "-" + cff_folder.split("-")[2]
@@ -44,29 +50,46 @@ for datastream in ["MET", "SingleElectron", "SingleMuon", "JetHT"]:
 
         print "promptreco_rereco_identifier", promptreco_rereco_identifier
 
+        def get_aod_dataset(child_datasets, production):
+            output = []
+            for item in child_datasets.split("\n"):
+                if "/AOD" in item and production in item:                  
+                    if not "pilot" in item:
+                        output.append(item)
+            return output
+
         complete_output = get_aod_dataset(child_datasets, promptreco_rereco_identifier)
-        complete_output = list(set(complete_output))
 
-        print "complete_output", complete_output
+        # solve issue (1):
+        if len(complete_output) == 0:
+            complete_output = get_aod_dataset(child_datasets, promptreco_rereco_identifier.replace("v1", "v2"))
+        # end of issue
 
-        # seems to be a problem with the automatic DAS query for this one...:
+        # solve issue (2):
         if len(complete_output) == 0 and "Run2018B" in aod_file_name and "MET" in aod_file_name:
             complete_output = ["/MET/Run2018B-PromptReco-v1/AOD", "/MET/Run2018B-PromptReco-v2/AOD"]
-        
-        # check site availability:
-        for item in complete_output:
-            print item
-            sample_available = False 
-            status, sites = commands.getstatusoutput('dasgoclient -query="site dataset=%s"' % item)
-            for line in sites.split("\n"):
-                if "MSS" not in line and "Buffer" not in line:
-                    print "\t", line
-                    sample_available = True
-        
-            if not sample_available:
-                print "### warning, sample not readily available on any site: %s" % item
+            cff_folder = "../python/Run2018B-PromptReco-v1v2"
+        # end of issue
+
+        # get only unique entries in list:
+        complete_output = list(set(complete_output))
+        print "complete_output", complete_output
+
+        # optional: check site availability, give warning if not available:
+        if check_dataset_availablity:
+            for item in complete_output:
+                print item
+                sample_available = False 
+                status, sites = commands.getstatusoutput('dasgoclient -query="site dataset=%s"' % item)
+                for line in sites.split("\n"):
+                    if "MSS" not in line and "Buffer" not in line:
+                        print "\t", line
+                        sample_available = True
+            
+                if not sample_available:
+                    print "### warning, sample not readily available on any site: %s" % item
                 
-        # create python configuration if sample is available:
+        # create python configuration:
         all_filenames = ""
         for item in complete_output:
             status, filenames = commands.getstatusoutput('dasgoclient -query="file dataset=%s"' % item)
@@ -83,7 +106,11 @@ for datastream in ["MET", "SingleElectron", "SingleMuon", "JetHT"]:
         
         chunks = list(chunks(all_filenames.split("\n"), 254))
 
-        pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "AOD_cff.py"
+        cff_folder = cff_folder + "-AOD"
+        os.system("mkdir -p %s" % cff_folder)
+        os.system("touch %s/__init__.py" % cff_folder)
+
+        pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "_cff.py"
 
         with open(pyfilename, "w+") as fout:
             header = """import FWCore.ParameterSet.Config as cms
