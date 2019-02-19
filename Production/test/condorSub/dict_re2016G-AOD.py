@@ -1,11 +1,11 @@
 flist = {
     "scenario": "2016MiniAODv3AOD",
     "samples": [
-        #['Run2016G-17Jul2018-v1-AOD.HTMHT'],
-        ['Run2016G-17Jul2018-v1-AOD.JetHT'],
-        ['Run2016G-17Jul2018-v1-AOD.MET'],
-        ['Run2016G-17Jul2018-v1-AOD.SingleElectron'],
-        ['Run2016G-17Jul2018-v1-AOD.SingleMuon'],
-        #['Run2016G-17Jul2018-v1-AOD.SinglePhoton'],
+        #['Run2016G-17Jul2018-v1.HTMHTAOD'],
+        ['Run2016G-17Jul2018-v1.JetHTAOD'],
+        ['Run2016G-17Jul2018-v1.METAOD'],
+        ['Run2016G-17Jul2018-v1.SingleElectronAOD'],
+        ['Run2016G-17Jul2018-v1.SingleMuonAOD'],
+        #['Run2016G-17Jul2018-v1.SinglePhotonAOD'],
     ]
 }

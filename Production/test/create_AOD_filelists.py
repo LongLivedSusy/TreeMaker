@@ -119,18 +119,18 @@ for datastream in datastreams:
         
         chunks = list(dochunks(all_filenames.split("\n"), 254))
 
-        cff_folder = cff_folder + "-AOD"
+        #cff_folder = cff_folder + "-AOD"
         os.system("mkdir -p %s" % cff_folder)
-        os.system("echo placeholder >> %s/__init__.py" % cff_folder)
+        #os.system("echo placeholder >> %s/__init__.py" % cff_folder)
 
         # don't submit more than 78 chunks at once (close to 20k jobs which is the limit):
         chunks_per_submission_file = list(dochunks(chunks, 78))
         for ichunk, filechunks in enumerate(chunks_per_submission_file):
 
             if len(chunks_per_submission_file) == 1:
-                pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "_cff.py"
+                pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "AOD_cff.py"
             else:
-                pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "%s_cff.py" % ichunk
+                pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "AOD%s_cff.py" % ichunk
 
             with open(pyfilename, "w+") as fout:
                 header = """import FWCore.ParameterSet.Config as cms
