@@ -23,10 +23,12 @@ else:
     is_data = False
 
 conditions = {
+                'RunIISummer16': ['CMSSW_8_0_21', '80X_mcRun2_asymptotic_2016_TrancheIV_v6', 'Run2_2016'],
                 'RunIIFall17': ['CMSSW_9_4_6_patch1', '94X_mc2017_realistic_v11', 'Run2_2017'],
-                'Run2018A*17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018'],
-                'Run2018B*17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018'],
-                'Run2018C*17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018'],
+                'Run2016*07Aug17': ['CMSSW_8_0_29', '80X_dataRun2_2016LegacyRepro_v4', 'Run2_2016'],
+                'Run2017*17Nov2017': ['CMSSW_9_4_0', '94X_dataRun2_ReReco_EOY17_v1', 'Run2_2017'],
+                'Run2018*17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018'],
+                'Run2018B*PromptReco': ['CMSSW_10_1_5', '101X_dataRun2_Prompt_v10', 'Run2_2018'],
                 'Run2018D*PromptReco': ['CMSSW_10_2_0', '102X_dataRun2_Prompt_v1', 'Run2_2018'],
              }
 

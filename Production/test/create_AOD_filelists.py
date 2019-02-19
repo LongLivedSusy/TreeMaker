@@ -7,7 +7,9 @@ import commands
 
 check_dataset_availablity = False
 datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
-campaign = "Run2018*"
+#campaign = "Run2018*"
+#campaign = "Run2016*"
+campaign = "Run2017*"
 
 # Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
 #
@@ -22,7 +24,10 @@ for datastream in datastreams:
 
     for ifile in sorted(input_files):
 
-        print ifile
+        # ignore already prepared folders:
+        if "-AOD" in ifile: continue
+
+        print "ifile", ifile
 
         cff_filename = ifile.split("/")[-1]
         cff_folder = "/".join( ifile.split("/")[:-1] )
@@ -48,7 +53,9 @@ for datastream in datastreams:
         else:
             promptreco_rereco_identifier = cff_folder
 
-        print "promptreco_rereco_identifier", promptreco_rereco_identifier
+        print "parents:", parent_dataset.replace("\n", ",")
+        print "childs:", child_datasets.replace("\n", ",")
+        print "select by:", promptreco_rereco_identifier
 
         def get_aod_dataset(child_datasets, production):
             output = []
@@ -58,7 +65,11 @@ for datastream in datastreams:
                         output.append(item)
             return output
 
-        complete_output = get_aod_dataset(child_datasets, promptreco_rereco_identifier)
+        # sometimes, the AOD is the parent of the miniAOD file (as in 2016):
+        if "/AOD" in parent_dataset:
+            complete_output = [parent_dataset]
+        else:
+            complete_output = get_aod_dataset(child_datasets, promptreco_rereco_identifier)
 
         # solve issue (1):
         if len(complete_output) == 0:
@@ -73,7 +84,7 @@ for datastream in datastreams:
 
         # get only unique entries in list:
         complete_output = list(set(complete_output))
-        print "complete_output", complete_output
+        print "selected AOD dataset:", complete_output
 
         # optional: check site availability, give warning if not available:
         if check_dataset_availablity:
