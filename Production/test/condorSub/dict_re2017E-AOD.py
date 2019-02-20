@@ -1,5 +1,5 @@
 flist = {
-    "scenario": "2017ReReco31Mar",
+    "scenario": "2017ReReco31MarAOD",
     "samples": [
         #['Run2017E-31Mar2018-v1.HTMHTAOD'],
         ['Run2017E-31Mar2018-v1.JetHTAOD'],

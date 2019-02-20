@@ -22,19 +22,32 @@ if '/data/' in options.infile:
 else:
     is_data = False
 
+miniaod_args_2016 = "REMINIAOD -s PAT,DQM:@miniAODDQM --runUnscheduled --data --scenario pp --eventcontent MINIAOD,DQM --datatier MINIAOD,DQMIO --customise_unsch PhysicsTools/PatAlgos/slimming/customizeMiniAOD_HcalFixLegacy2016.customizeAll --processName=RECO"
+
 conditions = {
-                'RunIISummer16': ['CMSSW_8_0_21', '80X_mcRun2_asymptotic_2016_TrancheIV_v6', 'Run2_2016'],
-                'RunIIFall17': ['CMSSW_9_4_6_patch1', '94X_mc2017_realistic_v11', 'Run2_2017'],
-                'Run2016*07Aug17': ['CMSSW_8_0_29', '80X_dataRun2_2016LegacyRepro_v4', 'Run2_2016'],
-                'Run2017*17Nov2017': ['CMSSW_9_4_0', '94X_dataRun2_ReReco_EOY17_v1', 'Run2_2017'],
-                'Run2018*17Sep2018': ['CMSSW_10_2_4_patch1', '102X_dataRun2_Sep2018Rereco_v1', 'Run2_2018'],
-                'Run2018B*PromptReco': ['CMSSW_10_1_5', '101X_dataRun2_Prompt_v10', 'Run2_2018'],
-                'Run2018D*PromptReco': ['CMSSW_10_2_0', '102X_dataRun2_Prompt_v1', 'Run2_2018'],
+                'RunIISummer16': {'version': 'CMSSW_8_0_21', 'tag': '80X_mcRun2_asymptotic_2016_TrancheIV_v6', 'era': 'Run2_2016'},
+                'RunIIFall17': {'version': 'CMSSW_9_4_6_patch1', 'tag': '94X_mc2017_realistic_v11', 'era': 'Run2_2017'},
+
+                'Run2016B*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
+                'Run2016C*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
+                'Run2016D*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
+                'Run2016E*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
+                'Run2016F*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
+                'Run2016G*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
+                'Run2016H*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
+
+                #'Run2017*17Nov2017': {'version': 'CMSSW_9_4_0', 'tag': '94X_dataRun2_ReReco_EOY17_v1', 'era': 'Run2_2017'},
+                'Run2017*17Nov2017': {'version': 'CMSSW_9_4_5_cand1', 'tag': '94X_dataRun2_ReReco_EOY17_v6', 'era': 'Run2_2017'},
+
+                'Run2018*17Sep2018': {'version': 'CMSSW_10_2_4_patch1', 'tag': '102X_dataRun2_Sep2018Rereco_v1', 'era': 'Run2_2018'},
+                'Run2018B*PromptReco': {'version': 'CMSSW_10_1_5', 'tag': '101X_dataRun2_Prompt_v10', 'era': 'Run2_2018'},
+                'Run2018D*PromptReco': {'version': 'CMSSW_10_2_0', 'tag': '102X_dataRun2_Prompt_v1', 'era': 'Run2_2018'},
              }
 
 cmssw_version = ""
 global_tag = ""
 era = ""
+custom_args = ""
 for condition in conditions:
     count = 0
     for subcondition in condition.split("*"):
@@ -42,16 +55,24 @@ for condition in conditions:
             count += 1
     if count == len(condition.split("*")):
         # passed all conditions
-        cmssw_version = conditions[condition][0]
-        global_tag = conditions[condition][1]
-        era = conditions[condition][2]
+        cmssw_version = conditions[condition]["version"]
+        global_tag = conditions[condition]["tag"]
+        era = conditions[condition]["era"]
+        if "custom_args" in conditions[condition]:
+            custom_args = conditions[condition]["custom_args"]
 
-print cmssw_version, global_tag, era
+print "cmssw_version:", cmssw_version
+print "global_tag:", global_tag
+print "era:", era
+print "custom_args:", custom_args
+
 if cmssw_version == "":
     print "Cannot determine which conditions to use for file", options.infile
     exit(50)
 
-if is_data:
+if custom_args != "":
+    command = 'cmsDriver.py %s --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (custom_args, global_tag, era, options.infile, options.outfile, options.nev)
+elif is_data:
     command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
 else:
     command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
@@ -62,7 +83,9 @@ export SCRAM_ARCH=slc6_amd64_gcc530
 cmsrel CMSBASE
 cd CMSBASE/src
 eval `scramv1 runtime -sh`
-echo $CMSSW_BASE
+echo "running in path: $(pwd)"
+echo "running in CMSSW_VERSION: $CMSSW_VERSION"
+echo "running in CMSSW_BASE: $CMSSW_BASE"
 cd -
 COMMAND
 '''
@@ -70,6 +93,8 @@ COMMAND
 fjob = open('createMiniAOD.sh','w')
 fjob.write(jobscript.replace('CMSBASE',cmssw_version).replace('COMMAND',command))
 fjob.close()
+
+print "Now running cmsDriver command in %s environment:\n%s\n" % (cmssw_version, command)
 
 status, output = commands.getstatusoutput('sh createMiniAOD.sh')
 

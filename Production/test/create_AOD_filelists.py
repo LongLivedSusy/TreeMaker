@@ -8,9 +8,6 @@ import commands
 check_dataset_availablity = False
 datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
 
-#campaign = "Run2018*"
-#campaign = "Run2016*"
-#campaign = "Run2017*"
 campaign = "Run201*"
 
 # Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
@@ -123,8 +120,8 @@ for datastream in datastreams:
         os.system("mkdir -p %s" % cff_folder)
         #os.system("echo placeholder >> %s/__init__.py" % cff_folder)
 
-        # don't submit more than 78 chunks at once (close to 20k jobs which is the limit):
-        chunks_per_submission_file = list(dochunks(chunks, 78))
+        # don't submit more than 20 chunks at once (close to 5,8k jobs which is well below the limit of 20k):
+        chunks_per_submission_file = list(dochunks(chunks, 20))
         for ichunk, filechunks in enumerate(chunks_per_submission_file):
 
             if len(chunks_per_submission_file) == 1:

@@ -168,6 +168,17 @@ class Scenario:
                 era="Run2_2017",
                 localera="TM2017",
             )
+        elif sname == "2017ReReco31MarAOD":
+            self.set_vars(
+                globaltag="94X_dataRun2_v6",
+                tagname="PAT",
+                hlttagname="HLT",
+                jsonfile="data/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt",
+                jecfile="data/jec/Fall17_17Nov2017_V32_94X_DATA",
+                residual=True,
+                era="Run2_2017",
+                localera="TM2017",
+            )
         elif sname == "Autumn18":
             self.set_vars(
                 globaltag="102X_upgrade2018_realistic_v16",
