@@ -4,8 +4,10 @@ flist = {
         #['Run2016D-17Jul2018-v1.HTMHTAOD'],
         ['Run2016D-17Jul2018-v1.JetHTAOD'],
         ['Run2016D-17Jul2018-v1.METAOD'],
-        ['Run2016D-17Jul2018-v1.SingleElectronAOD'],
-        ['Run2016D-17Jul2018-v1.SingleMuonAOD'],
+        ['Run2016D-17Jul2018-v1.SingleElectronAOD0'],
+        ['Run2016D-17Jul2018-v1.SingleElectronAOD1'],
+        ['Run2016D-17Jul2018-v1.SingleMuonAOD0'],
+        ['Run2016D-17Jul2018-v1.SingleMuonAOD1'],
         #['Run2016D-17Jul2018-v1.SinglePhotonAOD'],
     ]
 }
