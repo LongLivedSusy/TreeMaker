@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 CMSSWVER=CMSSW_9_4_11
-FORK=TreeMaker
-BRANCH=Run2_2017
+FORK=LongLivedSusy
+BRANCH=Run2_2017_autominiaod
 ACCESS=ssh
 CORES=8
 NAME=""
