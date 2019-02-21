@@ -7,7 +7,7 @@ flist = {
         ['Run2018D-PromptReco-v2.JetHTAOD1'],
         ['Run2018D-PromptReco-v2.METAOD'],
         ['Run2018D-PromptReco-v2.SingleMuonAOD0'],
-        ['Run2018D-PromptReco-v2.SingleMuonAOD1'],
-        ['Run2018D-PromptReco-v2.SingleMuonAOD2'],
+        #['Run2018D-PromptReco-v2.SingleMuonAOD1'],
+        #['Run2018D-PromptReco-v2.SingleMuonAOD2'],
     ]
 }

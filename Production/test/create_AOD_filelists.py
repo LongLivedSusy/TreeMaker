@@ -23,8 +23,9 @@ for datastream in datastreams:
 
     for ifile in sorted(input_files):
 
-        # ignore already prepared folders:
+        # ignore already prepared folders, special HEM rerecos:
         if "-AOD" in ifile: continue
+        if "HEM" in ifile: continue
 
         print "ifile", ifile
 
@@ -120,8 +121,8 @@ for datastream in datastreams:
         os.system("mkdir -p %s" % cff_folder)
         #os.system("echo placeholder >> %s/__init__.py" % cff_folder)
 
-        # don't submit more than 20 chunks at once (close to 5,8k jobs which is well below the limit of 20k):
-        chunks_per_submission_file = list(dochunks(chunks, 20))
+        # don't submit more than 78 chunks at once (close to the limit of 20k jobs for CMS Connect):
+        chunks_per_submission_file = list(dochunks(chunks, 78))
         for ichunk, filechunks in enumerate(chunks_per_submission_file):
 
             if len(chunks_per_submission_file) == 1:
