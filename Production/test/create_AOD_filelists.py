@@ -5,10 +5,16 @@ import commands
 
 # create AOD file lists from exisiting miniAOD file lists. Configuration:
 
-check_dataset_availablity = False
-datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
+check_dataset_availablity = True
 
-campaign = "Run201*"
+#campaign = "Run201*"
+#datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
+
+campaign = "Summer16"
+datastreams = []
+
+#campaign = "RunIIFall17MiniAODv2"
+#datastreams = []
 
 # Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
 #
@@ -16,6 +22,13 @@ campaign = "Run201*"
 #       --> solved, marked below
 # (2) For Run2018B-17Sep2018-v1.MET, DAS cannot find the AOD re-reco files (only prompt reco). Use prompt reco here
 #       --> solved, marked below
+
+if len(datastreams) == 0:
+
+    streams = glob.glob("../python/%s/*_cff.py" % campaign)
+    for stream in streams:
+        datastreams.append( stream.split("/")[-1].replace("_cff.py", "") )
+    print "using all datastreams:", str(datastreams)
 
 for datastream in datastreams:
 
@@ -88,9 +101,9 @@ for datastream in datastreams:
 
         # optional: check site availability, give warning if not available:
         if check_dataset_availablity:
+            sample_available = False 
             for item in complete_output:
                 print item
-                sample_available = False 
                 status, sites = commands.getstatusoutput('dasgoclient -query="site dataset=%s"' % item)
                 for line in sites.split("\n"):
                     if "MSS" not in line and "Buffer" not in line:
@@ -99,6 +112,7 @@ for datastream in datastreams:
             
                 if not sample_available:
                     print "### warning, sample not readily available on any site: %s" % item
+                    os.system('echo "%s" >> samples_not_available' % item)
                 
         # create python configuration:
         all_filenames = ""
@@ -125,10 +139,15 @@ for datastream in datastreams:
         chunks_per_submission_file = list(dochunks(chunks, 78))
         for ichunk, filechunks in enumerate(chunks_per_submission_file):
 
-            if len(chunks_per_submission_file) == 1:
-                pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "AOD_cff.py"
+            if "Run201" in cff_folder:
+                identifier = cff_filename.split("_")[0]
             else:
-                pyfilename = cff_folder + "/" + cff_filename.split("_")[0] + "AOD%s_cff.py" % ichunk
+                identifier = cff_filename.replace("_cff.py", "")
+
+            if len(chunks_per_submission_file) == 1:
+                pyfilename = cff_folder + "/" + identifier + "AOD_cff.py"
+            else:
+                pyfilename = cff_folder + "/" + identifier + "AOD%s_cff.py" % ichunk
 
             with open(pyfilename, "w+") as fout:
                 header = """import FWCore.ParameterSet.Config as cms
