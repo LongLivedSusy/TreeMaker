@@ -56,4 +56,4 @@ cmsRun runMakeTreeFromMiniAOD_cfg.py scenario=Summer16 inputFilesConfig=Summer16
 ./createMiniAOD.py --infile="$(cat info_aodfilename)" --outfile=miniaod.root --nev="$(cat info_nev)"
 cmsRun runMakeTreeFromMiniAOD_cfg.py scenario=Summer16 inputFilesConfig=Summer16.DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_ext1AOD nstart=0 nfiles=1 outfile=test numevents=10
 if [[ $? -ne 0 ]]; then echo "Failed test"; else echo "Success"; fi
-# result: ?
+# result: OK, Feb 21 commit 31db42abaf2c8bb82fa5c9825525f60ce06cb413
