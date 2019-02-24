@@ -5,13 +5,13 @@ import commands
 
 # create AOD file lists from exisiting miniAOD file lists. Configuration:
 
-check_dataset_availablity = True
+check_dataset_availablity = False
 
-#campaign = "Run201*"
-#datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
+campaign = "Run2018D*"
+datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
 
-campaign = "Summer16"
-datastreams = []
+#campaign = "Summer16"
+#datastreams = []
 
 #campaign = "RunIIFall17MiniAODv2"
 #datastreams = []
@@ -54,8 +54,11 @@ for datastream in datastreams:
                 aod_file_name = line.split("'")[1]
                 break
 
+        print "Querying:", 'dasgoclient --query="dataset file=%s"' % aod_file_name
         status, dataset = commands.getstatusoutput('dasgoclient -query="dataset file=%s"' % aod_file_name)
+        print "Querying:", 'dasgoclient --query="parent dataset=%s"' % dataset
         status, parent_dataset = commands.getstatusoutput('dasgoclient -query="parent dataset=%s"' % dataset)
+        print "Querying:", 'dasgoclient --query="child dataset=%s"' % parent_dataset
         status, child_datasets = commands.getstatusoutput('dasgoclient -query="child dataset=%s"' % parent_dataset)
 
         # promptreco_rereco_identifier is something like 17Sep2018, PromptReco etc:
@@ -136,7 +139,7 @@ for datastream in datastreams:
         #os.system("echo placeholder >> %s/__init__.py" % cff_folder)
 
         # don't submit more than 78 chunks at once (close to the limit of 20k jobs for CMS Connect):
-        chunks_per_submission_file = list(dochunks(chunks, 78))
+        chunks_per_submission_file = list(dochunks(chunks, 20))
         for ichunk, filechunks in enumerate(chunks_per_submission_file):
 
             if "Run201" in cff_folder:

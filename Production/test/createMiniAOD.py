@@ -26,8 +26,9 @@ miniaod_args_2016 = "REMINIAOD -s PAT,DQM:@miniAODDQM --runUnscheduled --data --
 
 conditions = {
                 'RunIISummer16': {'version': 'CMSSW_8_0_21', 'tag': '80X_mcRun2_asymptotic_2016_TrancheIV_v6', 'era': 'Run2_2016'},
-                'RunIIFall17': {'version': 'CMSSW_9_4_6_patch1', 'tag': '94X_mc2017_realistic_v11', 'era': 'Run2_2017'},
-
+                #'RunIIFall17': {'version': 'CMSSW_9_4_6_patch1', 'tag': '94X_mc2017_realistic_v11', 'era': 'Run2_2017'},
+                'RunIIFall17': {'version': 'CMSSW_9_4_6_patch1', 'tag': '94X_mc2017_realistic_v14', 'era': 'Run2_2017'},
+                
                 'Run2016B*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
                 'Run2016C*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
                 'Run2016D*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
@@ -36,7 +37,6 @@ conditions = {
                 'Run2016G*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
                 'Run2016H*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016,run2_miniAOD_80XLegacy', 'custom_args': miniaod_args_2016},
 
-                #'Run2017*17Nov2017': {'version': 'CMSSW_9_4_0', 'tag': '94X_dataRun2_ReReco_EOY17_v1', 'era': 'Run2_2017'},
                 'Run2017*17Nov2017': {'version': 'CMSSW_9_4_5_cand1', 'tag': '94X_dataRun2_ReReco_EOY17_v6', 'era': 'Run2_2017'},
 
                 'Run2018*17Sep2018': {'version': 'CMSSW_10_2_4_patch1', 'tag': '102X_dataRun2_Sep2018Rereco_v1', 'era': 'Run2_2018'},
