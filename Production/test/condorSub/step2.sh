@@ -57,9 +57,10 @@ echo "cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1"
 cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1
 
 echo "check if output file already exists:"
+echo "xrdfs root://dcache-cms-xrootd.desy.de/ stat ${OUTDIR//srm:\/\/dcache-se-cms.desy.de}/$(cat info_outfilename).root"
 xrdfs root://dcache-cms-xrootd.desy.de/ stat ${OUTDIR//srm:\/\/dcache-se-cms.desy.de}/$(cat info_outfilename).root
-if [[ $CMSEXIT -eq 0 ]]; then
-   echo "outfile file exists on dcache, exiting"
+if [[ $? -eq 0 ]]; then
+   echo "outfile file already exists on dcache, exiting"
    exit 0
 fi
 
