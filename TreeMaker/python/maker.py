@@ -101,6 +101,7 @@ class maker:
                 # check if miniAOD file is present:
                 if not os.path.exists("miniaod.root"):
                     os.system("echo %s > info_aodfilename" % rf)
+                    os.system("echo %s > info_outfilename" % self.outfile)
                     os.system("echo %s > info_nev" % self.numevents)
                     quit(78)
                 else:

@@ -56,6 +56,13 @@ fi
 echo "cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1"
 cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1
 
+echo "check if output file already exists:"
+xrdfs root://dcache-cms-xrootd.desy.de/ stat ${OUTDIR//srm:\/\/dcache-se-cms.desy.de}/$(cat info_outfilename).root
+if [[ $CMSEXIT -eq 0 ]]; then
+   echo "outfile file exists on dcache, exiting"
+   exit 0
+fi
+
 echo "first need to create miniAOD file"
 oldbase=$CMSSW_BASE
 cp "$CMSSW_VERSION/src/TreeMaker/Production/test/createMiniAOD.py" .
