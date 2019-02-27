@@ -74,9 +74,13 @@ with open("TMPFILE", "r") as fin:
             runs[run] = sorted(list(set(runs[run])))
 
 for run in runs:
-    runs[run] = [min(runs[run]), max(runs[run])]
+    #runs[run] = [min(runs[run]), max(runs[run])]
+    output = []
+    for i in range(len(runs[run])):
+        output.append([runs[run][i], runs[run][i]])
+    runs[run] = output
 
-json_content = json.dumps(runs).replace("[", "[[").replace("]", "]]")
+json_content = json.dumps(runs)
 print "json_content", json_content
 
 
