@@ -99,14 +99,26 @@ class maker:
             if '/store/' in rf:
                 # grid production: AOD as primary file
                 # check if miniAOD file is present:
-                if not os.path.exists("miniaod.root"):
+                if not os.path.exists("info_miniaods"):
+                #if not os.path.exists("miniaod.root"):
                     os.system("echo %s > info_aodfilename" % rf)
                     os.system("echo %s > info_outfilename" % self.outfile)
+                    os.system("echo %s > info_jsonfilename" % self.jsonfile)
                     os.system("echo %s > info_nev" % self.numevents)
                     quit(78)
                 else:
-                    self.readFiles_sidecar += ["file:miniaod.root"]
-                    print "Found miniAOD file"
+                    #self.readFiles_sidecar += ["file:miniaod.root"]
+                    #print "Found miniAOD file"
+                    
+                    miniaod_list = ""
+                    with open("info_miniaods", "r") as fin:
+                        miniaod_list = fin.read().split(",")
+                    for miniaod in miniaod_list:
+                        self.readFiles_sidecar += ["root://cmsxrootd.fnal.gov/%s" % miniaod.replace("\n", "")]
+                    
+                    # corresponding json mask (union of golden JSON and AOD file)    
+                    self.jsonfile = "lumisecs_union.json"
+                        
                     switch_primary_secondary_files = True
             else: 
                 # private production: now miniAOD as primary file

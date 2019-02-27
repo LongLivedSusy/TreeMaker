@@ -52,7 +52,7 @@ if [[ -n "$THREADS" ]]; then
 	ARGS="$ARGS threads=${THREADS}"
 fi
 
-# run cmsRun the first time to get input file name...
+# run cmsRun the first time to get input file name and other information!
 echo "cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1"
 cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1
 
@@ -64,21 +64,10 @@ if [[ $? -eq 0 ]]; then
    exit 0
 fi
 
-echo "first need to create miniAOD file"
-oldbase=$CMSSW_BASE
-cp "$CMSSW_VERSION/src/TreeMaker/Production/test/createMiniAOD.py" .
-chmod +x createMiniAOD.py
-./createMiniAOD.py --infile="$(cat info_aodfilename)" --outfile=miniaod.root --nev="$(cat info_nev)"
-MINIAODEXIT=$?
-if [[ $MINIAODEXIT -ne 0 ]]; then
-  echo "exit code $MINIAODEXIT, error in miniAOD production!"
-  exit $MINIAODEXIT
-fi
-echo "running again cmsRun..."
-
-cd $oldbase/src
-eval `scramv1 runtime -sh`
-cd -
+# locate the corresponding miniAODs... come to papa
+cp "$CMSSW_VERSION/src/TreeMaker/Production/test/get_miniAOD.py" .
+chmod +x get_miniAOD.py
+./get_miniAOD.py --infile="$(cat info_aodfilename)" --outfile=miniaod.root --nev="$(cat info_nev)"
 
 # run cmsRun the second time to run with miniaod.root in sidecar
 cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1
