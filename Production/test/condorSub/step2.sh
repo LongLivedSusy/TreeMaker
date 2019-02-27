@@ -52,7 +52,7 @@ if [[ -n "$THREADS" ]]; then
 	ARGS="$ARGS threads=${THREADS}"
 fi
 
-# run cmsRun the first time to get input file name and other information!
+# run cmsRun the first time to get input & output file names and other information such as json file, number of events
 echo "cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1"
 cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1
 
@@ -101,16 +101,28 @@ if [[ $? -ne 0 ]]; then
     exit 519
 fi
 
-# copy output to eos
+# copy output: prepare gfal tools
 echo "gfal-copy output for condor"
 if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
     . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
 fi
 for FILE in *.root
 do
-  echo gfal-copy -n 1 "file:////$PWD/${FILE}" "${OUTDIR}${FILE}"
-  gfal-copy -n 1 "file:////$PWD/${FILE}" "${OUTDIR}${FILE}"
-  XRDEXIT=$?
+
+  # try up to 20 times with 100s sleep in between to copy the file to dcache
+
+  XRDEXIT=0
+  n=0
+  until [ $n -ge 20 ]
+  do
+    echo gfal-copy -n 1 "file:////$PWD/${FILE}" "${OUTDIR}${FILE}"
+    gfal-copy -n 1 "file:////$PWD/${FILE}" "${OUTDIR}${FILE}" && break
+    XRDEXIT=$?
+    n=$[$n+1]
+    echo "gfal-copy failed, retrying in 100s"
+    sleep 100
+  done
+ 
   if [[ $XRDEXIT -ne 0 ]]; then
     rm *.root
     echo "exit code $XRDEXIT, failure in xrdcp"

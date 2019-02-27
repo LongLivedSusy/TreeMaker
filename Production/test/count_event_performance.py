@@ -8,7 +8,7 @@ gROOT.SetBatch(True)
 gStyle.SetOptStat(0)
 TH1D.SetDefaultSumw2()
 
-userlist = ["vkutzner", "sbein", "jarieger", "tokramer"]
+userlist = ["vkutzner", "sbein", "jarieger", "tokramer", "ssekmen"]
 
 def get_entries_last_nth_day(n, folder):
 
@@ -87,12 +87,13 @@ def plot(data):
         histos[label].SetLineWidth(2)
         histos[label].SetLineColor(i+1)
         histos[label].GetYaxis().SetRangeUser(0.8*minimum, 1.2*maximum)
-        histos[label].SetTitle("NtupleHub contents, Feb 26;last n days;gigabytes")
+        histos[label].SetTitle("production rate, %s;last n days;gigabytes" % dt.datetime.now().strftime("%b %d %H:%M"))
         
         legend.AddEntry(histos[label], label)
             
     legend.Draw()
     canvas.SaveAs("evtperf.pdf")
+    canvas.SaveAs("evtperf.png")
 
 
 def get_dataset_filecount_done(dataset, n):
@@ -208,7 +209,7 @@ def collect_datasets(days):
                 histos[label].SetLineColor(color)
                 histos[label].SetLineStyle(2)
 
-            histos[label].SetTitle("ntuple count;last n days;")
+            histos[label].SetTitle("ntuple count, %s;last n days;" % dt.datetime.now().strftime("%b %d %H:%M"))
 
             if i%2 == 0:
                 legend.AddEntry(histos[label], label)
@@ -218,7 +219,11 @@ def collect_datasets(days):
                 
         legend.Draw()
         canvas.SaveAs("evtperf2-%s.pdf" % period)
+        canvas.SaveAs("evtperf2-%s.png" % period)
 
+# plot last 10 days:
 plot(collect_data(10))
-
 collect_datasets(10)
+
+# copy to public web folder:
+os.system("cp evtperf*png ~/www/ntuple-production/")

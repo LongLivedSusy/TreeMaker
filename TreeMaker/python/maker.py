@@ -97,19 +97,14 @@ class maker:
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
             if '/store/' in rf:
-                # grid production: AOD as primary file
                 # check if miniAOD file is present:
                 if not os.path.exists("info_miniaods"):
-                #if not os.path.exists("miniaod.root"):
                     os.system("echo %s > info_aodfilename" % rf)
                     os.system("echo %s > info_outfilename" % self.outfile)
                     os.system("echo %s > info_jsonfilename" % self.jsonfile)
                     os.system("echo %s > info_nev" % self.numevents)
                     quit(78)
-                else:
-                    #self.readFiles_sidecar += ["file:miniaod.root"]
-                    #print "Found miniAOD file"
-                    
+                else:                   
                     miniaod_list = ""
                     with open("info_miniaods", "r") as fin:
                         miniaod_list = fin.read().split(",")

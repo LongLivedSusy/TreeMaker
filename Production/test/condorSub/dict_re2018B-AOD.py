@@ -1,5 +1,5 @@
 flist = {'scenario':
-'2018ReReco17SepAOD',
+'2018ReReco17Sep',
 'samples':
 [
 ['Run2018B-17Sep2018-v1.JetHTAOD'],

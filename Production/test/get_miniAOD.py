@@ -9,7 +9,7 @@ parser.add_option('--outfile', dest='outfile')
 parser.add_option('--nev', dest='nev')
 (options, args) = parser.parse_args()
 
-print 'Truncating existing miniAOD file(s) to match AOD file:', options.infile
+print 'locating miniAOD file(s) which match the AOD file:', options.infile
 
 if not 'root://' in options.infile:
     options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
