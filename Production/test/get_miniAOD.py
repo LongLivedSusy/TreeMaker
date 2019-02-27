@@ -89,4 +89,12 @@ with open("lumisecs.json", "w") as fo:
     fo.write(json_content)
 os.system("compareJSON.py --and $(cat info_jsonfilename) lumisecs.json > lumisecs_union.json")
 
+
+#check for empty json union:
+with open("lumisecs_union.json", "r") as fin:
+    union = fin.read()
+    if union == "{}\n":
+        print "Empty union, ignoring"
+        exit(123)
+    
 print "Done"

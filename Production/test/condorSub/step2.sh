@@ -69,6 +69,12 @@ cp "$CMSSW_VERSION/src/TreeMaker/Production/test/get_miniAOD.py" .
 chmod +x get_miniAOD.py
 ./get_miniAOD.py --infile="$(cat info_aodfilename)" --outfile=miniaod.root --nev="$(cat info_nev)"
 
+if [[ $? -eq 123 ]]; then
+  echo "empty union json, ignoring lumisection"
+  exit 0
+fi
+
+
 # run cmsRun the second time to run with miniaod.root in sidecar
 cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1
 CMSEXIT=$?

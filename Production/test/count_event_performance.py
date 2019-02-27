@@ -1,3 +1,4 @@
+#!/bin/env python
 import os, sys, glob
 from ROOT import *
 import datetime as dt
