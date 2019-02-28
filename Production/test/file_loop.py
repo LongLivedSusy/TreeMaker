@@ -40,8 +40,7 @@ print "numstart", numstart
 
 for i_file, aod_file in enumerate(aod_files):
    
-    #FIXME:
-    if i_file>2: continue
+    print "\n\n============new file=============\n\n"
 
     file_number = (numstart * len(aod_files)) + i_file
     outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str(file_number) + "_RA2AnalysisTree"
@@ -68,8 +67,8 @@ for i_file, aod_file in enumerate(aod_files):
     status, output = runcmd(cmd)
 
     if status == 123:
-      print "empty union json, ignoring lumisection"
-      continue
+        print "empty union json, ignoring lumisection"
+        continue
       
     # run cmsRun the second time to run with miniaod.root in sidecar
     os.system("echo %s > info_outfilename" % outfile)
@@ -117,7 +116,7 @@ for i_file, aod_file in enumerate(aod_files):
     print "rm %s.root" % outfile
     os.system("rm %s.root" % outfile)
 
-    print "\n\n============next file=============\n\n"
+
 
 quit(job_return_status)
 
