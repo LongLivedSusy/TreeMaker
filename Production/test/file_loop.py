@@ -6,15 +6,27 @@ import collections
 import glob
 import time
 
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
+
 parser = OptionParser()
 parser.add_option('--outpath', dest='outpath')
 parser.add_option('--arguments', dest='arguments')
 (options, args) = parser.parse_args()
 
 def runcmd(cmd):
-    print cmd
+    print color.BOLD + color.PURPLE + cmd + color.END
     status, output = commands.getstatusoutput(cmd)
-    print output
+    print color.DARKCYAN + output + color.END
     return status, output
     
 job_return_status = 0
@@ -38,12 +50,10 @@ with open("info_outfilename", "r") as fin:
 numstart = int(options.arguments.split("nstart=")[-1].split()[0])
 print "numstart", numstart
 
-#FIXME
-aod_files = [aod_files[0], aod_files[1]]
-
 for i_file, aod_file in enumerate(aod_files):
-
-    outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str((i_file + 1) * numstart) + "_RA2AnalysisTree"
+   
+    file_number = (numstart * len(aod_files)) + i_file
+    outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str(file_number) + "_RA2AnalysisTree"
     
     print "Doing input file:", aod_file
     print "CMSSW arguments:", options.arguments
@@ -71,6 +81,7 @@ for i_file, aod_file in enumerate(aod_files):
       continue
       
     # run cmsRun the second time to run with miniaod.root in sidecar
+    os.system("echo %s > info_outfilename" % outfile)
     cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
     status, output = runcmd(cmd)
     
@@ -90,7 +101,7 @@ for i_file, aod_file in enumerate(aod_files):
     # copy output (retry 10 times if failed):
     for i in range(10):
         
-        cmd = 'gfal-copy -n 1 "file:////%s/%s.root" "%s/%s.root" ' % (os.getcwd(), outfile, options.outpath, outfile)
+        cmd = "gfal-copy -n 1 file://%s/%s.root %s/%s.root" % (os.getcwd(), outfile, options.outpath, outfile)
         status, output = runcmd(cmd)
         job_return_status = status
         if status == 0:
@@ -100,7 +111,9 @@ for i_file, aod_file in enumerate(aod_files):
         time.sleep(60)
 
     print "rm %s.root" % outfile
-    #os.system("rm %s.root" % outfile)
+    os.system("rm %s.root" % outfile)
+
+    print "\n\n============next file=============\n\n"
 
 quit(job_return_status)
 

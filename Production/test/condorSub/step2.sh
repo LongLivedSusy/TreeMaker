@@ -68,9 +68,9 @@ if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_
     . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
 fi
 
-cp "$CMSSW_VERSION/src/TreeMaker/Production/test/file_loop.py" .
+cp "$CMSSW_BASE/src/TreeMaker/Production/test/file_loop.py" .
 chmod +x file_loop.py
-python file_loop.py --outpath=$OUTDIR --arguments="$ARGS"
+./file_loop.py --outpath=$OUTDIR --arguments="$ARGS"
 CMSSWSTATUS=$?
 if [[ $CMSSWSTATUS -ne 0 ]]; then
     echo "error $CMSSWSTATUS"
