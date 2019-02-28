@@ -8,6 +8,7 @@ import time
 
 parser = OptionParser()
 parser.add_option('--outpath', dest='outpath')
+parser.add_option('--arguments', dest='arguments')
 (options, args) = parser.parse_args()
 
 def runcmd(cmd):
@@ -16,19 +17,43 @@ def runcmd(cmd):
     print output
     return status, output
     
-aod_files = []
-with open("info_aodfilename", "r") as fin:
-    aod_files = fin.read().split(",")
-
 job_return_status = 0
 
-for aod_file in aod_files:
+# cleanup
+os.system("rm info_*")
+
+# run cmsRun the first time to get infos
+cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
+status, output = runcmd(cmd)
+
+aod_files = []
+with open("info_aodfilenames", "r") as fin:
+    aod_files = fin.read().replace("\n", "").split(",")
+print "Will loop over files:", str(aod_files)
+
+outfile_general = ""
+with open("info_outfilename", "r") as fin:
+    outfile_general = fin.read().split("\n")[0]
+
+numstart = int(options.arguments.split("nstart=")[-1].split()[0])
+print "numstart", numstart
+
+#FIXME
+aod_files = [aod_files[0], aod_files[1]]
+
+for i_file, aod_file in enumerate(aod_files):
+
+    outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str((i_file + 1) * numstart) + "_RA2AnalysisTree"
     
-    # check if destination file already exists:
-    
+    print "Doing input file:", aod_file
+    print "CMSSW arguments:", options.arguments
+    print "Output file:", outfile
+    print "Output path:", options.outpath
+
+    os.system("echo %s > info_aods" % aod_file)
+
     print "check if output file already exists:"
-        
-    cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/$(cat info_outfilename).root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", "").replace("root://dcache-cms-xrootd.desy.de/", ""))
+    cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
     status, output = runcmd(cmd)
 
     if status == 0:
@@ -36,7 +61,7 @@ for aod_file in aod_files:
         continue
         
     # locate the corresponding miniAODs... come to papa
-    os.system('cp "$CMSSW_VERSION/src/TreeMaker/Production/test/get_miniAOD.py" .')
+    os.system('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD.py" .')
     os.system('chmod +x get_miniAOD.py')
     cmd = './get_miniAOD.py --infile=%s' % aod_file
     status, output = runcmd(cmd)
@@ -46,32 +71,36 @@ for aod_file in aod_files:
       continue
       
     # run cmsRun the second time to run with miniaod.root in sidecar
-    cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py $(cat info_arguments) 2>&1"
+    cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
     status, output = runcmd(cmd)
     
     if status != 0:
         job_return_status = status
+        continue
     
     # run test script to check if output file has a tracks collection:
-    os.system('cp "$CMSSW_VERSION/src/TreeMaker/Production/test/check_if_tracks_present.py" .')
+    os.system('cp "$CMSSW_BASE/src/TreeMaker/Production/test/check_if_tracks_present.py" .')
     os.system('chmod +x check_if_tracks_present.py')
     cmd = 'python check_if_tracks_present.py'
     status, output = runcmd(cmd)
     
     if status != 0:
-        job_return_status = status    
+        job_return_status = status
         
-    # copy output:
+    # copy output (retry 10 times if failed):
     for i in range(10):
         
-        success = True
-        for ifile in glob.glob("*root"):
-            cmd = "xrdcp -f %s %s/%s" % (ifile, options.outpath, ifile.split("/")[-1])
-            status, output = runcmd(cmd)
-            if status != 0: success = False
-        if success: break
+        cmd = 'gfal-copy -n 1 "file:////%s/%s.root" "%s/%s.root" ' % (os.getcwd(), outfile, options.outpath, outfile)
+        status, output = runcmd(cmd)
+        job_return_status = status
+        if status == 0:
+            break
+        print "Copy failed, retry in 60s"
         
-        time.sleep(100)
-    
+        time.sleep(60)
+
+    print "rm %s.root" % outfile
+    #os.system("rm %s.root" % outfile)
+
 quit(job_return_status)
-    
+

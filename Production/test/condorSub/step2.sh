@@ -58,20 +58,19 @@ echo $vomsident
 if [[ $vomsident = *"cmsgli"* ]]; then
 	# this is the exit code for "User is not authorized to write to destination site."
 	rm *.root
-	echo "exit code 60322, skipping xrdcp"	
+	echo "exit code 60322, skipping file copy"	
 	exit 60322
 fi
 
-# run cmsRun the first time to get input & output file names and other information such as json file, number of events
-echo "cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1"
-cmsRun runMakeTreeFromMiniAOD_cfg.py ${ARGS} 2>&1
-
-# save some information
-echo $ARGS > info_arguments
+# prepare gfal tools
+echo "prepare gfal tools"
+if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
+    . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
+fi
 
 cp "$CMSSW_VERSION/src/TreeMaker/Production/test/file_loop.py" .
 chmod +x file_loop.py
-python file_loop.py --outpath=$OUTDIR
+python file_loop.py --outpath=$OUTDIR --arguments="$ARGS"
 CMSSWSTATUS=$?
 if [[ $CMSSWSTATUS -ne 0 ]]; then
     echo "error $CMSSWSTATUS"
