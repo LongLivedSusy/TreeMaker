@@ -62,12 +62,6 @@ if [[ $vomsident = *"cmsgli"* ]]; then
 	exit 60322
 fi
 
-# prepare gfal tools
-echo "prepare gfal tools"
-if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
-    . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
-fi
-
 cp "$CMSSW_BASE/src/TreeMaker/Production/test/file_loop.py" .
 chmod +x file_loop.py
 ./file_loop.py --outpath=$OUTDIR --arguments="$ARGS"

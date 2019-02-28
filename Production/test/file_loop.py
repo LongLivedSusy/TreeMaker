@@ -6,27 +6,15 @@ import collections
 import glob
 import time
 
-class color:
-   PURPLE = '\033[95m'
-   CYAN = '\033[96m'
-   DARKCYAN = '\033[36m'
-   BLUE = '\033[94m'
-   GREEN = '\033[92m'
-   YELLOW = '\033[93m'
-   RED = '\033[91m'
-   BOLD = '\033[1m'
-   UNDERLINE = '\033[4m'
-   END = '\033[0m'
-
 parser = OptionParser()
 parser.add_option('--outpath', dest='outpath')
 parser.add_option('--arguments', dest='arguments')
 (options, args) = parser.parse_args()
 
 def runcmd(cmd):
-    print color.BOLD + color.PURPLE + cmd + color.END
+    print cmd
     status, output = commands.getstatusoutput(cmd)
-    print color.DARKCYAN + output + color.END
+    print output
     return status, output
     
 job_return_status = 0
@@ -97,12 +85,25 @@ for i_file, aod_file in enumerate(aod_files):
     
     if status != 0:
         job_return_status = status
-        
+       
     # copy output (retry 10 times if failed):
+    shell_script = """
+    #!/bin/bash
+    echo "prepare gfal tools"
+    if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
+        . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
+    fi        
+
+    gfal-copy -n 1 file://%s/%s.root %s/%s.root
+    exit($?)
+    """ % (os.getcwd(), outfile, options.outpath, outfile)
+
+    with open("script_gfalcopy", "w+") as fout:
+        fout.write(shell_script)
+    os.sytem("chmod +x shell_script")
+
     for i in range(10):
-        
-        cmd = "gfal-copy -n 1 file://%s/%s.root %s/%s.root" % (os.getcwd(), outfile, options.outpath, outfile)
-        status, output = runcmd(cmd)
+        status, output = runcmd("./script_gfalcopy")
         job_return_status = status
         if status == 0:
             break
