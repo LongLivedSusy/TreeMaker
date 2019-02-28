@@ -40,6 +40,9 @@ print "numstart", numstart
 
 for i_file, aod_file in enumerate(aod_files):
    
+    #FIXME:
+    if i_file>2: continue
+
     file_number = (numstart * len(aod_files)) + i_file
     outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str(file_number) + "_RA2AnalysisTree"
     
@@ -95,12 +98,12 @@ for i_file, aod_file in enumerate(aod_files):
     fi        
 
     gfal-copy -n 1 file://%s/%s.root %s/%s.root
-    exit($?)
+    exit $?
     """ % (os.getcwd(), outfile, options.outpath, outfile)
 
     with open("script_gfalcopy", "w+") as fout:
         fout.write(shell_script)
-    os.sytem("chmod +x shell_script")
+    os.system("chmod +x script_gfalcopy")
 
     for i in range(10):
         status, output = runcmd("./script_gfalcopy")
