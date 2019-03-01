@@ -55,10 +55,18 @@ for i_file, aod_file in enumerate(aod_files):
     print "check if output file already exists:"
     cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
     status, output = runcmd(cmd)
-
     if status == 0:
         print "outfile file already exists on dcache."
         continue
+
+    # TEMP FIX for Sang-Il:
+    if "spak" in cmd:
+        cmd = cmd.replace("/spak/", "/vkutzner/")
+        print "check if output file already exists:"
+        status, output = runcmd(cmd)
+        if status == 0:
+            print "outfile file already exists on dcache."
+            continue
         
     # locate the corresponding miniAODs... come to papa
     os.system('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD.py" .')
