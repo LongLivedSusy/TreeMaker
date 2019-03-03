@@ -70,3 +70,6 @@ if [[ $CMSSWSTATUS -ne 0 ]]; then
     echo "error $CMSSWSTATUS"
     exit CMSSWSTATUS
 fi
+
+rm *.root
+
