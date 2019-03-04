@@ -6,6 +6,9 @@ import collections
 import glob
 import time
 
+# loop over multiple AOD input files and process them one-by-one instead of loading all files
+# files are copied directly after each file has been processed
+
 parser = OptionParser()
 parser.add_option('--outpath', dest='outpath')
 parser.add_option('--arguments', dest='arguments')
@@ -20,7 +23,7 @@ def runcmd(cmd):
 job_return_status = 0
 
 # cleanup
-os.system("rm info_*")
+runcmd("rm info_* *root")
 
 # run cmsRun the first time to get infos
 cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
@@ -40,37 +43,36 @@ print "numstart", numstart
 
 for i_file, aod_file in enumerate(aod_files):
    
-    print "\n\n============new file=============\n\n"
-
     file_number = (numstart * len(aod_files)) + i_file
     outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str(file_number) + "_RA2AnalysisTree"
     
-    print "Doing input file:", aod_file
+    print "\n\nDoing input file:", aod_file
     print "CMSSW arguments:", options.arguments
     print "Output file:", outfile
     print "Output path:", options.outpath
 
-    os.system("echo %s > info_aods" % aod_file)
+    runcmd("echo %s > info_aods" % aod_file)
 
-    print "check if output file already exists:"
-    cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
-    status, output = runcmd(cmd)
-    if status == 0:
-        print "outfile file already exists on dcache."
-        continue
+    print "\nCheck if output file already exists..."
+    status, userlist = runcmd("curl http://www.desy.de/~kutznerv/ntuple-production/userlist")
+    userlist = userlist.replace("\n", "").split(",")
+    username = options.outpath.split("/store/user/")[1].split("/")[0]
 
-    # TEMP FIX for Sang-Il:
-    if "spak" in cmd:
-        cmd = cmd.replace("/spak/", "/vkutzner/")
-        print "check if output file already exists:"
+    file_exists = False
+    for user in userlist:
+        cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
+        cmd = cmd.replace("/%s/" % username, "/%s/ % user")
+        # check if output file already exists for user
         status, output = runcmd(cmd)
         if status == 0:
             print "outfile file already exists on dcache."
-            continue
+            file_exists = True
+
+    if file_exists: continue
         
-    # locate the corresponding miniAODs... come to papa
-    os.system('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD.py" .')
-    os.system('chmod +x get_miniAOD.py')
+    print "\nLocate the corresponding miniAODs..."
+    runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD.py" .')
+    runcmd('chmod +x get_miniAOD.py')
     cmd = './get_miniAOD.py --infile=%s' % aod_file
     status, output = runcmd(cmd)
 
@@ -79,7 +81,7 @@ for i_file, aod_file in enumerate(aod_files):
         continue
       
     # run cmsRun the second time to run with miniaod.root in sidecar
-    os.system("echo %s > info_outfilename" % outfile)
+    runcmd("echo %s > info_outfilename" % outfile)
     cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
     status, output = runcmd(cmd)
     
@@ -88,8 +90,8 @@ for i_file, aod_file in enumerate(aod_files):
         continue
     
     # run test script to check if output file has a tracks collection:
-    os.system('cp "$CMSSW_BASE/src/TreeMaker/Production/test/check_if_tracks_present.py" .')
-    os.system('chmod +x check_if_tracks_present.py')
+    runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/check_if_tracks_present.py" .')
+    runcmd('chmod +x check_if_tracks_present.py')
     cmd = 'python check_if_tracks_present.py'
     status, output = runcmd(cmd)
     
@@ -110,21 +112,20 @@ for i_file, aod_file in enumerate(aod_files):
 
     with open("script_gfalcopy", "w+") as fout:
         fout.write(shell_script)
-    os.system("chmod +x script_gfalcopy")
+    runcmd("chmod +x script_gfalcopy")
 
     for i in range(10):
         status, output = runcmd("./script_gfalcopy")
         job_return_status = status
-        if status == 0:
+        if status == 0 or status == 17:
+            # status code 17: file exists
             break
         print "Copy failed, retry in 60s"
         
         time.sleep(60)
 
     print "rm %s.root" % outfile
-    os.system("rm %s.root" % outfile)
-
+    runcmd("rm %s.root" % outfile)
 
 
 quit(job_return_status)
-
