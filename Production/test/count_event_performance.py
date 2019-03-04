@@ -9,12 +9,28 @@ gROOT.SetBatch(True)
 gStyle.SetOptStat(0)
 TH1D.SetDefaultSumw2()
 
-userlist = ["vkutzner", "sbein", "jarieger", "tokramer", "ssekmen"]
+def get_userlist():
 
-def get_entries_last_nth_day(n, folder):
+    # get list of users with NtupleHub at DESY:
 
-    now = dt.datetime.now() - dt.timedelta(days=n)
-    ago = now - dt.timedelta(days=1)
+    userlist = []
+    hub_folders = glob.glob("/pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/")
+    for hub_folder in hub_folders:
+        userlist.append(hub_folder.split("/")[-3])
+
+    return userlist
+
+
+def get_entries_last_nth_day(n, folder, timeframe):
+
+    if timeframe == "days":
+        now = dt.datetime.now() - dt.timedelta(days=n)
+        ago = now - dt.timedelta(days=1)
+    elif timeframe == "hours":
+        now = dt.datetime.now() - dt.timedelta(hours=n)
+        ago = now - dt.timedelta(hours=1)
+    else:
+        quit("huh?")
     
     tree = TChain('TreeMaker2/PreSelection')
     size = 0
@@ -35,11 +51,11 @@ def get_entries_last_nth_day(n, folder):
     return size
     
 
-def collect_data(days):
+def collect_data(days, timeframe):
 
     counts = {}
     
-    for user in userlist:   
+    for user in get_userlist():   
         
         print user
          
@@ -47,15 +63,17 @@ def collect_data(days):
         counts[user] = {}
                 
         for i in range(days):
-            counts[user][i] = get_entries_last_nth_day(i, folder)
+            counts[user][i] = get_entries_last_nth_day(i, folder, timeframe)
                         
     print counts
     
     return counts
 
 
-def plot(data):
+def plot(days, timeframe):
     
+    data = collect_data(days, timeframe)
+
     gROOT.SetBatch(True)
     gStyle.SetOptStat(0)
     TH1D.SetDefaultSumw2()
@@ -77,7 +95,7 @@ def plot(data):
     canvas = TCanvas("c1", "c1", 800, 800)
     canvas.SetLogy(True)
     
-    legend = TLegend(0.7, 0.8, 0.98, 0.94)
+    legend = TLegend(0.7, 0.7, 0.98, 0.94)
     legend.SetTextSize(0.025)    
     
     for i, label in enumerate(histos):
@@ -87,14 +105,18 @@ def plot(data):
             histos[label].Draw("hist same")
         histos[label].SetLineWidth(2)
         histos[label].SetLineColor(i+1)
-        histos[label].GetYaxis().SetRangeUser(0.8*minimum, 1.2*maximum)
-        histos[label].SetTitle("production rate, %s;last n days;gigabytes" % dt.datetime.now().strftime("%b %d %H:%M"))
+        histos[label].GetYaxis().SetRangeUser(0.8*minimum, 1.5*maximum)
+
+        if timeframe == "days":
+            histos[label].SetTitle("daily production rate, %s;last n days;gigabytes" % (dt.datetime.now().strftime("%b %d %H:%M")))
+        elif timeframe == "hours":
+            histos[label].SetTitle("hourly production rate, %s;last n hours;gigabytes" % (dt.datetime.now().strftime("%b %d %H:%M")))
         
         legend.AddEntry(histos[label], label)
             
     legend.Draw()
-    canvas.SaveAs("evtperf.pdf")
-    canvas.SaveAs("evtperf.png")
+    canvas.SaveAs("evtperf_%s.pdf" % timeframe)
+    canvas.SaveAs("evtperf_%s.svg" % timeframe)
 
 
 def get_dataset_filecount_done(dataset, n):
@@ -105,7 +127,7 @@ def get_dataset_filecount_done(dataset, n):
     filecount_done = 0 
 
     folders = []
-    for user in userlist:
+    for user in get_userlist():
         folders.append("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/" % user)
         if user == "sbein":
             folders.append("/pnfs/desy.de/cms/tier2/store/user/sbein/NtupleHub/ProductionRun2v4/")
@@ -220,11 +242,12 @@ def collect_datasets(days):
                 
         legend.Draw()
         canvas.SaveAs("evtperf2-%s.pdf" % period)
-        canvas.SaveAs("evtperf2-%s.png" % period)
+        canvas.SaveAs("evtperf2-%s.svg" % period)
 
-# plot last 10 days:
-plot(collect_data(10))
+# plot last 10 hours/days:
+plot(10, "hours")
+plot(10, "days")
 collect_datasets(10)
 
 # copy to public web folder:
-os.system("cp evtperf*png ~/www/ntuple-production/")
+os.system("mv evtperf*svg ~/www/ntuple-production/")
