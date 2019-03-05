@@ -29,10 +29,7 @@ def get_entries_last_nth_day(n, folder, timeframe):
     elif timeframe == "hours":
         now = dt.datetime.now() - dt.timedelta(hours=n)
         ago = now - dt.timedelta(hours=1)
-    else:
-        quit("huh?")
     
-    tree = TChain('TreeMaker2/PreSelection')
     size = 0
     
     for root, dirs, files in os.walk(folder):  
@@ -41,11 +38,8 @@ def get_entries_last_nth_day(n, folder, timeframe):
             st = os.stat(path)    
             mtime = dt.datetime.fromtimestamp(st.st_mtime)
             if mtime <= now and mtime > ago:
-                #tree.Add(path)
                 size += os.path.getsize(path)
-    
-    entries = tree.GetEntries()
-    
+   
     print size
     
     return size
@@ -55,16 +49,36 @@ def collect_data(days, timeframe):
 
     counts = {}
     
-    for user in get_userlist():   
+    now_list = []
+    for i_day in range(days):
+        if timeframe == "days":
+            now = dt.datetime.now() - dt.timedelta(days=i_day)
+            now_list.append(now)
+        elif timeframe == "hours":
+            now = dt.datetime.now() - dt.timedelta(hours=i_day)
+            now_list.append(now)
+
+    for user in get_userlist():
         
-        print user
+        print "Checking", user
          
         folder = '/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/' % user             
-        counts[user] = {}
+        counts[user] = [0] * days
                 
-        for i in range(days):
-            counts[user][i] = get_entries_last_nth_day(i, folder, timeframe)
-                        
+        for root, dirs, files in os.walk(folder):
+            for fname in files:
+                path = os.path.join(root, fname)
+                st = os.stat(path)    
+                mtime = dt.datetime.fromtimestamp(st.st_mtime)
+
+                for i_day, now in enumerate(now_list):
+                    if timeframe == "days":
+                        ago = now - dt.timedelta(days=1)
+                    elif timeframe == "hours":
+                        ago = now - dt.timedelta(hours=1)
+                    if mtime <= now and mtime > ago:
+                        counts[user][i_day] += os.path.getsize(path)
+                       
     print counts
     
     return counts
@@ -84,7 +98,7 @@ def plot(days, timeframe):
     histos = {}
     for user in data:
         histos[user] = TH1F(user, user, len(data["vkutzner"])-1, 1, len(data["vkutzner"]))
-        for day in data[user]:
+        for day in range(len(data[user])):
             val = data[user][day] * 1.0/1e9
             histos[user].Fill(day+1, val)
             if val > maximum: maximum = val
@@ -147,6 +161,53 @@ def get_dataset_filecount_done(dataset, n):
     return filecount_done
 
 
+def get_dataset_filecount_done2(datasets, n):
+
+    data = OrderedDict()
+
+    now = dt.datetime.now()
+    ago_list = []
+    for i_day in range(n):
+        ago = now - dt.timedelta(days=i_day)
+        ago_list.append(ago)
+      
+    folders = []
+    for user in get_userlist():
+        folders.append("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/" % user)
+        if user == "sbein":
+            folders.append("/pnfs/desy.de/cms/tier2/store/user/sbein/NtupleHub/ProductionRun2v4/")
+
+    for dataset in datasets:
+        data[dataset] = {}
+        data[dataset]["count"] = [0] * n
+        data[dataset]["size"] = [0] * n
+        data[dataset]["total"] = get_dataset_total(dataset)
+   
+
+    for folder in folders:
+        print "Searching in folder", folder
+        for dataset in datasets:
+
+            status, output = commands.getstatusoutput("ls %s/ | grep %s | head -n 1" % (folder, dataset) )
+            output = output.replace("\n", "")
+
+            if len(output) > 0:
+                for root, dirs, files in os.walk(folder):  
+                    for fname in files:
+                        if dataset in fname:
+                            path = os.path.join(root, fname)
+                            st = os.stat(path)    
+                            mtime = dt.datetime.fromtimestamp(st.st_mtime)
+                            for i_day, ago in enumerate(ago_list):
+                                if mtime < ago:
+                                    data[dataset]["count"][i_day] += 1
+                                    data[dataset]["size"][i_day] += os.path.getsize(path)
+
+                print " \__> found dataset", dataset, data[dataset]["count"]
+
+    return data
+
+
 def get_dataset_total(dataset):
 
     status, filecount_total = commands.getstatusoutput("grep '/store/' ../python/%s*/*AOD*py | wc -l" % dataset)
@@ -156,7 +217,7 @@ def get_dataset_total(dataset):
 
 def collect_datasets(days):
  
-    data = OrderedDict()
+    #data = OrderedDict()
 
     datasets = [
                 "Run2016B-17Jul2018",
@@ -177,77 +238,78 @@ def collect_datasets(days):
                 "Run2018D-PromptReco",
                ]
 
-    for dataset in datasets:
-        data[dataset] = {}
-        data[dataset]["count"] = []
-        for i in range(days):
-            count = get_dataset_filecount_done(dataset, i)
-            data[dataset]["count"].append(count)
-        data[dataset]["total"] = get_dataset_total(dataset)
-        data[dataset]["percentage"] = 1.0 * data[dataset]["count"][0] / data[dataset]["total"]
-    print data
+    data = get_dataset_filecount_done2(datasets, days)
 
-    histos = OrderedDict()
-    for dataset in datasets:
-        histos[dataset] = TH1F(dataset, dataset, len(data["Run2018D-PromptReco"]["count"])-1, 1, len(data["Run2018D-PromptReco"]["count"]))
-        histos[dataset + "_total"] = TH1F(dataset, dataset, len(data["Run2018D-PromptReco"]["count"])-1, 1, len(data["Run2018D-PromptReco"]["count"]))
-        for i in range(len(data[dataset]["count"])):
-            val = data[dataset]["count"][i]
-            histos[dataset].Fill(i+1, val)
-            histos[dataset + "_total"].Fill(i+1, float(data[dataset]["total"]))
-    
-    # plot absolutes:
-  
-    for period in ["Run2016", "Run2017", "Run2018"]:
+    for variable in ["count", "size"]:
 
-        canvas = TCanvas("c1", "c1", 800, 800)
-        canvas.SetLogy(False)
+        histos = OrderedDict()
+        for dataset in datasets:
+            histos[dataset] = TH1F(dataset, dataset, len(data["Run2018D-PromptReco"][variable])-1, 1, len(data["Run2018D-PromptReco"][variable]))
+            histos[dataset + "_total"] = TH1F(dataset, dataset, len(data["Run2018D-PromptReco"][variable])-1, 1, len(data["Run2018D-PromptReco"][variable]))
+            for i in range(len(data[dataset][variable])):
+                val = data[dataset][variable][i]
+                histos[dataset].Fill(i+1, val)
+                histos[dataset + "_total"].Fill(i+1, float(data[dataset]["total"]))
+
+                if variable == "size":
+                    histos[dataset].Scale(1.0/1e9)
         
-        legend = TLegend(0.6, 0.7, 0.98, 0.94)
-        legend.SetTextSize(0.025)    
-        
-        colors = range(1,20)
-        color = -1
+        # plot absolutes:
+      
+        for period in ["Run2016", "Run2017", "Run2018"]:
 
-        maximum = 0
+            canvas = TCanvas("c1", "c1", 800, 800)
+            canvas.SetLogy(False)
+            
+            legend = TLegend(0.6, 0.7, 0.98, 0.94)
+            legend.SetTextSize(0.025)    
+            
+            colors = range(1,20)
+            color = -1
 
-        for i, label in enumerate(histos):
+            maximum = 0
 
-            if period not in label: continue
+            for i, label in enumerate(histos):
 
-            hmax = histos[label].GetMaximum()
-            print period, hmax
-            if hmax > maximum: maximum = hmax
+                if period not in label: continue
 
-            if i == 0:
-                histos[label].Draw("hist")
-            else:
-                histos[label].Draw("hist same")
-            histos[label].SetLineWidth(2)
+                hmax = histos[label].GetMaximum()
+                print period, hmax
+                if hmax > maximum: maximum = hmax
 
-            if i%2 == 0:
-                color = colors.pop(0)
-                histos[label].SetLineColor(color)
-            else:
-                histos[label].SetLineColor(color)
-                histos[label].SetLineStyle(2)
+                if i == 0:
+                    histos[label].Draw("hist")
+                else:
+                    histos[label].Draw("hist same")
+                histos[label].SetLineWidth(2)
 
-            histos[label].SetTitle("ntuple count, %s;last n days;" % dt.datetime.now().strftime("%b %d %H:%M"))
+                if i%2 == 0:
+                    color = colors.pop(0)
+                    histos[label].SetLineColor(color)
+                else:
+                    histos[label].SetLineColor(color)
+                    histos[label].SetLineStyle(2)
 
-            if i%2 == 0:
-                legend.AddEntry(histos[label], label)
+                xtitle = variable
+                if variable == "size":
+                    xtitle = "gigabytes"
 
-        for i, label in enumerate(histos):
-            histos[label].GetYaxis().SetRangeUser(0, 1.2*maximum)
-                
-        legend.Draw()
-        canvas.SaveAs("evtperf2-%s.pdf" % period)
-        canvas.SaveAs("evtperf2-%s.svg" % period)
+                histos[label].SetTitle("ntuple %s, %s;last n days;%s" % (variable, dt.datetime.now().strftime("%b %d %H:%M"), xtitle))
+
+                if i%2 == 0:
+                    legend.AddEntry(histos[label], label)
+
+            for i, label in enumerate(histos):
+                histos[label].GetYaxis().SetRangeUser(0, 1.2*maximum)
+                    
+            legend.Draw()
+            canvas.SaveAs("evtperf2-%s-%s.pdf" % (variable, period) )
+            canvas.SaveAs("evtperf2-%s-%s.svg" % (variable, period) )
 
 # plot last 10 hours/days:
-plot(10, "hours")
-plot(10, "days")
-collect_datasets(10)
+plot(24, "hours")
+plot(14, "days")
+collect_datasets(14)
 
 # copy to public web folder:
 os.system("mv evtperf*svg ~/www/ntuple-production/")

@@ -44,6 +44,8 @@ for parent_filename in parent_filenames.split("\n"):
         elif "Run2018C" in options.infile and "/MINIAOD/17Sep2018-v1/" in relative: miniaod_filenames.append(relative)
         elif "Run2018D" in options.infile and "/MINIAOD/PromptReco-v1/" in relative: miniaod_filenames.append(relative)
         elif "Run2018D" in options.infile and "/MINIAOD/PromptReco-v2/" in relative: miniaod_filenames.append(relative)
+        elif "Summer16" in options.infile and "/RunIISummer16MiniAODv2/" in relative: miniaod_filenames.append(relative)
+        elif "RunIIFall17" in options.infile and "/RunIIFall17MiniAODv2/" in relative: miniaod_filenames.append(relative)
 
     if len(miniaod_filenames) == 0:
         print "Could not locate corresponding miniAOD file!"
