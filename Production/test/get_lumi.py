@@ -21,13 +21,11 @@ for iFile in args[:-1]:
 
 nev = tree.GetEntries() 
 
-print "Will run over", nev, "files"
+print "Will run over", nev, "events"
 
 runs = {}
 
 for iEv, event in enumerate(tree):
-
-    if iEv > 50000: break
 
     if (iEv+1) % 10000 == 0:
         PercentProcessed = int( 20 * iEv / nev )
