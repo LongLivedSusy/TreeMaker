@@ -86,11 +86,14 @@ json_content = json.dumps(runs)
 print "json_content", json_content
 
 
-#do union with golden json file:
-with open("lumisecs.json", "w") as fo:
-    fo.write(json_content)
-os.system("compareJSON.py --and $(cat info_jsonfilename) lumisecs.json > lumisecs_union.json")
-
+#for data, do intersection with golden json file:
+if "Run201" in options.infile:
+    with open("lumisecs.json", "w") as fo:
+         fo.write(json_content)
+    os.system("compareJSON.py --and $(cat info_jsonfilename) lumisecs.json > lumisecs_union.json")
+else:
+    with open("lumisecs_union.json", "w") as fo:
+        fo.write(json_content)
 
 #check for empty json union:
 with open("lumisecs_union.json", "r") as fin:
