@@ -84,7 +84,7 @@ def collect_data(days, timeframe):
     return counts
 
 
-def plot(days, timeframe):
+def plot_production_rate(days, timeframe):
     
     data = collect_data(days, timeframe)
 
@@ -215,9 +215,7 @@ def get_dataset_total(dataset):
     return float(filecount_total)
    
 
-def collect_datasets(days):
- 
-    #data = OrderedDict()
+def plot_ntuple_count(days):
 
     datasets = [
                 "Run2016B-17Jul2018",
@@ -307,9 +305,9 @@ def collect_datasets(days):
             canvas.SaveAs("evtperf2-%s-%s.svg" % (variable, period) )
 
 # plot last 10 hours/days:
-plot(24, "hours")
-plot(14, "days")
-collect_datasets(14)
+plot_production_rate(24, "hours")
+plot_production_rate(14, "days")
+plot_ntuple_count(14)
 
 # copy to public web folder:
 os.system("mv evtperf*svg ~/www/ntuple-production/")

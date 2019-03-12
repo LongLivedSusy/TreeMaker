@@ -43,7 +43,7 @@ print "numstart", numstart
 
 for i_file, aod_file in enumerate(aod_files):
    
-    file_number = (numstart * len(aod_files)) + i_file
+    file_number = numstart + i_file
     outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str(file_number) + "_RA2AnalysisTree"
     
     print "\n\nDoing input file:", aod_file
@@ -77,7 +77,7 @@ for i_file, aod_file in enumerate(aod_files):
     status, output = runcmd(cmd)
 
     if status == 123:
-        print "empty union json, ignoring lumisection"
+        print "empty json, ignoring lumisection"
         continue
       
     # run cmsRun the second time to run with miniaod.root in sidecar

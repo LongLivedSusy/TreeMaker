@@ -15,7 +15,7 @@ if len(args) == 0:
 output_json_filename = args[-1]
 
 tree = TChain("TreeMaker2/PreSelection")
-for iFile in args[:-1]:
+for iFile in args[0].split(","):
     print "Adding", iFile
     tree.Add(iFile)
 
