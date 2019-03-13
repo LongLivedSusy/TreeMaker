@@ -21,30 +21,6 @@ def get_userlist():
     return userlist
 
 
-def get_entries_last_nth_day(n, folder, timeframe):
-
-    if timeframe == "days":
-        now = dt.datetime.now() - dt.timedelta(days=n)
-        ago = now - dt.timedelta(days=1)
-    elif timeframe == "hours":
-        now = dt.datetime.now() - dt.timedelta(hours=n)
-        ago = now - dt.timedelta(hours=1)
-    
-    size = 0
-    
-    for root, dirs, files in os.walk(folder):  
-        for fname in files:
-            path = os.path.join(root, fname)
-            st = os.stat(path)    
-            mtime = dt.datetime.fromtimestamp(st.st_mtime)
-            if mtime <= now and mtime > ago:
-                size += os.path.getsize(path)
-   
-    print size
-    
-    return size
-    
-
 def collect_data(days, timeframe):
 
     counts = {}
@@ -131,37 +107,12 @@ def plot_production_rate(days, timeframe):
     legend.Draw()
     canvas.SaveAs("evtperf_%s.pdf" % timeframe)
     canvas.SaveAs("evtperf_%s.svg" % timeframe)
+    try:
+        os.system("mv evtperf*svg ~/www/ntuple-production/")
+    except: pass
 
 
-def get_dataset_filecount_done(dataset, n):
-
-    now = dt.datetime.now()
-    ago = now - dt.timedelta(days=n)
-      
-    filecount_done = 0 
-
-    folders = []
-    for user in get_userlist():
-        folders.append("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/" % user)
-        if user == "sbein":
-            folders.append("/pnfs/desy.de/cms/tier2/store/user/sbein/NtupleHub/ProductionRun2v4/")
-
-    for folder in folders:
-        for root, dirs, files in os.walk(folder):  
-            for fname in files:
-                if dataset in fname:
-                    path = os.path.join(root, fname)
-                    st = os.stat(path)    
-                    mtime = dt.datetime.fromtimestamp(st.st_mtime)
-                    if mtime < ago:
-                        filecount_done += 1
-
-    print "dataset, n, filecount_done", dataset, n, filecount_done
-
-    return filecount_done
-
-
-def get_dataset_filecount_done2(datasets, n):
+def get_dataset_filecount_done(datasets, n):
 
     data = OrderedDict()
 
@@ -236,7 +187,7 @@ def plot_ntuple_count(days):
                 "Run2018D-PromptReco",
                ]
 
-    data = get_dataset_filecount_done2(datasets, days)
+    data = get_dataset_filecount_done(datasets, days)
 
     for variable in ["count", "size"]:
 
@@ -303,11 +254,12 @@ def plot_ntuple_count(days):
             legend.Draw()
             canvas.SaveAs("evtperf2-%s-%s.pdf" % (variable, period) )
             canvas.SaveAs("evtperf2-%s-%s.svg" % (variable, period) )
+            try:
+                os.system("mv evtperf*svg ~/www/ntuple-production/")
+            except: pass
 
 # plot last 10 hours/days:
 plot_production_rate(24, "hours")
 plot_production_rate(14, "days")
 plot_ntuple_count(14)
 
-# copy to public web folder:
-os.system("mv evtperf*svg ~/www/ntuple-production/")
