@@ -69,6 +69,12 @@ for i_file, aod_file in enumerate(aod_files):
             file_exists = True
 
     if file_exists: continue
+
+    print "\nCheck if handbrake option is set..."
+    status, handbrake = runcmd("curl http://www.desy.de/~kutznerv/ntuple-production/handbrake")
+    handbrake = handbrake.replace("\n", "")
+    if "STOP" in handbrake:
+        quit(111)
         
     print "\nLocate the corresponding miniAODs..."
     runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD.py" .')
