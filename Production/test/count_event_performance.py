@@ -9,6 +9,10 @@ gROOT.SetBatch(True)
 gStyle.SetOptStat(0)
 TH1D.SetDefaultSumw2()
 
+flags = {}
+flags["production_active"] = False
+flags["good_rate"] = False
+
 def get_userlist():
 
     # get list of users with NtupleHub at DESY:
@@ -20,6 +24,8 @@ def get_userlist():
 
     return userlist
 
+
+users = get_userlist()
 
 def collect_data(days, timeframe):
 
@@ -34,7 +40,7 @@ def collect_data(days, timeframe):
             now = dt.datetime.now() - dt.timedelta(hours=i_day)
             now_list.append(now)
 
-    for user in get_userlist():
+    for user in users:
         
         print "Checking", user
          
@@ -57,6 +63,13 @@ def collect_data(days, timeframe):
                        
     print counts
     
+    for user in users:
+        if counts[user][0] > 0:
+            flags["production_active"] = True
+        if counts[user][0] > 1:
+            flags["good_rate"] = True
+            break
+
     return counts
 
 
@@ -95,6 +108,10 @@ def plot_production_rate(days, timeframe):
             histos[label].Draw("hist same")
         histos[label].SetLineWidth(2)
         histos[label].SetLineColor(i+1)
+
+        if i+1 == 10:
+            histos[label].SetLineStyle(9)
+
         histos[label].GetYaxis().SetRangeUser(0.8*minimum, 1.5*maximum)
 
         if timeframe == "days":
@@ -123,7 +140,7 @@ def get_dataset_filecount_done(datasets, n):
         ago_list.append(ago)
       
     folders = []
-    for user in get_userlist():
+    for user in users:
         folders.append("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/" % user)
         if user == "sbein":
             folders.append("/pnfs/desy.de/cms/tier2/store/user/sbein/NtupleHub/ProductionRun2v4/")
@@ -185,6 +202,8 @@ def plot_ntuple_count(days):
                 "Run2018B-17Sep2018",
                 "Run2018C-17Sep2018",
                 "Run2018D-PromptReco",
+                "Summer16",
+                "RunIIFall17MiniAODv2",
                ]
 
     data = get_dataset_filecount_done(datasets, days)
@@ -205,7 +224,7 @@ def plot_ntuple_count(days):
         
         # plot absolutes:
       
-        for period in ["Run2016", "Run2017", "Run2018"]:
+        for period in ["Run2016", "Run2017", "Run2018", "Summer16", "Fall17"]:
 
             canvas = TCanvas("c1", "c1", 800, 800)
             canvas.SetLogy(False)
@@ -234,6 +253,10 @@ def plot_ntuple_count(days):
 
                 if i%2 == 0:
                     color = colors.pop(0)
+
+                    if color == 10:
+                        histos[label].SetLineStyle(9)
+
                     histos[label].SetLineColor(color)
                 else:
                     histos[label].SetLineColor(color)
@@ -258,8 +281,63 @@ def plot_ntuple_count(days):
                 os.system("mv evtperf*svg ~/www/ntuple-production/")
             except: pass
 
+
+def write_html():
+
+    html = '''
+            <i>Plots updated every 2 hours. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SUSYDispTrackProduction>Production Twiki page</a></i><p>
+            <h2>DCache space used:</h2>
+           '''
+
+    size_all_users = 0
+
+    for user in users:
+       
+        print "Checking", user
+        cmd = "du -s /pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/" % user
+        if user == "sbein":
+            cmd = cmd.replace("v3", "v4")
+        status, total_size = commands.getstatusoutput(cmd)
+        total_size = total_size.split()[0]
+        total_size = float(total_size)/1e6
+        size_all_users += total_size
+
+        html += "%s: <b>%.2f GB</b><br>" % (user, total_size)
+    
+    size_all_users = float(size_all_users)/1e3
+    html += "<b>All users: %.2f TB</b><br>" % (size_all_users)
+
+    # flags:
+
+    if flags["production_active"]:
+        html += " <b><font color='green'>Production ongoing</font> </b><br>"
+    else:
+        html += " <b><font color='red'>Production halted!</font> </b><br>"        
+
+    if not flags["good_rate"]:
+        html += " <b><font color='red'>Low production rate!</font> </b><br>"
+
+    html += '''
+            <p>
+            <center>
+            <img src=evtperf_days.svg width=600> <img src=evtperf_hours.svg width=600> <p>
+            <br><h2>Combined SingleMuon + SingleElectron + MET + JetHT:</h2>
+            <img src=evtperf2-count-Run2016.svg width=600>
+            <img src=evtperf2-count-Run2017.svg width=600>
+            <img src=evtperf2-count-Run2018.svg width=600><p>
+            <br><h2>MC:</h2>
+            <img src=evtperf2-count-Summer16.svg width=600>
+            <img src=evtperf2-count-Fall17.svg width=600><p>
+            <img src=http://grid.desy.de/monitoring/dcache/dcache-se-cms/userWeek.png> <br> Disk space @ target DESY T2 CMS
+            </center>
+           '''
+
+    with open("/afs/desy.de/user/k/kutznerv/www/ntuple-production/index.html", "w") as fout:
+        fout.write(html)
+
+
 # plot last 10 hours/days:
 plot_production_rate(24, "hours")
-plot_production_rate(14, "days")
-plot_ntuple_count(14)
-
+plot_production_rate(10, "days")
+plot_ntuple_count(10)
+write_html()
