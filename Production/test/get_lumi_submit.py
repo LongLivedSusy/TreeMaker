@@ -1,8 +1,9 @@
 #!/bin/env python
 import os, glob
 from GridEngineTools import runParallel
+import commands
 
-def prepare_command_list(ntuples_folder, samples, output_folder, files_per_job = 5, files_per_sample = -1, command = "./get_lumi.py $INPUT $OUTPUT", nowildcard=False):
+def prepare_command_list(ntuples_folder, samples, output_folder, files_per_job = 5, files_per_sample = -1, command = "./get_lumi_json.py $INPUT $OUTPUT", nowildcard=False):
 
     commands = []
 
@@ -33,7 +34,7 @@ def prepare_command_list(ntuples_folder, samples, output_folder, files_per_job =
     return commands
 
 
-def do_submission(commands, output_folder, executable = "get_lumi.py", runmode = "grid"):
+def do_submission(commands, output_folder, executable = "get_lumi_json.py", runmode = "grid"):
 
     raw_input("submit %s jobs?" % len(commands))
     os.system("mkdir -p %s" % output_folder)
@@ -42,27 +43,30 @@ def do_submission(commands, output_folder, executable = "get_lumi.py", runmode =
 
 
 Run2016_ntuples_2016v2 = [
-                    "Run2016B-03Feb2017_ver2-v2.SingleElectron",
-                    "Run2016C-03Feb2017-v1.SingleElectron",
-                    "Run2016D-03Feb2017-v1.SingleElectron",
-                    "Run2016E-03Feb2017-v1.SingleElectron",
-                    "Run2016F-03Feb2017-v1.SingleElectron",
-                    "Run2016G-03Feb2017-v1.SingleElectron",
-                    "Run2016H-03Feb2017_ver2-v1.SingleElectron",
-                    "Run2016B-03Feb2017_ver2-v2.SingleMuon",
-                    "Run2016C-03Feb2017-v1.SingleMuon",
-                    "Run2016D-03Feb2017-v1.SingleMuon",
-                    "Run2016E-03Feb2017-v1.SingleMuon",
-                    "Run2016F-03Feb2017-v1.SingleMuon",
-                    "Run2016G-03Feb2017-v1.SingleMuon",
-                    "Run2016H-03Feb2017_ver2-v1.SingleMuon",
-                    "Run2016B-03Feb2017_ver2-v2.MET",
-                    "Run2016C-03Feb2017-v1.MET",
-                    "Run2016D-03Feb2017-v1.MET",
-                    "Run2016E-03Feb2017-v1.MET",
-                    "Run2016F-03Feb2017-v1.MET",
-                    "Run2016G-03Feb2017-v1.MET",
-                    "Run2016H-03Feb2017_ver2-v1.MET",
+                    #"Run2016B-03Feb2017_ver2-v2.SingleElectron",
+                    #"Run2016C-03Feb2017-v1.SingleElectron",
+                    #"Run2016D-03Feb2017-v1.SingleElectron",
+                    #"Run2016E-03Feb2017-v1.SingleElectron",
+                    #"Run2016F-03Feb2017-v1.SingleElectron",
+                    #"Run2016G-03Feb2017-v1.SingleElectron",
+                    #"Run2016H-03Feb2017_ver2-v1.SingleElectron",
+                    "Run2016H-03Feb2017_ver3-v1.SingleElectron",
+                    #"Run2016B-03Feb2017_ver2-v2.SingleMuon",
+                    #"Run2016C-03Feb2017-v1.SingleMuon",
+                    #"Run2016D-03Feb2017-v1.SingleMuon",
+                    #"Run2016E-03Feb2017-v1.SingleMuon",
+                    #"Run2016F-03Feb2017-v1.SingleMuon",
+                    #"Run2016G-03Feb2017-v1.SingleMuon",
+                    #"Run2016H-03Feb2017_ver2-v1.SingleMuon",
+                    "Run2016H-03Feb2017_ver3-v1.SingleMuon",
+                    #"Run2016B-03Feb2017_ver2-v2.MET",
+                    #"Run2016C-03Feb2017-v1.MET",
+                    #"Run2016D-03Feb2017-v1.MET",
+                    #"Run2016E-03Feb2017-v1.MET",
+                    #"Run2016F-03Feb2017-v1.MET",
+                    #"Run2016G-03Feb2017-v1.MET",
+                    #"Run2016H-03Feb2017_ver2-v1.MET",
+                    "Run2016H-03Feb2017_ver3-v1.MET",
                  ]
 
 do_submit = True
@@ -71,16 +75,21 @@ do_bril = True
 
 if do_submit:
 
-    command = "./get_lumi.py $INPUT $OUTPUT"
+    command = "./get_lumi_json.py $INPUT $OUTPUT"
     output_folder = "output_lumi"
     commands = []
-    commands += prepare_command_list("/pnfs/desy.de/cms/tier2/store/user/sbein/NtupleHub/Production2016v2", Run2016_ntuples_2016v2, output_folder, command = command, files_per_job = 3)
-    do_submission(commands, output_folder, executable = "get_lumi.py")
+    commands += prepare_command_list("/pnfs/desy.de/cms/tier2/store/user/sbein/NtupleHub/Production2016v2", Run2016_ntuples_2016v2, output_folder, command = command, files_per_job = 1)
+    do_submission(commands, output_folder, executable = "get_lumi_json.py")
 
 
-#if do_combine:
-#    for datastream in ["MET", "SingleElectron", "SingleMuon", "JetHT"]:
-#        os.system("cat 2016*%s*json | sed 's/}{/, /g' | sed 's/, ,/, /g'  > output_2016_%s.json" % (datastream, datastream))
+if do_combine:
+
+    import get_lumi_combine
+    get_lumi_combine.get_json(years = ["2016"], datastreams = ["MET", "SingleElectron", "SingleMuon"])
 
 
+if do_bril:
+    
+    os.system("scp *.json get_lumi_bril.py lxplus:~/")
+    os.system("ssh -t -A lxplus 'chmod +x ./get_lumi_bril.py; ./get_lumi_bril.py'")
 
