@@ -87,6 +87,7 @@ for i_file, aod_file in enumerate(aod_files):
     
     if status != 0:
         job_return_status = status
+        runcmd("rm %s.root" % outfile)
         continue
     
     print "run test script to check if output file has a tracks collection:"
