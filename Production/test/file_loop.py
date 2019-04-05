@@ -25,7 +25,7 @@ job_return_status = 0
 # cleanup
 runcmd("rm info_* *root")
 
-# run cmsRun the first time to get infos
+print "run cmsRun the first time"
 cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
 status, output = runcmd(cmd)
 
@@ -69,13 +69,7 @@ for i_file, aod_file in enumerate(aod_files):
             file_exists = True
 
     if file_exists: continue
-
-    print "\nCheck if handbrake option is set..."
-    status, handbrake = runcmd("curl http://www.desy.de/~kutznerv/ntuple-production/handbrake")
-    handbrake = handbrake.replace("\n", "")
-    if "STOP" in handbrake:
-        quit(111)
-        
+       
     print "\nLocate the corresponding miniAODs..."
     runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD.py" .')
     runcmd('chmod +x get_miniAOD.py')
@@ -86,7 +80,7 @@ for i_file, aod_file in enumerate(aod_files):
         print "empty json, ignoring lumisection"
         continue
       
-    # run cmsRun the second time to run with miniaod.root in sidecar
+    print "run cmsRun the second time to run with miniaod.root in sidecar:"
     runcmd("echo %s > info_outfilename" % outfile)
     cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
     status, output = runcmd(cmd)
@@ -95,7 +89,7 @@ for i_file, aod_file in enumerate(aod_files):
         job_return_status = status
         continue
     
-    # run test script to check if output file has a tracks collection:
+    print "run test script to check if output file has a tracks collection:"
     runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/check_if_tracks_present.py" .')
     runcmd('chmod +x check_if_tracks_present.py')
     cmd = 'python check_if_tracks_present.py'
@@ -104,34 +98,34 @@ for i_file, aod_file in enumerate(aod_files):
     if status != 0:
         job_return_status = status
        
-    # copy output (retry 10 times if failed):
-    shell_script = """
-    #!/bin/bash
-    echo "prepare gfal tools"
-    if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
-        . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
-    fi        
+# copy output (retry 10 times if failed):
+shell_script = """
+#!/bin/bash
+echo "prepare gfal tools"
+if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
+    . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
+fi        
 
-    gfal-copy -n 1 file://%s/%s.root %s/%s.root
-    exit $?
-    """ % (os.getcwd(), outfile, options.outpath, outfile)
+#gfal-copy -n 1 file://%s/%s.root %s/%s.root
+find $PWD -type f -name "*.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
+gfal-copy -n 1 -f --from-file files.txt %s/
+exit $?
+""" % (os.getcwd(), outfile, options.outpath, outfile, options.outpath)
 
-    with open("script_gfalcopy", "w+") as fout:
-        fout.write(shell_script)
-    runcmd("chmod +x script_gfalcopy")
+with open("script_gfalcopy", "w+") as fout:
+    fout.write(shell_script)
+runcmd("chmod +x script_gfalcopy")
 
-    for i in range(10):
-        status, output = runcmd("./script_gfalcopy")
-        job_return_status = status
-        if status == 0 or status == 17:
-            # status code 17: file exists
-            break
-        print "Copy failed, retry in 60s"
-        
-        time.sleep(60)
+for i in range(10):
+    status, output = runcmd("./script_gfalcopy")
+    job_return_status = status
+    if status == 0 or status == 17:
+        # status code 17: file exists
+        break
+    print "Copy failed, retry in 60s"
+    time.sleep(400)
 
-    print "rm %s.root" % outfile
-    runcmd("rm %s.root" % outfile)
-
+print "rm *.root"
+runcmd("rm *.root")
 
 quit(job_return_status)
