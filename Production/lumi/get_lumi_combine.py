@@ -5,7 +5,7 @@ import commands
 from natsort import natsorted, ns
 import sys
 
-get_json(years = ["2016"], datastreams = ["MET", "SingleElectron", "SingleMuon"]):
+def get_json(years = ["2016"], datastreams = ["MET", "SingleElectron", "SingleMuon"]):
 
     json_cleaning = True
 
@@ -68,4 +68,9 @@ get_json(years = ["2016"], datastreams = ["MET", "SingleElectron", "SingleMuon"]
         
                 print "%s written" % filename
       
-    
+
+if __name__ == "__main__":
+
+    get_json(years = ["2017", "2018"], datastreams = ["JetHT", "MET", "SingleElectron", "SingleMuon"])    
+
+

@@ -286,6 +286,7 @@ def write_html():
 
     html = '''
             <i>Plots updated every 2 hours. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SUSYDispTrackProduction>Production Twiki page</a></i><p>
+            <a href=http://grafana.mwt2.org/d/000000136/cms-connect-queue?orgId=1&from=1554152671835&to=1554212970329>Number of running/idle/held jobs (CMS Connect Grafana)</a>
             <h2>DCache space used:</h2>
            '''
 
