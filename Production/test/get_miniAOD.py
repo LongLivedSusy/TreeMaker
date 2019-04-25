@@ -16,40 +16,49 @@ print 'locating miniAOD file(s) which match the AOD file:', options.infile
 if not 'root://' in options.infile:
     options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
 
-
 #get corresponding miniAOD file(s): 
 miniaod_filenames = []
-status, parent_filenames = commands.getstatusoutput('dasgoclient -query="parent file=/%s"' % options.infile.split("//")[-1])
 status, child_filenames = commands.getstatusoutput('dasgoclient -query="child file=/%s"' % options.infile.split("//")[-1])
 
-for parent_filename in parent_filenames.split("\n"):
-    status, cousins_filenames = commands.getstatusoutput('dasgoclient -query="child file=%s"' % parent_filename)
-
-    relatives_filenames = cousins_filenames.split("\n") + child_filenames.split("\n")
-
+if "RunIIFall17" in options.infile:
+    
+    # check only children:
+    relatives_filenames = child_filenames.split("\n")
     for relative in relatives_filenames:
-        if   "Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver1-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver2-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver2-v2/" in relative: miniaod_filenames.append(relative)
-        elif "Run2016C" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2016D" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2016E" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2016F" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2016G" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2016H" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2016H" in options.infile and "/MINIAOD/17Jul2018-v2/" in relative: miniaod_filenames.append(relative)
-        elif "Run2017"  in options.infile and "/MINIAOD/31Mar2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2018A" in options.infile and "/MINIAOD/17Sep2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2018B" in options.infile and "/MINIAOD/17Sep2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2018C" in options.infile and "/MINIAOD/17Sep2018-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2018D" in options.infile and "/MINIAOD/PromptReco-v1/" in relative: miniaod_filenames.append(relative)
-        elif "Run2018D" in options.infile and "/MINIAOD/PromptReco-v2/" in relative: miniaod_filenames.append(relative)
-        elif "Summer16" in options.infile and "/RunIISummer16MiniAODv2/" in relative: miniaod_filenames.append(relative)
-        elif "RunIIFall17" in options.infile and "/RunIIFall17MiniAODv2/" in relative: miniaod_filenames.append(relative)
+        if "RunIIFall17" in options.infile and "/RunIIFall17MiniAODv2/" in relative: miniaod_filenames.append(relative)
 
-    if len(miniaod_filenames) == 0:
-        print "Could not locate corresponding miniAOD file!"
-        quit(99)
+else:
+    
+    # check everything:
+    status, parent_filenames = commands.getstatusoutput('dasgoclient -query="parent file=/%s"' % options.infile.split("//")[-1])
+    for parent_filename in parent_filenames.split("\n"):
+    
+        status, cousins_filenames = commands.getstatusoutput('dasgoclient -query="child file=%s"' % parent_filename)
+        relatives_filenames = cousins_filenames.split("\n") + child_filenames.split("\n")
+    
+        for relative in relatives_filenames:
+            if   "Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver1-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver2-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver2-v2/" in relative: miniaod_filenames.append(relative)
+            elif "Run2016C" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2016D" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2016E" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2016F" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2016G" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2016H" in options.infile and "/MINIAOD/17Jul2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2016H" in options.infile and "/MINIAOD/17Jul2018-v2/" in relative: miniaod_filenames.append(relative)
+            elif "Run2017"  in options.infile and "/MINIAOD/31Mar2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2018A" in options.infile and "/MINIAOD/17Sep2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2018B" in options.infile and "/MINIAOD/17Sep2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2018C" in options.infile and "/MINIAOD/17Sep2018-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2018D" in options.infile and "/MINIAOD/PromptReco-v1/" in relative: miniaod_filenames.append(relative)
+            elif "Run2018D" in options.infile and "/MINIAOD/PromptReco-v2/" in relative: miniaod_filenames.append(relative)
+            elif "Summer16" in options.infile and "/RunIISummer16MiniAODv2/" in relative: miniaod_filenames.append(relative)
+            elif "RunIIFall17" in options.infile and "/RunIIFall17MiniAODv2/" in relative: miniaod_filenames.append(relative)
+
+if len(miniaod_filenames) == 0:
+    print "Could not locate corresponding miniAOD file!"
+    quit(99)
 
 miniaod_filenames = list(set(miniaod_filenames))
 print "miniaod_filenames", miniaod_filenames
