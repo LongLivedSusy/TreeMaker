@@ -5,16 +5,16 @@ import commands
 
 # create AOD file lists from exisiting miniAOD file lists. Configuration:
 
-check_dataset_availablity = False
+check_dataset_availablity = True
 
-campaign = "Run2018D*"
-datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
+#campaign = "Run2018D*"
+#datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
 
 #campaign = "Summer16"
 #datastreams = []
 
-#campaign = "RunIIFall17MiniAODv2"
-#datastreams = []
+campaign = "RunIIFall17MiniAODv2"
+datastreams = []
 
 # Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
 #
@@ -38,6 +38,7 @@ for datastream in datastreams:
 
         # ignore already prepared folders, special HEM rerecos:
         if "-AOD" in ifile: continue
+        if "AOD_cff" in ifile: continue
         if "HEM" in ifile: continue
 
         print "ifile", ifile
@@ -109,13 +110,16 @@ for datastream in datastreams:
                 print item
                 status, sites = commands.getstatusoutput('dasgoclient -query="site dataset=%s"' % item)
                 for line in sites.split("\n"):
-                    if "MSS" not in line and "Buffer" not in line:
+                    if "MSS" not in line and "Buffer" not in line and "T0_CH_CERN_Export" not in line:
                         print "\t", line
                         sample_available = True
             
                 if not sample_available:
                     print "### warning, sample not readily available on any site: %s" % item
-                    os.system('echo "%s" >> samples_not_available' % item)
+                    os.system('echo "%s" >> samples_not_available_%s' % (item, campaign))
+
+        # skip the rest
+        continue
                 
         # create python configuration:
         all_filenames = ""

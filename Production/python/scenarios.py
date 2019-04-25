@@ -200,7 +200,9 @@ class Scenario:
                 signal=True,
                 jecfile="data/jec/Fall17_17Nov2017_V32_94X_MC",
                 jerfile="data/jer/Fall17_V3_94X_MC",
-                pufile="TreeMaker/Production/test/data/PileupHistograms_0118_63mb_pm5.root",
+                #pufile="TreeMaker/Production/test/data/PileupHistograms_0118_63mb_pm5.root",
+                #temporary fix: old PU file from Fall17Sig
+                pufile="TreeMaker/Production/test/data/PileupHistograms_0328_63mb_pm5.root",
                 era="Run2_2018",
                 localera="TM2018",
             )

@@ -6,6 +6,7 @@ import commands
 aod_scenarios = {
                  "Summer16": ["Summer16", "Summer16"],
                  "Fall17":   ["Fall17", "Fall17"],
+                 "Autumn18":  ["Autumn18", "Autumn18"],
                  "Run2016A":  ["re2016A", "2016MiniAODv3AOD"],
                  "Run2016B":  ["re2016B", "2016MiniAODv3AOD"],
                  "Run2016C":  ["re2016C", "2016MiniAODv3AOD"],
@@ -27,24 +28,25 @@ aod_scenarios = {
 
 
 for campaign in [
-                 "Summer16",
-                 "RunIIFall17MiniAODv2",
-                 "Run2016B-17Jul2018_ver*",
-                 "Run2016C-17Jul2018-v1",
-                 "Run2016D-17Jul2018-v1",
-                 "Run2016E-17Jul2018-v1",
-                 "Run2016F-17Jul2018-v1",
-                 "Run2016G-17Jul2018-v1",
-                 "Run2016H-17Jul2018-v*",
-                 "Run2017B-31Mar2018-v1",
-                 "Run2017C-31Mar2018-v1",
-                 "Run2017D-31Mar2018-v1",
-                 "Run2017E-31Mar2018-v1",
-                 "Run2017F-31Mar2018-v1",
-                 "Run2018A-17Sep2018-v1",
-                 "Run2018B-17Sep2018-v1",
-                 "Run2018C-17Sep2018-v1",
-                 "Run2018D-PromptReco*",
+                 #"Summer16",
+                 #"RunIIFall17MiniAODv2",
+                 "RunIIAutumn18MiniAOD",
+                 #"Run2016B-17Jul2018_ver*",
+                 #"Run2016C-17Jul2018-v1",
+                 #"Run2016D-17Jul2018-v1",
+                 #"Run2016E-17Jul2018-v1",
+                 #"Run2016F-17Jul2018-v1",
+                 #"Run2016G-17Jul2018-v1",
+                 #"Run2016H-17Jul2018-v*",
+                 #"Run2017B-31Mar2018-v1",
+                 #"Run2017C-31Mar2018-v1",
+                 #"Run2017D-31Mar2018-v1",
+                 #"Run2017E-31Mar2018-v1",
+                 #"Run2017F-31Mar2018-v1",
+                 #"Run2018A-17Sep2018-v1",
+                 #"Run2018B-17Sep2018-v1",
+                 #"Run2018C-17Sep2018-v1",
+                 #"Run2018D-PromptReco*",
                 ]:
 
     flist = {}
@@ -64,16 +66,18 @@ for campaign in [
 
         label = folder.split("/")[-1]
 
+        datastreams = []
         if "Run201" in label:
             datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
         else:
-            datastreams = []
-            streams = glob.glob("%s/*_cff.py" % folder)
+            streams = glob.glob("%s/*AOD*_cff.py" % folder)
             for stream in streams:
                 datastreams.append( stream.split("/")[-1].replace("_cff.py", "") )
 
+        #print "datastreams", datastreams
+
         for datastream in datastreams:
-            filelists = glob.glob("%s/%s*AOD*_cff.py" % (folder, datastream))
+            filelists = glob.glob("%s/%s_cff.py" % (folder, datastream))
             for filelist in sorted(filelists):
 
                 if "SMS" in filelist: continue
@@ -81,7 +85,6 @@ for campaign in [
                 if "RPV" in filelist: continue
 
                 flist["samples"].append( label + "." + filelist.split("/")[-1].replace("_cff.py", "") )
-
  
     flist["samples"] = list(set(flist["samples"]))
     for i in range(len(flist["samples"])):
