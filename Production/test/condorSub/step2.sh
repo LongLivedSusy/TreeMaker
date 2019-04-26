@@ -62,9 +62,9 @@ if [[ $vomsident = *"cmsgli"* ]]; then
 	exit 60322
 fi
 
-cp "$CMSSW_BASE/src/TreeMaker/Production/test/file_loop.py" .
-chmod +x file_loop.py
-./file_loop.py --outpath=$OUTDIR --arguments="$ARGS"
+cp "$CMSSW_BASE/src/TreeMaker/Production/test/job_main_loop.py" .
+chmod +x job_main_loop.py
+./job_main_loop.py --outpath=$OUTDIR --arguments="$ARGS"
 CMSSWSTATUS=$?
 if [[ $CMSSWSTATUS -ne 0 ]]; then
     echo "error $CMSSWSTATUS"

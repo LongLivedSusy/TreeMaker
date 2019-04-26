@@ -13,3 +13,5 @@ __init__.py
 jobExecCondor_*.jdl
 jobExecCondorNeff_*.jdl
 *.tar.gz
+*.pdf
+.nfs*

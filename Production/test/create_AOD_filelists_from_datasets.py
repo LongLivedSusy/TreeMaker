@@ -113,17 +113,6 @@ for dataset in miniaod_datastreams:
         
         complete_output = get_aod_dataset(child_datasets, promptreco_rereco_identifier)
 
-    # solve issue (1):
-    #if len(complete_output) == 0:
-    #    complete_output = get_aod_dataset(child_datasets, promptreco_rereco_identifier.replace("v1", "v2"))
-    # end of issue
-
-    # solve issue (2):
-    #if len(complete_output) == 0 and "Run2018B" in aod_file_name and "MET" in aod_file_name:
-    #    complete_output = ["/MET/Run2018B-PromptReco-v1/AOD", "/MET/Run2018B-PromptReco-v2/AOD"]
-    #    cff_folder = "../python/Run2018B-PromptReco-v1v2"
-    # end of issue
-
     # get only unique entries in list:
     complete_output = list(set(complete_output))
     print "selected AOD dataset:", complete_output

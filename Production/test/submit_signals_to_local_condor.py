@@ -35,5 +35,5 @@ def do_submission(commands, runmode="grid", dontCheckOnJobs=True):
 
 print commands
 
-#do_submission(commands)
+do_submission(commands)
 
