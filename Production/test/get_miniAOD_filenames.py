@@ -104,19 +104,17 @@ def get_miniAOD_filenames():
             os.system("echo %s > info_miniaods" % ",".join(miniaod_filenames))
             return True
 
-
-    successful = get_miniaod_filenames()
-
-    # retry in case no miniAOD filename(s) have been found - there could have been an issue with DBS
-    if not successful:
+    successful = False
+    while retry_count > 0:
+        successful = get_miniaod_filenames()
+        if successful: break
+        print "Retrying DBS request, retrying after some time (count %s)" % retry_count
         retry_count -= 1
-        if retry_count > 0:
-            print "Retrying DBS request, retrying after some time (count %s)" % retry_count
-            time.sleep(10)
-            run_cmd(command)
-        else:
-            print "Failed to retrieve miniAOD filename(s)"
-            quit(99)
+        time.sleep(10)
+        
+    if not successful:
+        print "Failed to retrieve miniAOD filename(s)"
+        quit(99)
 
     if options.test:
         print "@@@ Test successful"
