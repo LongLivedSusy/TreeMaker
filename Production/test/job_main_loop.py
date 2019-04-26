@@ -53,20 +53,27 @@ for i_file, aod_file in enumerate(aod_files):
 
     runcmd("echo %s > info_aods" % aod_file)
 
-    print "\nCheck if output file already exists..."
+    print "\nCheck if output file already exists in a user folder..."
     status, userlist = runcmd("curl http://www.desy.de/~kutznerv/ntuple-production/userlist")
     userlist = userlist.replace("\n", "").split(",")
     username = options.outpath.split("/store/user/")[1].split("/")[0]
 
     file_exists = False
     for user in userlist:
+
         cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
         cmd = cmd.replace("/%s/" % username, "/%s/ % user")
+
+        # check for Sams foldername:
+        if "ProductionRun2v4" in cmd and user != "sbein":
+            cmd = cmd.replace("ProductionRun2v4", "ProductionRun2v3")
+
         # check if output file already exists for user
         status, output = runcmd(cmd)
         if status == 0:
             print "outfile file already exists on dcache."
             file_exists = True
+            break
 
     if file_exists: continue
        
