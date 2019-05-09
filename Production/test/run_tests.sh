@@ -1,14 +1,19 @@
 #!/bin/bash
 
-echo "test Fall17 MC"
+echo "test Fall17 MC GJets"
 rm info_*
-cmsRun runMakeTreeFromMiniAOD_cfg.py outfile=test inputFilesConfig=RunIIFall17MiniAODv2.DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8AOD nstart=2 nfiles=1 scenario=Fall17
+cmsRun runMakeTreeFromMiniAOD_cfg.py outfile=test inputFilesConfig=RunIIFall17MiniAODv2.GJets_DR-0p4_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8_v2AOD nstart=2 nfiles=1 scenario=Fall17 numevents=10
 ./get_miniAOD_filenames.py --infile="$(cat info_aodfilenames)"
-
+cmsRun runMakeTreeFromMiniAOD_cfg.py outfile=test inputFilesConfig=RunIIFall17MiniAODv2.GJets_DR-0p4_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8_v2AOD nstart=2 nfiles=1 scenario=Fall17 numevents=10
 
 # skip other tests:
 exit
 
+echo "test Fall17 MC DY"
+rm info_*
+cmsRun runMakeTreeFromMiniAOD_cfg.py outfile=test inputFilesConfig=RunIIFall17MiniAODv2.DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8AOD nstart=2 nfiles=1 scenario=Fall17
+./get_miniAOD_filenames.py --infile="$(cat info_aodfilenames)"
+cmsRun runMakeTreeFromMiniAOD_cfg.py outfile=test inputFilesConfig=RunIIFall17MiniAODv2.DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8AOD nstart=2 nfiles=1 scenario=Fall17
 
 echo "test Run2016C rereco"
 rm info_*
