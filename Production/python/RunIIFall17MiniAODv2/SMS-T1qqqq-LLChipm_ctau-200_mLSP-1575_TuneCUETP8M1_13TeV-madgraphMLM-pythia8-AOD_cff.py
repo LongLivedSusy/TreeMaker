@@ -3,7 +3,7 @@ import FWCore.ParameterSet.Config as cms
 maxEvens = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 readFils = cms.untracked.vstring()
 secFile = cms.untracked.vstring()
-source  cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
+source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/SMS-T1qqqq-LLChipm_ctau-200_mLSP-1575_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_longlived_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/6E494436-2F5E-E911-9263-7845C4FC3989.root',
 '/store/mc/RunIISummer16DR80Premix/SMS-T1qqqq-LLChipm_ctau-200_mLSP-1575_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_longlived_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/0ACD0AFB-FC5D-E911-876C-00259048A8F4.root',
