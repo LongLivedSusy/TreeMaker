@@ -25,7 +25,7 @@ job_return_status = 0
 # cleanup
 runcmd("rm info_* *root")
 
-print "run cmsRun the first time"
+print "run cmsRun the first time. The exit code 78 is expected:"
 cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
 status, output = runcmd(cmd)
 

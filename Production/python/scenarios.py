@@ -128,6 +128,18 @@ class Scenario:
                 era="Run2_2017",
                 localera="TM2017",
             )
+        elif sname == "Fall17nowrongPU":
+            self.set_vars(
+                globaltag="94X_mc2017_realistic_v13",
+                tagname="PAT",
+                hlttagname="HLT",
+                geninfo=True,
+                jecfile="data/jec/Fall17_17Nov2017_V32_94X_MC",
+                jerfile="data/jer/Fall17_V3_94X_MC",
+                pufile="TreeMaker/Production/test/data/PileupHistograms_0328_63mb_pm5.root",
+                era="Run2_2017",
+                localera="TM2017",
+            )
         elif sname == "Fall17sig":
             self.set_vars(
                 globaltag="94X_mc2017_realistic_v13",
