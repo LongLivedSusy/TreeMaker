@@ -1,5 +1,6 @@
 #!/bin/env python
 from dbs.apis.dbsClient import DbsApi
+from optparse import OptionParser
 import commands
 import time
 import os
@@ -9,6 +10,11 @@ import os
 # source /cvmfs/cms.cern.ch/crab3/crab.sh
 
 dbs = DbsApi('https://cmsweb.cern.ch/dbs/prod/global/DBSReader')
+
+parser = OptionParser()
+parser.add_option('--campaign', dest='campaign')
+parser.add_option('--treemaker_path', dest='treemaker_path')
+(options, args) = parser.parse_args()
 
 def dataset_is_correct_miniAOD(i_File, dataset):
 
@@ -66,15 +72,18 @@ def do_queries(aod_file_name):
     return miniaod_filenames
 
 
-def main(treemaker_path, campaign):
+def main(treemaker_path, campaign, outfile = ""):
     
     # check for VOMS proxy:
     status, file_names_string = commands.getstatusoutput("voms-proxy-info -exists")
     if status != 0:
         print "No VOMS proxy"
         return
+        
+    if outfile == "":
+        outfile = campaign
 
-    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s/*AOD*py" % (treemaker_path, campaign))
+    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/*AOD*py" % (treemaker_path, campaign))
     if status != 0:
         return
 
@@ -91,7 +100,7 @@ def main(treemaker_path, campaign):
     print "Total # of files: %s" % len(file_names)
     print "First file in list: %s" % file_names[0]   
 
-    fout = open("%s.catalogue" % campaign, "a")
+    fout = open("catalogue_%s.dat" % outfile, "a")
 
     for i, aod_file_name in enumerate(file_names):
 
@@ -99,7 +108,7 @@ def main(treemaker_path, campaign):
             print "%s / %s done" % (i, len(file_names))
 
         # check if we already have the info:
-        status, ignore = commands.getstatusoutput("grep %s %s.catalogue" % (aod_file_name, campaign))
+        status, ignore = commands.getstatusoutput("grep %s catalogue_%s.dat" % (aod_file_name, outfile))
         if status == 0: continue
 
         file_has_issues = False
@@ -116,7 +125,7 @@ def main(treemaker_path, campaign):
             file_has_issues = True
 
         if file_has_issues:
-            os.system("echo %s >> files_with_issues" % aod_file_name)
+            os.system("echo %s >> files_with_issues.%s" % (aod_file_name, outfile))
             continue
 
         output = "[%s]\n%s\n" % (aod_file_name, "\n".join(miniaod_filenames))
@@ -135,9 +144,11 @@ def main(treemaker_path, campaign):
 
 if __name__ == "__main__":
 
-    treemaker_path = "~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/"
-    campaign = "RunIIFall17MiniAODv2"
-    
+    #treemaker_path = "~/treemaker/CMSSW_10_2_7/src/TreeMaker/"
+    #campaign = "RunIIFall17"
+    treemaker_path = options.treemaker_path
+    campaign = options.campaign
+       
     main(treemaker_path, campaign)
 
 
