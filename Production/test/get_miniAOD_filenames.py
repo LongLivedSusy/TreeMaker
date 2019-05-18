@@ -8,12 +8,50 @@ import time
 
 parser = OptionParser()
 parser.add_option('--infile', dest='infile')
-parser.add_option('--outfile', dest='outfile')
-parser.add_option('--nev', dest='nev')
 parser.add_option('--test', action='store_true', dest='test')
 (options, args) = parser.parse_args()
 
 number_of_dbs_requests = 0
+
+def dataset_is_correct_miniAOD(dataset):
+    if ("Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver1-v1/" in dataset) or \
+       ("Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver2-v1/" in dataset) or \
+       ("Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver2-v2/" in dataset) or \
+       ("Run2016C" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
+       ("Run2016D" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
+       ("Run2016E" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
+       ("Run2016F" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
+       ("Run2016G" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
+       ("Run2016H" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
+       ("Run2016H" in options.infile and "/MINIAOD/17Jul2018-v2/" in dataset) or \
+       ("Run2017"  in options.infile and "/MINIAOD/31Mar2018-v1/" in dataset) or \
+       ("Run2018A" in options.infile and "/MINIAOD/17Sep2018-v1/" in dataset) or \
+       ("Run2018B" in options.infile and "/MINIAOD/17Sep2018-v1/" in dataset) or \
+       ("Run2018C" in options.infile and "/MINIAOD/17Sep2018-v1/" in dataset) or \
+       ("Run2018D" in options.infile and "/MINIAOD/PromptReco-v1/" in dataset) or \
+       ("Run2018D" in options.infile and "/MINIAOD/PromptReco-v2/" in dataset) or \
+       ("Summer16" in options.infile and "/RunIISummer16MiniAODv2/" in dataset) or \
+       ("RunIIFall17" in options.infile and "/RunIIFall17MiniAODv2/" in dataset):
+        return True
+    else:
+        return False
+
+
+def run_cmd(command):
+
+    global number_of_dbs_requests
+
+    if number_of_dbs_requests > 40:
+        print "Could not locate corresponding miniAOD file after %s DBS requests!" % number_of_dbs_requests
+        quit(99)
+
+    print "Running:", command
+    exitcode, output = commands.getstatusoutput(command)
+    print "[%s] %s" % (exitcode, output)
+    number_of_dbs_requests += 1
+
+    return exitcode, output
+
 
 def get_miniAOD_filenames():
 
@@ -22,51 +60,9 @@ def get_miniAOD_filenames():
     if not 'root://' in options.infile:
         options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
 
-    global number_of_dbs_requests
-    number_of_dbs_requests = 0
     retry_count = 5
 
-    def dataset_is_correct_miniAOD(dataset):
-        if ("Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver1-v1/" in dataset) or \
-           ("Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver2-v1/" in dataset) or \
-           ("Run2016B" in options.infile and "/MINIAOD/17Jul2018_ver2-v2/" in dataset) or \
-           ("Run2016C" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
-           ("Run2016D" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
-           ("Run2016E" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
-           ("Run2016F" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
-           ("Run2016G" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
-           ("Run2016H" in options.infile and "/MINIAOD/17Jul2018-v1/" in dataset) or \
-           ("Run2016H" in options.infile and "/MINIAOD/17Jul2018-v2/" in dataset) or \
-           ("Run2017"  in options.infile and "/MINIAOD/31Mar2018-v1/" in dataset) or \
-           ("Run2018A" in options.infile and "/MINIAOD/17Sep2018-v1/" in dataset) or \
-           ("Run2018B" in options.infile and "/MINIAOD/17Sep2018-v1/" in dataset) or \
-           ("Run2018C" in options.infile and "/MINIAOD/17Sep2018-v1/" in dataset) or \
-           ("Run2018D" in options.infile and "/MINIAOD/PromptReco-v1/" in dataset) or \
-           ("Run2018D" in options.infile and "/MINIAOD/PromptReco-v2/" in dataset) or \
-           ("Summer16" in options.infile and "/RunIISummer16MiniAODv2/" in dataset) or \
-           ("RunIIFall17" in options.infile and "/RunIIFall17MiniAODv2/" in dataset):
-            return True
-        else:
-            return False
-
-
-    def run_cmd(command):
-
-        global number_of_dbs_requests
-
-        if number_of_dbs_requests > 40:
-            print "Could not locate corresponding miniAOD file, doing too many (%s) DBS requests!" % number_of_dbs_requests
-            quit(99)
-
-        print "Running:", command
-        exitcode, output = commands.getstatusoutput(command)
-        print "[%s] %s" % (exitcode, output)
-        number_of_dbs_requests += 1
-
-        return exitcode, output
-
-
-    def get_miniaod_filenames():
+    def do_queries():
 
         # get corresponding miniAOD file(s):
         miniaod_filenames = []
@@ -106,7 +102,7 @@ def get_miniAOD_filenames():
 
     successful = False
     while retry_count > 0:
-        successful = get_miniaod_filenames()
+        successful = do_queries()
         if successful: break
         print "Retrying DBS request, retrying after some time (count %s)" % retry_count
         retry_count -= 1
@@ -117,7 +113,7 @@ def get_miniAOD_filenames():
         quit(99)
 
     if options.test:
-        print "@@@ Test successful"
+        print "@@@ Test successful \n\n"
         return
 
     #first, get start / end of AOD file:
@@ -171,7 +167,6 @@ def get_miniAOD_filenames():
 if __name__ == "__main__":
 
     if not options.test:
-        # normal operation:
         get_miniAOD_filenames()
 
     else:

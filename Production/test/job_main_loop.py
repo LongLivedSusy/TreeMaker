@@ -78,9 +78,10 @@ for i_file, aod_file in enumerate(aod_files):
     if file_exists: continue
        
     print "\nLocate the corresponding miniAODs..."
-    runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames.py" .')
-    runcmd('chmod +x get_miniAOD_filenames.py')
-    cmd = './get_miniAOD_filenames.py --infile=%s' % aod_file
+    runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
+    runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
+    runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
+    cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file
     status, output = runcmd(cmd)
 
     if status == 123:
