@@ -49,7 +49,11 @@ def get_miniAOD_filenames(aod_file_name):
     
     catalogue_name = get_catalogue(aod_file_name)
     miniaod_filenames = read_catalogue(aod_file_name, catalogue_name)
-    
+   
+    miniaod_filenames = list(set(miniaod_filenames))
+    print "miniaod_filenames", miniaod_filenames
+    os.system("echo %s > info_miniaods" % ",".join(miniaod_filenames))
+
     if options.test:
         print "Test successful", str(miniaod_filenames)
         return
