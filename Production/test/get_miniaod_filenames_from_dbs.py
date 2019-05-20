@@ -8,13 +8,12 @@ import os
 # Run before:
 # voms-proxy-init -voms cms:/cms -valid 192:00
 # source /cvmfs/cms.cern.ch/crab3/crab.sh
+#
+# run e.g.
+#
+# ./get_miniaod_filenames_from_dbs.py --campaign Run2018A --treemaker_path ~/treemaker/CMSSW_10_2_7/src/TreeMaker/
 
 dbs = DbsApi('https://cmsweb.cern.ch/dbs/prod/global/DBSReader')
-
-parser = OptionParser()
-parser.add_option('--campaign', dest='campaign')
-parser.add_option('--treemaker_path', dest='treemaker_path')
-(options, args) = parser.parse_args()
 
 def dataset_is_correct_miniAOD(i_File, dataset):
 
@@ -41,38 +40,43 @@ def dataset_is_correct_miniAOD(i_File, dataset):
         return False
 
 
-def do_queries(aod_file_name):
+def do_queries(aod_file_name, debug):
 
     miniaod_filenames = []
 
     # first check children for miniAODs:
     children = dbs.listFileChildren(logical_file_name = aod_file_name )
-    if not children or not len(children)>0 or not "child_logical_file_name" in children[0]: return False
-    
-    child_filenames = children[0]["child_logical_file_name"]
-    for child in child_filenames:
-        if dataset_is_correct_miniAOD(aod_file_name, child):
-            miniaod_filenames.append(child)
+    if debug: print "children", children
+
+    if children and len(children)>0:  
+        child_filenames = children[0]["child_logical_file_name"]
+        for child in child_filenames:
+            if dataset_is_correct_miniAOD(aod_file_name, child):
+                miniaod_filenames.append(child)
 
     # if no matches have been found, check children of parent files for matching miniAODs:
     if len(miniaod_filenames) == 0:
         parents = dbs.listFileParents(logical_file_name = aod_file_name )
+        if debug: print "parents", parents
+        if parents and len(parents)>0:
+            parents_filenames = parents[0]["parent_logical_file_name"]
 
-        if not parents or not len(parents)>0 or not "parent_logical_file_name" in parents[0]: return False
-        parents_filenames = parents[0]["parent_logical_file_name"]
+            for parent_filename in parents_filenames:
+                cousins = dbs.listFileChildren(logical_file_name = parent_filename )
+                if cousins and len(cousins)>0:
+                    if debug: print "cousins", cousins
+                    if not cousins or not len(cousins)>0 or not "child_logical_file_name" in cousins[0]: return False
+                    cousins_filenames = cousins[0]["child_logical_file_name"]       
+                    for cousin in cousins_filenames:
+                        if dataset_is_correct_miniAOD(aod_file_name, cousin):
+                            miniaod_filenames.append(cousin)
 
-        for parent_filename in parents_filenames:
-            cousins = dbs.listFileChildren(logical_file_name = parent_filename )
-            if not cousins or not len(cousins)>0 or not "child_logical_file_name" in cousins[0]: return False
-            cousins_filenames = cousins[0]["child_logical_file_name"]       
-            for cousin in cousins_filenames:
-                if dataset_is_correct_miniAOD(aod_file_name, cousin):
-                    miniaod_filenames.append(cousin)
+    miniaod_filenames = list(set(miniaod_filenames))
 
     return miniaod_filenames
 
 
-def main(treemaker_path, campaign, outfile = ""):
+def main(treemaker_path, campaign, debug, outfile = ""):
     
     # check for VOMS proxy:
     status, file_names_string = commands.getstatusoutput("voms-proxy-info -exists")
@@ -104,7 +108,7 @@ def main(treemaker_path, campaign, outfile = ""):
 
     for i, aod_file_name in enumerate(file_names):
 
-        if i % 100 == 0 and i > 0:
+        if (i % 100 == 0 and i > 0) or debug:
             print "%s / %s done" % (i, len(file_names))
 
         # check if we already have the info:
@@ -114,7 +118,7 @@ def main(treemaker_path, campaign, outfile = ""):
         file_has_issues = False
 
         try:
-            miniaod_filenames = do_queries(aod_file_name)
+            miniaod_filenames = do_queries(aod_file_name, debug)
         except Exception as e:
             print "Got error with file (# %s)" % i, aod_file_name
             print str(e)
@@ -144,11 +148,12 @@ def main(treemaker_path, campaign, outfile = ""):
 
 if __name__ == "__main__":
 
-    #treemaker_path = "~/treemaker/CMSSW_10_2_7/src/TreeMaker/"
-    #campaign = "RunIIFall17"
-    treemaker_path = options.treemaker_path
-    campaign = options.campaign
-       
-    main(treemaker_path, campaign)
+    parser = OptionParser()
+    parser.add_option('--campaign', dest = 'campaign')
+    parser.add_option('--treemaker_path', dest = 'treemaker_path')
+    parser.add_option('--debug', action = "store_true", dest = 'debug')
+    (options, args) = parser.parse_args()
+
+    main(options.treemaker_path, options.campaign, options.debug)
 
 
