@@ -28,7 +28,7 @@ def dataset_is_correct_miniAOD(i_File, dataset):
        ("Run2016H" in i_File and "/MINIAOD/17Jul2018-v1/" in dataset) or \
        ("Run2016H" in i_File and "/MINIAOD/17Jul2018-v2/" in dataset) or \
        ("Run2017"  in i_File and "/MINIAOD/31Mar2018-v1/" in dataset) or \
-       ("Run2018A" in i_File and "/MINIAOD/17Sep2018-v1/" in dataset) or \
+       ("Run2018A" in i_File and "/MINIAOD/17Sep2018" in dataset) or \
        ("Run2018B" in i_File and "/MINIAOD/17Sep2018-v1/" in dataset) or \
        ("Run2018C" in i_File and "/MINIAOD/17Sep2018-v1/" in dataset) or \
        ("Run2018D" in i_File and "/MINIAOD/PromptReco-v1/" in dataset) or \
