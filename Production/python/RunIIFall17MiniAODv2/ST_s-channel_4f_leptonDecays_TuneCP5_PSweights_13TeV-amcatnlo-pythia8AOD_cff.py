@@ -810,3 +810,4 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/ST_s-channel_4f_leptonDecays_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/10000/4630852B-FBF8-E711-8D90-EC0D9A8225FE.root',
 '/store/mc/RunIIFall17DRPremix/ST_s-channel_4f_leptonDecays_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/10000/EE8A2825-1AF9-E711-AB8C-EC0D9A80980A.root',
 ] )
+

@@ -649,10 +649,10 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/8A56678F-15F2-E711-8A89-FA163EB12A73.root',
 '/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/921ECF6C-3CF2-E711-B741-FA163E61A536.root',
 '/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/F448955F-42F2-E711-B3E7-FA163E8BEE57.root',
-'/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/B2708160-42F2-E711-BE53-FA163EDE3D80.root',
-'/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/1E0CC25E-42F2-E711-90F9-FA163E6894DC.root',
-'/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/56E4282B-EFED-E711-8D4D-008CFAE45134.root',
-'/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/CC67B0E0-03EE-E711-8BB5-008CFA111340.root',
+#'/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/B2708160-42F2-E711-BE53-FA163EDE3D80.root',
+#'/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/1E0CC25E-42F2-E711-90F9-FA163E6894DC.root',
+#'/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/56E4282B-EFED-E711-8D4D-008CFAE45134.root',
+#'/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/CC67B0E0-03EE-E711-8BB5-008CFA111340.root',
 '/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/70E820D9-FEF1-E711-8AC4-90E2BAD1BDF0.root',
 '/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/644C8955-D5F2-E711-B5B8-002590FD030A.root',
 '/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/3C9A1A89-A2F4-E711-B7CE-0CC47A1DF7EE.root',
@@ -834,3 +834,7 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/B8DF86B1-7AF3-E711-BA5F-FA163E3A9014.root',
 '/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/98722663-1AF4-E711-A863-FA163EB86A93.root',
 ] )
+
+
+
+

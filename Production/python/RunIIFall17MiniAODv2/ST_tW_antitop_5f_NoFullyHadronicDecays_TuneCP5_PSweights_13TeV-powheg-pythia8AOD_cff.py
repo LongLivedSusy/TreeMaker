@@ -490,3 +490,4 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_PSweights_13TeV-powheg-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/00000/A6F54571-1FF9-E711-825B-AC1F6B1AEFFC.root',
 '/store/mc/RunIIFall17DRPremix/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_PSweights_13TeV-powheg-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/00000/FECD528F-1EF9-E711-B075-AC1F6B1AEFFC.root',
 ] )
+

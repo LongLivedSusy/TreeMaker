@@ -363,3 +363,4 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/WGJets_MonoPhoton_PtG-40to130_TuneCP5_13TeV-madgraph/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/26A657FE-1777-E811-A77E-68CC6EA5BE82.root',
 '/store/mc/RunIIFall17DRPremix/WGJets_MonoPhoton_PtG-40to130_TuneCP5_13TeV-madgraph/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/5E0A47D3-3D78-E811-92D0-3417EBE669D4.root',
 ] )
+

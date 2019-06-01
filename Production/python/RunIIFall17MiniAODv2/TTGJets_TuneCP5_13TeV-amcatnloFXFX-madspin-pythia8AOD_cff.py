@@ -413,3 +413,4 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/20000/FCC7EF57-43F9-E711-9B44-A4BF0112BDE6.root',
 '/store/mc/RunIIFall17DRPremix/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/20000/6E942468-42F9-E711-AC89-A4BF0112BC40.root',
 ] )
+

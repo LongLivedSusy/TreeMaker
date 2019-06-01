@@ -526,3 +526,4 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/ST_t-channel_top_4f_inclusiveDecays_TuneCP5_13TeV-powhegV2-madspin-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/10000/403880B9-71F7-E711-A329-0CC47A166D66.root',
 '/store/mc/RunIIFall17DRPremix/ST_t-channel_top_4f_inclusiveDecays_TuneCP5_13TeV-powhegV2-madspin-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/10000/948479A7-67F7-E711-841F-0CC47AB64E82.root',
 ] )
+

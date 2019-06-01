@@ -452,3 +452,4 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/WWTo1L1Nu2Q_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/94X_mc2017_realistic_v10-v1/010000/A4717CAF-3A0D-E811-BAEF-C45444922BFE.root',
 '/store/mc/RunIIFall17DRPremix/WWTo1L1Nu2Q_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/94X_mc2017_realistic_v10-v1/010000/9064FCA0-3A0D-E811-8ECA-002590800C6C.root',
 ] )
+

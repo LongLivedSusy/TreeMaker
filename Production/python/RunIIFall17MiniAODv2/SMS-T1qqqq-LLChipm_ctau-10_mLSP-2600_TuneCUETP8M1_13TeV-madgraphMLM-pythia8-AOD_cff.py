@@ -6,3 +6,4 @@ secFiles = cms.untracked.vstring()
 source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
 ] )
+
