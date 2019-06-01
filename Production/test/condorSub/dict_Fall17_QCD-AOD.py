@@ -1,0 +1,19 @@
+flist = {'scenario':
+'Fall17',
+'samples':
+[
+['RunIIFall17MiniAODv2.QCD_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8AOD'],
+['RunIIFall17MiniAODv2.QCD_HT2000toInf_TuneCP5_13TeV-madgraph-pythia8AOD'],
+['RunIIFall17MiniAODv2.QCD_HT500to700_TuneCP5_13TeV-madgraph-pythia8AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt-300to470_MuEnrichedPt5_TuneCP5_13TeV_pythia8AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_ext1AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_120to170_TuneCP5_13TeV_pythia8AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_ext1AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_170to300_TuneCP5_13TeV_pythia8_ext1AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_300to470_TuneCP5_13TeV_pythia8_ext1AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_470to600_TuneCP5_13TeV_pythia8AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_600to800_TuneCP5_13TeV_pythia8_ext1AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_800to1000_TuneCP5_13TeV_pythia8AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_ext1AOD'],
+['RunIIFall17MiniAODv2.QCD_Pt_80to120_TuneCP5_13TeV_pythia8_ext1AOD']
+]}

@@ -59,10 +59,9 @@ def main(campaign, processed_files, debug = False):
 
         with open(aod_file, "w") as fout:
             fout.write("\n".join(file_contents) + "\n")
-        if debug: print aod_file + " written"
-            
-        break
-
+        
+        print aod_file + " written"
+        
 
 if __name__ == "__main__":
 
