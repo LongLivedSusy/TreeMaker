@@ -136,6 +136,9 @@ class maker:
         if os.path.exists("info_outfilename"):
             with open("info_outfilename", "r") as fin:
                 self.outfile = fin.read().replace("\n", "")
+        else:
+            print "no info_outfilename"
+            quit()
 
         self.readFiles = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles]
         self.readFiles_sidecar = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles_sidecar]

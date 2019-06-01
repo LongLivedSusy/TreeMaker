@@ -41,9 +41,32 @@ with open("info_outfilename", "r") as fin:
 numstart = int(options.arguments.split("nstart=")[-1].split()[0])
 print "numstart", numstart
 
+check_dcache_if_file_exists = False
+use_file_index_from_filelist = True
+
 for i_file, aod_file in enumerate(aod_files):
    
-    file_number = numstart + i_file
+    if use_file_index_from_filelist:
+
+        print "using corrected file index derived from actual file list"
+
+        inputFilesConfig = options.arguments.split("inputFilesConfig=")[-1].split()[0]
+        campaign = inputFilesConfig.split(".")[0]
+        dataset = inputFilesConfig.split(".")[1]
+
+        status, file_position_plus_one = runcmd("grep '.root' $CMSSW_BASE/src/TreeMaker/Production/python/%s/%s_cff.py | grep -n '%s' | cut -d':' -f1" % (campaign, dataset, aod_file.split("/")[-1])   )
+
+        if status == 0:
+            file_number = int(file_position_plus_one) - 1
+            print "old file number: %s" % (numstart + i_file)
+            print "new file_number: %s" % file_number
+        else:
+            print "There was an error", status
+            quit()
+    else:
+
+        file_number = numstart + i_file
+
     outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str(file_number) + "_RA2AnalysisTree"
     
     print "\n\nDoing input file:", aod_file
@@ -53,29 +76,31 @@ for i_file, aod_file in enumerate(aod_files):
 
     runcmd("echo %s > info_aods" % aod_file)
 
-    print "\nCheck if output file already exists in a user folder..."
-    status, userlist = runcmd("curl http://www.desy.de/~kutznerv/ntuple-production/userlist")
-    userlist = userlist.replace("\n", "").split(",")
-    username = options.outpath.split("/store/user/")[1].split("/")[0]
+    if check_dcache_if_file_exists:
 
-    file_exists = False
-    for user in userlist:
+        print "\nCheck if output file already exists in a user folder..."
+        status, userlist = runcmd("curl http://www.desy.de/~kutznerv/ntuple-production/userlist")
+        userlist = userlist.replace("\n", "").split(",")
+        username = options.outpath.split("/store/user/")[1].split("/")[0]
 
-        cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
-        cmd = cmd.replace("/%s/" % username, "/%s/ % user")
+        file_exists = False
+        for user in userlist:
 
-        # check for Sams foldername:
-        if "ProductionRun2v4" in cmd and user != "sbein":
-            cmd = cmd.replace("ProductionRun2v4", "ProductionRun2v3")
+            cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
+            cmd = cmd.replace("/%s/" % username, "/%s/ % user")
 
-        # check if output file already exists for user
-        status, output = runcmd(cmd)
-        if status == 0:
-            print "outfile file already exists on dcache."
-            file_exists = True
-            break
+            # check for Sams foldername:
+            if "ProductionRun2v4" in cmd and user != "sbein":
+                cmd = cmd.replace("ProductionRun2v4", "ProductionRun2v3")
 
-    if file_exists: continue
+            # check if output file already exists for user
+            status, output = runcmd(cmd)
+            if status == 0:
+                print "outfile file already exists on dcache."
+                file_exists = True
+                break
+
+        if file_exists: continue
        
     print "\nLocate the corresponding miniAODs..."
     runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
