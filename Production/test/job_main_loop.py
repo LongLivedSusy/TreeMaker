@@ -109,8 +109,9 @@ for i_file, aod_file in enumerate(aod_files):
     cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file
     status, output = runcmd(cmd)
 
-    if status == 123:
-        print "empty json, ignoring lumisection"
+    if status != 0:
+        job_return_status = status
+        print "error while getting miniAOD file name..."
         continue
       
     print "run cmsRun the second time to run with miniaod.root in sidecar:"
@@ -152,7 +153,8 @@ runcmd("chmod +x script_gfalcopy")
 
 for i in range(10):
     status, output = runcmd("./script_gfalcopy")
-    job_return_status = status
+    if status != 0:
+        job_return_status = status
     if status == 0 or status == 17:
         # status code 17: file exists
         break
