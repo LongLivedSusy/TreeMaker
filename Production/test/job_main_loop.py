@@ -41,7 +41,7 @@ with open("info_outfilename", "r") as fin:
 numstart = int(options.arguments.split("nstart=")[-1].split()[0])
 print "numstart", numstart
 
-check_dcache_if_file_exists = False
+check_dcache_if_file_exists = True
 use_file_index_from_filelist = True
 
 for i_file, aod_file in enumerate(aod_files):
