@@ -11177,4 +11177,3 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/10000/B6586CD1-A000-E811-A1F0-A0369FC5D5D8.root',
 '/store/mc/RunIIFall17DRPremix/TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/10000/80569388-6E00-E811-A16A-A0369FC5EEB0.root',
 ] )
-

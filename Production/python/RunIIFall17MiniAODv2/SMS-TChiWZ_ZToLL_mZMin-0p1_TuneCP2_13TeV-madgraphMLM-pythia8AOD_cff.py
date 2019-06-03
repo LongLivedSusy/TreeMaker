@@ -1520,4 +1520,3 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCP2_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_GridpackScan_94X_mc2017_realistic_v11-v1/120000/20AD4479-80C8-E811-88B3-B499BAAC0694.root',
 '/store/mc/RunIIFall17DRPremix/SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCP2_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_GridpackScan_94X_mc2017_realistic_v11-v1/120000/5AA18762-A9C7-E811-8C67-90B11C2801E1.root',
 ] )
-

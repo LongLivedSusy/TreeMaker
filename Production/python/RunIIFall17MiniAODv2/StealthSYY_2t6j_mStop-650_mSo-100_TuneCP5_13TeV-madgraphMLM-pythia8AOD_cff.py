@@ -16,4 +16,3 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/StealthSYY_2t6j_mStop-650_mSo-100_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/80000/5EE96E00-54AB-E811-A9CD-5065F381F202.root',
 '/store/mc/RunIIFall17DRPremix/StealthSYY_2t6j_mStop-650_mSo-100_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/80000/2CD93819-54AB-E811-97F4-842B2B689031.root',
 ] )
-

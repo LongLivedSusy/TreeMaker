@@ -2326,4 +2326,3 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/QCD_Pt-20to30_MuEnrichedPt5_TuneCP5_13TeV_pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/A03980FC-43F4-E711-940F-1866DAEB5C94.root',
 '/store/mc/RunIIFall17DRPremix/QCD_Pt-20to30_MuEnrichedPt5_TuneCP5_13TeV_pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/70B56EE6-ABF4-E711-B483-14187741278B.root',
 ] )
-

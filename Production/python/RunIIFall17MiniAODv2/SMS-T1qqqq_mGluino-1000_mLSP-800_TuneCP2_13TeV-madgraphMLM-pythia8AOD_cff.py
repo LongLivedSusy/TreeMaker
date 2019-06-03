@@ -22,4 +22,3 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/SMS-T1qqqq_mGluino-1000_mLSP-800_TuneCP2_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/02A7CDB8-06BC-E811-A92C-A4BADB3CEBCE.root',
 '/store/mc/RunIIFall17DRPremix/SMS-T1qqqq_mGluino-1000_mLSP-800_TuneCP2_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/BA60C22D-A2BD-E811-92D9-7CD30AD09C10.root',
 ] )
-

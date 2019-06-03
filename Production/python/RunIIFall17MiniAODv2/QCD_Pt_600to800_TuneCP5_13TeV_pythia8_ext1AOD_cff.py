@@ -5379,4 +5379,3 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/QCD_Pt_600to800_TuneCP5_13TeV_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11_ext1-v2/40000/14A1BB4C-519D-E811-8B89-008CFA197C70.root',
 '/store/mc/RunIIFall17DRPremix/QCD_Pt_600to800_TuneCP5_13TeV_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11_ext1-v2/40000/00E3DEA8-8D9F-E811-A49D-7CD30AC0313C.root',
 ] )
-

@@ -5352,4 +5352,3 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/80000/9062AA88-5112-E811-B303-02163E019B48.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/80000/7A5460FF-5212-E811-8FC9-02163E012935.root',
 ] )
-

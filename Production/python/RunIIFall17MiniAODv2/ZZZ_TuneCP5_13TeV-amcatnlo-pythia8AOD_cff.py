@@ -33,4 +33,3 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/AODSIM/94X_mc2017_realistic_v11-v1/90000/4077ACC8-FC23-E811-BA10-FA163ECD3B69.root',
 '/store/mc/RunIIFall17DRPremix/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/AODSIM/94X_mc2017_realistic_v11-v1/90000/ECD29B75-F126-E811-B88F-B083FED00117.root',
 ] )
-
