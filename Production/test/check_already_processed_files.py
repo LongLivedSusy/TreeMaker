@@ -2,6 +2,7 @@
 import os, glob
 from optparse import OptionParser
 import socket
+import commands
 
 def create_processed_filelist():
     os.system("ls /pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v*/ > finished_ntuples.dat")
@@ -10,26 +11,31 @@ def create_processed_filelist():
 def file_has_been_processed(campaign, aod_file, file_count, processed_files, filename, debug = False):
 
     output_file_name = "%s.%s_%s_RA2AnalysisTree.root" % (campaign, aod_file.replace("_cff.py", ""), file_count)
-
-    if debug:
-        print "%s: %s" % (filename, output_file_name)
-    
-    for processed_file in processed_files:
-        if output_file_name in processed_file:
-            return True
+   
+    if output_file_name in processed_files:
+        print "output_file_name", output_file_name
+        return True
     else:
         return False
+
+    #for processed_file in processed_files:
+    #    if output_file_name in processed_file:
+    #       return True
+    #else:
+    #    return False
 
 
 def main(campaign, processed_files, debug = False):
 
     # read processed files
     processed_files_string = ""
-    with open(options.processed_files, "r") as fin:
+    with open(processed_files, "r") as fin:
         processed_files_string = fin.read()
-    processed_files = sorted(processed_files_string.split("\n"))
-    
-    aod_filelists = sorted(glob.glob("%s/*AOD_cff.py" % options.campaign))
+    processed_files = set(processed_files_string.split("\n"))
+
+    print "%s/*AOD_cff.py" % campaign
+
+    aod_filelists = sorted(glob.glob("%s/*AOD_cff.py" % campaign))
     
     for i_aod_file, aod_file in enumerate(aod_filelists):
        
@@ -43,24 +49,28 @@ def main(campaign, processed_files, debug = False):
         file_contents = file_contents.split("\n")
         file_count = 0
         for i in range(len(file_contents)):
-            line = file_contents[i]
             ignore_file = False
-            if ".root" in line:
-                if line[0] == "#": continue
-                filename = line.split("'")[1]
-                if file_has_been_processed(options.campaign.split("/")[-1], aod_file.split("/")[-1], file_count, processed_files, filename, debug = debug):
-                    ignore_file = True
+            if ".root" in file_contents[i]:
+
+                # remove old hashes...
+                file_contents[i] = file_contents[i].replace("#", "")
+
+                filename = file_contents[i].split("'")[1]
+                if file_has_been_processed(campaign.split("/")[-1], aod_file.split("/")[-1], file_count, processed_files, filename, debug = debug):
+                    file_contents[i] = "#" + file_contents[i]
+                    print file_contents[i]
+                else:
+                    file_contents[i] = file_contents[i]
+
                 file_count += 1
 
-            if ignore_file:
-                file_contents[i] = "#" + file_contents[i]
-            else:
-                file_contents[i] = file_contents[i]
 
         with open(aod_file, "w") as fout:
             fout.write("\n".join(file_contents) + "\n")
         
         print aod_file + " written"
+
+        break
         
 
 if __name__ == "__main__":
@@ -76,12 +86,17 @@ if __name__ == "__main__":
         create_processed_filelist()
     elif options.campaign and options.processed_files:
 
-        if "naf-" in socket.gethostname():
+        if False and "naf-" in socket.gethostname():
             print "Running on NAF, we can update the already processed file list. Just wait a sec..."
             create_processed_filelist()
             print "OK"
 
-        main(options.campaign, options.processed_files, debug = options.debug)
+        campaigns = options.campaign.split(",")
+
+        for campaign in campaigns:
+            main("../python/" + campaign, options.processed_files, debug = options.debug)
+
     else:
-        print "Run with e.g.\n ./check_already_processed_files.py --campaign ../python/RunIIFall17MiniAODv2 --processed_files finished_ntuples.dat \n"
+        print "Run with e.g.\n ./check_already_processed_files.py --campaign RunIIFall17MiniAODv2 --processed_files finished_ntuples.dat \n"
+        print "Can also run with multiple campaigns separated by commas."
 
