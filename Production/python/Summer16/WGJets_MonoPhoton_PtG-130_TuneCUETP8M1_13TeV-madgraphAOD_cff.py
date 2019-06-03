@@ -70,3 +70,5 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WGJets_MonoPhoton_PtG-130_TuneCUETP8M1_13TeV-madgraph/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/88712355-B2B1-E611-932A-003048322CAB.root',
 '/store/mc/RunIISummer16DR80Premix/WGJets_MonoPhoton_PtG-130_TuneCUETP8M1_13TeV-madgraph/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/B68ED6F1-B2B1-E611-80E3-002590574544.root',
 ] )
+
+

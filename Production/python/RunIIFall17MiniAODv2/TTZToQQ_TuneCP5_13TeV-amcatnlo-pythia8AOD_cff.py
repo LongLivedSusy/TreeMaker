@@ -76,3 +76,5 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/60000/DA7DCB5B-E6F1-E711-8D3B-0242AC130002.root',
 '/store/mc/RunIIFall17DRPremix/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/610000/209F5B2D-4AF2-E711-A4B2-0242AC130002.root',
 ] )
+
+

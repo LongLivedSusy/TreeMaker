@@ -18,3 +18,5 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/SMS-TChiWZ_ZToLL_mZMin-0p1_mChargino250_mLSP230_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/20000/6C7262CA-C779-E811-9F9B-FA163EB6C63A.root',
 '/store/mc/RunIIFall17DRPremix/SMS-TChiWZ_ZToLL_mZMin-0p1_mChargino250_mLSP230_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/20000/18AB3C9E-757A-E811-B3D7-FA163E4A2D1C.root',
 ] )
+
+

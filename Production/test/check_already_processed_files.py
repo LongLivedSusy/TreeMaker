@@ -13,16 +13,9 @@ def file_has_been_processed(campaign, aod_file, file_count, processed_files, fil
     output_file_name = "%s.%s_%s_RA2AnalysisTree.root" % (campaign, aod_file.replace("_cff.py", ""), file_count)
    
     if output_file_name in processed_files:
-        print "output_file_name", output_file_name
         return True
     else:
         return False
-
-    #for processed_file in processed_files:
-    #    if output_file_name in processed_file:
-    #       return True
-    #else:
-    #    return False
 
 
 def main(campaign, processed_files, debug = False):
@@ -53,12 +46,12 @@ def main(campaign, processed_files, debug = False):
             if ".root" in file_contents[i]:
 
                 # remove old hashes...
-                file_contents[i] = file_contents[i].replace("#", "")
+                if "#" in file_contents[i]:
+                    file_contents[i] = file_contents[i].replace("#", "")
 
                 filename = file_contents[i].split("'")[1]
                 if file_has_been_processed(campaign.split("/")[-1], aod_file.split("/")[-1], file_count, processed_files, filename, debug = debug):
                     file_contents[i] = "#" + file_contents[i]
-                    print file_contents[i]
                 else:
                     file_contents[i] = file_contents[i]
 
@@ -68,17 +61,15 @@ def main(campaign, processed_files, debug = False):
         with open(aod_file, "w") as fout:
             fout.write("\n".join(file_contents) + "\n")
         
-        print aod_file + " written"
-
-        break
+        print "%s written!" % aod_file
         
 
 if __name__ == "__main__":
 
     parser = OptionParser()
     parser.add_option("--create_processed_filelist", dest="create_processed_filelist", action="store_true")
-    parser.add_option("--campaign", dest="campaign")
-    parser.add_option("--processed_files", dest="processed_files")
+    parser.add_option("--campaign", dest="campaign", default="all")
+    parser.add_option("--processed_files", dest="processed_files", default="finished_ntuples.dat")
     parser.add_option("--debug", dest="debug", action="store_true")
     (options, args) = parser.parse_args()
 
@@ -86,12 +77,16 @@ if __name__ == "__main__":
         create_processed_filelist()
     elif options.campaign and options.processed_files:
 
-        if False and "naf-" in socket.gethostname():
+        if "naf-" in socket.gethostname():
             print "Running on NAF, we can update the already processed file list. Just wait a sec..."
             create_processed_filelist()
             print "OK"
 
-        campaigns = options.campaign.split(",")
+        if options.campaign == "all":
+            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"]
+            print "Using campaigns:", campaigns
+        else:
+            campaigns = options.campaign.split(",")
 
         for campaign in campaigns:
             main("../python/" + campaign, options.processed_files, debug = options.debug)

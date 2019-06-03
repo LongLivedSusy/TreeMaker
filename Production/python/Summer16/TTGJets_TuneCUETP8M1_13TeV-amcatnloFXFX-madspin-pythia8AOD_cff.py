@@ -576,3 +576,5 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/F01E764A-82BB-E611-A1F3-1866DAEEB364.root',
 '/store/mc/RunIISummer16DR80Premix/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/1019AE7F-22BC-E611-B061-001EC94BA3D1.root',
 ] )
+
+

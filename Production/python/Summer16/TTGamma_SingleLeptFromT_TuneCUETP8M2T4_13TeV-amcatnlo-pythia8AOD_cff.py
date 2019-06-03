@@ -592,3 +592,5 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/TTGamma_SingleLeptFromT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/70000/12A798D6-93F1-E611-A948-A0000420FE80.root',
 '/store/mc/RunIISummer16DR80Premix/TTGamma_SingleLeptFromT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/90000/4AEA8891-54F1-E611-B3C0-02163E01A34B.root',
 ] )
+
+

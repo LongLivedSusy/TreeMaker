@@ -44,7 +44,7 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/40001/E6F900FE-1D0A-E811-9D91-0025902EED00.root',
 '/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/40001/A033FB36-290A-E811-8A29-002590E7E07A.root',
 '/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/40001/3E5C110B-550A-E811-B1A6-0CC47A1E0DC2.root',
-'/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/40000/24628D47-A10A-E811-BF9B-20CF307C98D9.root',
+#'/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/40000/24628D47-A10A-E811-BF9B-20CF307C98D9.root',
 '/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/40001/160F66CC-590A-E811-9CDE-20CF305B0618.root',
 '/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/40000/949F27F1-5D07-E811-B516-A4BF0112BDBC.root',
 '/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/40000/98EA5A29-3A07-E811-8F6E-A4BF01125C68.root',
@@ -1882,3 +1882,5 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/80000/BA5A4EA6-5016-E811-AB66-BC305B390AA7.root',
 '/store/mc/RunIIFall17DRPremix/ZJetsToNuNu_HT-200To400_13TeV-madgraph/AODSIM/94X_mc2017_realistic_v10-v1/80000/72B4A639-4E16-E811-A7EC-0026B9277A18.root',
 ] )
+
+

@@ -27,3 +27,5 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/SMS-T1tttt_mGluino-1200_mLSP-800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/6222B0F8-6DB8-E611-959A-008CFA0A565C.root',
 '/store/mc/RunIISummer16DR80Premix/SMS-T1tttt_mGluino-1200_mLSP-800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/8E3DF8F9-AAB8-E611-AE2E-00266CFCC304.root',
 ] )
+
+
