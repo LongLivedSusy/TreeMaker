@@ -27,6 +27,10 @@ def get_catalogue(aod_file_name):
         if catalogue_stripped_name in aod_file_name:
             print "Using catalogue %s" % catalogue_stripped_name
             return catalogue_stripped_name
+
+    # quick fix for Yuvi's samples:
+    if "RunIISummer16DR80Premix/DYJetsToLL_M-5to50" in aod_file_name:
+        return "RunIISummer16MiniAODv3"
             
     quit("No matching catalogue file found")
 
@@ -56,7 +60,7 @@ def get_miniAOD_filenames(aod_file_name):
 
     if options.test:
         print "Test successful", str(miniaod_filenames)
-        return
+        #return
     
     #first, get start / end of AOD file:
     print "Running edmFileUtil to get run number / lumisec information..."
@@ -122,9 +126,9 @@ if __name__ == "__main__":
         options.infile = "/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/4A9A2A03-7BED-E711-B2C9-5065F38122A1.root"
         get_miniAOD_filenames(options.infile)
 
-        print "@@@ Summer16"
-        options.infile = "/store/mc/RunIISummer16DR80Premix/DYJetsToLL_M-50_HT-2500toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/0C2ECF33-A1C0-E611-9A9C-0CC47A4C8F12.root"
-        get_miniAOD_filenames(options.infile)
+        #print "@@@ Summer16"
+        #options.infile = "/store/mc/RunIISummer16DR80Premix/DYJetsToLL_M-50_HT-2500toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/0C2ECF33-A1C0-E611-9A9C-0CC47A4C8F12.root"
+        #get_miniAOD_filenames(options.infile)
 
         print "@@@ 2016 data"
         options.infile = "/store/data/Run2016B/JetHT/AOD/07Aug17_ver2-v1/50001/84F70C55-397D-E711-8EA4-90B11C0BD63A.root"
