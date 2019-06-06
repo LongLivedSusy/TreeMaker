@@ -160,7 +160,7 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/70000/48808452-1A89-E811-896D-0242AC130002.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/70000/5AAE6365-1A89-E811-AE27-0242AC130002.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/70000/B0F78206-1A89-E811-950C-0242AC130002.root',
-'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/40000/34A07983-468A-E811-BEF2-0025904C5DDA.root',
+#'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/40000/34A07983-468A-E811-BEF2-0025904C5DDA.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/40000/C64AA0F9-A687-E811-86BE-90B11C518DA4.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/40000/5C58D221-3588-E811-A29D-1866DA85DCA3.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/40000/2A6102B1-DF88-E811-8C7B-1866DA7F96FF.root',
@@ -264,10 +264,10 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/A800493A-4289-E811-B00B-FA163E3C0C41.root',
 #'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/44596493-3D89-E811-8AA2-FA163E8B9DA5.root',
 #'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/F4C7F235-9389-E811-B856-FA163ECC606F.root',
-'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/9C574893-4E89-E811-AB2D-FA163EDE7E69.root',
+#'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/9C574893-4E89-E811-AB2D-FA163EDE7E69.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/D2E96308-5089-E811-8FDE-02163E01A113.root',
-'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/02F21445-5289-E811-B13B-FA163EB82E8D.root',
-'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/5E714678-9489-E811-90FF-FA163E515426.root',
+#'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/02F21445-5289-E811-B13B-FA163EB82E8D.root',
+#'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/5E714678-9489-E811-90FF-FA163E515426.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/1E2D34AC-9C89-E811-8701-FA163E6E32F8.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/A4C9C209-9D89-E811-9274-FA163E1588A7.root',
 '/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/00000/BA0A382A-D889-E811-8F81-FA163E1CFCCE.root',
@@ -1410,5 +1410,6 @@ readFiles.extend( [
 #'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/630000/E0182AFC-E3BC-E811-8FCB-0242AC1C0503.root',
 #'/store/mc/RunIIFall17DRPremix/TTJets_SingleLeptFromT_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/60000/623FA430-AFBD-E811-B652-0242AC1C0501.root',
 ] )
+
 
 

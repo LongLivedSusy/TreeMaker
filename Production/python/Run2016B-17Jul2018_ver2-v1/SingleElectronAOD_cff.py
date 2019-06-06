@@ -2373,7 +2373,7 @@ readFiles.extend( [
 #'/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/70001/DCF13D13-509D-E711-B5A0-001E67E6F8DC.root',
 #'/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/70001/AE4DB923-149D-E711-9CC0-A4BF0112BC58.root',
 #'/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/70001/201F723B-149D-E711-9B51-001E67E6F7CE.root',
-'/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/70001/E8269124-149D-E711-8380-001E67E6F512.root',
+#'/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/70001/E8269124-149D-E711-8380-001E67E6F512.root',
 '/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/70001/6A904A0C-509D-E711-9199-A4BF0112BC12.root',
 '/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/70002/B22073BB-5E9D-E711-B9BE-A4BF0112BD1A.root',
 '/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/70002/BCF887E7-5E9D-E711-9A3B-A4BF0108B34A.root',
@@ -12820,5 +12820,6 @@ readFiles.extend( [
 #'/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/150000/562CC3BA-2CAD-E711-9E63-0025901DE2F2.root',
 #'/store/data/Run2016B/SingleElectron/AOD/07Aug17_ver2-v2/150000/C2262075-22AD-E711-9003-0CC47A7C361E.root',
 ] )
+
 
 
