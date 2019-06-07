@@ -104,7 +104,7 @@ def main(treemaker_path, campaign, debug, outfile = ""):
     print "Total # of files: %s" % len(file_names)
     print "First file in list: %s" % file_names[0]   
 
-    fout = open("catalogue_%s.dat" % outfile, "a")
+    fout = open("../test/catalogue_%s.dat" % outfile, "a")
 
     for i, aod_file_name in enumerate(file_names):
 
@@ -112,7 +112,7 @@ def main(treemaker_path, campaign, debug, outfile = ""):
             print "%s / %s done" % (i, len(file_names))
 
         # check if we already have the info:
-        status, ignore = commands.getstatusoutput("grep %s catalogue_%s.dat" % (aod_file_name, outfile))
+        status, ignore = commands.getstatusoutput("grep %s ../test/catalogue_%s.dat" % (aod_file_name, outfile))
         if status == 0: continue
 
         file_has_issues = False
