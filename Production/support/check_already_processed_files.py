@@ -4,6 +4,8 @@ from optparse import OptionParser
 import socket
 import commands
 
+# to be run at DESY
+
 def create_processed_filelist():
     os.system("ls /pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v*/ > finished_ntuples.dat")
 
@@ -94,4 +96,3 @@ if __name__ == "__main__":
     else:
         print "Run with e.g.\n ./check_already_processed_files.py --campaign RunIIFall17MiniAODv2 --processed_files finished_ntuples.dat \n"
         print "Can also run with multiple campaigns separated by commas."
-

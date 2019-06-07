@@ -24,7 +24,7 @@ for i, file_name in enumerate(file_names):
     file_name = file_name.split("'")[1]
     file_name = file_name.split("/")[-1].replace(".root", "")
 
-    commands.append( "cmsRun runMakeTreeFromMiniAOD_cfg.py scenario=%s inputFilesConfig=%s nstart=%s nfiles=1 outfile=%s; mv %s %s/" % (scenario, inputFilesConfig, i, file_name, file_name + "*.root", output_folder) )
+    commands.append( "cmsRun ../test/runMakeTreeFromMiniAOD_cfg.py scenario=%s inputFilesConfig=%s nstart=%s nfiles=1 outfile=%s; mv %s %s/" % (scenario, inputFilesConfig, i, file_name, file_name + "*.root", output_folder) )
 
 
 def do_submission(commands, runmode="grid", dontCheckOnJobs=True):

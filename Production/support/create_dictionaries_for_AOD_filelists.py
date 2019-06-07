@@ -105,10 +105,7 @@ for campaign in [
 
     print contents  
 
-    #pyfilename = "condorSub/dict_AOD-%s.py" % campaign.split("-")[0]
-    #pyfilename = "condorSub/dict_%s-AOD.py" % pyfilename.replace("Run", "")
-    pyfilename = "condorSub/dict_%snowrongPU-AOD.py" % pyfilename.replace("Run", "")
-    #pyfilename = "condorSub/dict_%s-SMS-T1qqqq-LLChipm-AOD.py" % pyfilename.replace("Run", "")
+    pyfilename = "../test/condorSub/dict_%snowrongPU-AOD.py" % pyfilename.replace("Run", "")
 
     with open(pyfilename, "w+") as fout:
 

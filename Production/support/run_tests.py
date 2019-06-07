@@ -15,6 +15,8 @@ def run_test(sample, scenario):
 
     print "Testing %s with %s scenario" % (scenario, sample)
 
+    os.chdir("../test/")
+
     outfile = "test_" + sample.split(".")[-1]
     cmsRun_command = "cmsRun runMakeTreeFromMiniAOD_cfg.py outfile=%s inputFilesConfig=%s nstart=2 nfiles=1 scenario=%s numevents=1" % (outfile, sample, scenario)
 
@@ -40,8 +42,8 @@ if __name__ == "__main__":
               #["Fall17nowrongPU", "RunIIFall17MiniAODv2.QCD_HT200to300_TuneCP5_13TeV-madgraph-pythia8AOD"],
               #["2016MiniAODv3", "Run2016C-17Jul2018-v1.METAOD"],
               #["2017ReReco31Mar", "Run2017E-31Mar2018-v1.METAOD"],
-              #["2018ReReco17Sep", "Run2018A-17Sep2018-v1.METAOD"],
-              ["Summer16MiniAODv3", "RunIISummer16MiniAODv3.DYJetsToLL_M-5to50_HT-100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD"],
+              ["2018ReReco17Sep", "Run2018A-17Sep2018-v1.METAOD"],
+              #["Summer16MiniAODv3", "RunIISummer16MiniAODv3.DYJetsToLL_M-5to50_HT-100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD"],
             ]
 
     for test in tests:
