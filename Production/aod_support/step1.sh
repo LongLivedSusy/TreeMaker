@@ -9,10 +9,11 @@ echo "CMSSW on Condor"
 export CMSSWVER=""
 export CMSSWLOC=""
 export CMSSWXRD=""
+export SRMPATH=""
 export OPTIND=1
 while [[ $OPTIND -lt $# ]]; do
 	# getopts in silent mode, don't exit on errors
-	getopts ":C:L:X:" opt
+	getopts ":C:L:X:o:" opt
 	case "$opt" in
 		C) export CMSSWVER=$OPTARG
 		;;
@@ -20,6 +21,8 @@ while [[ $OPTIND -lt $# ]]; do
 		;;
 		X) export CMSSWXRD=$OPTARG
 		;;
+                o) export SRMPATH=$OPTARG
+                ;;
 		# keep going if getopts had an error
 		\? | :) OPTIND=$((OPTIND+1))
 		;;
@@ -49,13 +52,15 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 #	export SCRAM_ARCH=${CMSSWLOC}
 #fi
 
+USERNAME="$(echo "$SRMPATH" | cut -d'/' -f10)"
+
 # get tarball from e.g. http://stash.osgconnect.net/+vkutzner/
-echo $USER
-if [ "$USER" == "aksingh" ]
+echo $USERNAME
+if [ "$USERNAME" == "aksingh" ]
 then
-    wget http://stash.osgconnect.net/+akshansh/${CMSSWVER}.tar.gz
+    curl http://stash.osgconnect.net/+akshansh/${CMSSWVER}.tar.gz > ${CMSSWVER}.tar.gz
 else
-    wget http://stash.osgconnect.net/+$USER/${CMSSWVER}.tar.gz
+    curl http://stash.osgconnect.net/+$USERNAME/${CMSSWVER}.tar.gz > ${CMSSWVER}.tar.gz
 fi
 
 # use a tarball if we have it, otherwise make a new release area
