@@ -6,15 +6,16 @@ import commands
 # create AOD file lists from exisiting miniAOD file lists. Configuration:
 
 check_dataset_availablity = True
+write_file_lists = False
 
-#campaign = "Run2018D*"
-#datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
+campaign = "Run2016*"
+datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
 
 #campaign = "Summer16"
 #datastreams = []
 
-campaign = "RunIIFall17MiniAODv2"
-datastreams = []
+#campaign = "RunIIFall17MiniAODv2"
+#datastreams = []
 
 # Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
 #
@@ -118,8 +119,7 @@ for datastream in datastreams:
                     print "### warning, sample not readily available on any site: %s" % item
                     os.system('echo "%s" >> samples_not_available_%s' % (item, campaign))
 
-        # skip the rest
-        continue
+        if not write_file_lists: continue
                 
         # create python configuration:
         all_filenames = ""
