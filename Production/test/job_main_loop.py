@@ -87,7 +87,7 @@ for i_file, aod_file in enumerate(aod_files):
         for user in userlist:
 
             cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
-            cmd = cmd.replace("/%s/" % username, "/%s/ % user")
+            cmd = cmd.replace("/%s/" % username, "/%s/" % user)
 
             # check for Sams foldername:
             if "ProductionRun2v4" in cmd and user != "sbein":
