@@ -12,8 +12,8 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/A08D0A82-DEB0-E611-AD57-0CC47A7E0006.root',
 '/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/E019C372-E1B0-E611-A15F-0025904B1370.root',
 '/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/4095CFF5-E9B0-E611-9D45-0CC47A7FC7C8.root',
-'/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/5A7DB1F3-E9B0-E611-B77F-0CC47A7FC44E.root',
-'/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/CED296AA-F2B0-E611-801D-0CC47A78A468.root',
+#'/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/5A7DB1F3-E9B0-E611-B77F-0CC47A7FC44E.root',
+#'/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/CED296AA-F2B0-E611-801D-0CC47A78A468.root',
 '/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/2810B927-F8B0-E611-879B-0CC47A74527A.root',
 #'/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/8237CA09-F7B0-E611-91D6-003048FFD7A4.root',
 '/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/802B766F-FDB0-E611-AD4C-0CC47A4D76D2.root',
@@ -192,6 +192,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/8694AA2C-51B1-E611-98E9-FA163E20F6DB.root',
 '/store/mc/RunIISummer16DR80Premix/WWTo2L2Nu_13TeV-powheg/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/3EC0F8E3-44B1-E611-A88A-00266CFFC0C0.root',
 ] )
+
 
 
 

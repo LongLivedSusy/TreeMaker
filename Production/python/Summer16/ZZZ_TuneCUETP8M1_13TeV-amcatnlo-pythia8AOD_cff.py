@@ -6,8 +6,8 @@ secFiles = cms.untracked.vstring()
 source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/0C68858C-FFBE-E611-A90C-FA163E3CB127.root',
-'/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/364B4795-FFBE-E611-9D06-FA163E73FE13.root',
-'/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/7CD8C88B-FFBE-E611-8538-00259075D714.root',
+#'/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/364B4795-FFBE-E611-9D06-FA163E73FE13.root',
+#'/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/7CD8C88B-FFBE-E611-8538-00259075D714.root',
 '/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/1AC7D0EC-74BD-E611-8D54-0242AC130002.root',
 '/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/D411C63F-78BD-E611-AF01-0242AC130003.root',
 '/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/C8DDAE36-74BD-E611-B5F3-ECF4BBE1CEB0.root',
@@ -41,6 +41,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/04E64E9A-95BD-E611-B252-001EC94BA119.root',
 '/store/mc/RunIISummer16DR80Premix/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/58E64DFC-9DBE-E611-B30A-D4AE527EE7C4.root',
 ] )
+
 
 
 
