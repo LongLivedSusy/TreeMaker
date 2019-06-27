@@ -109,7 +109,11 @@ for i_file, aod_file in enumerate(aod_files):
     cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file
     status, output = runcmd(cmd)
 
-    if status != 0:
+    if status == 123:
+        print "Lumisection was masked (empty JSON)"
+        print "Creating empty ROOT file..."
+        os.system("echo masked > %s.root" % outfile)
+    elif status != 0:
         job_return_status = status
         print "error while getting miniAOD file name..."
         continue
