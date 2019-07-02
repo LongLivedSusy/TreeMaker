@@ -16,6 +16,7 @@ def get_userlist():
     userlist = []
     hub_folders = glob.glob("/pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/")
     for hub_folder in hub_folders:
+        if "amohamed" in hub_folder: continue
         userlist.append(hub_folder.split("/")[-3])
 
     return userlist
