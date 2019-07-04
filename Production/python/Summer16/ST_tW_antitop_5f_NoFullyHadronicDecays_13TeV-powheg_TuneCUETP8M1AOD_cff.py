@@ -292,7 +292,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/04E99AB4-2BB9-E611-B0B9-D4AE527F2883.root',
 #'/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/AC6C1A71-2DB9-E611-9F1F-782BCB67826E.root',
 #'/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/F4242599-2CB9-E611-83C2-1866DAEB5230.root',
-'/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/EA85DE36-2EB9-E611-9108-14187741278B.root',
+#'/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/EA85DE36-2EB9-E611-9108-14187741278B.root',
 #'/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/8E98D3EC-2BB9-E611-AB88-B083FED04CAB.root',
 #'/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/8ADD3335-2EB9-E611-AACC-1866DAEA6D0C.root',
 #'/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/FC9ADA48-30B9-E611-BC21-D4AE527F2883.root',
@@ -547,6 +547,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/42850438-32B9-E611-91EC-0019B9CABE2A.root',
 '/store/mc/RunIISummer16DR80Premix/ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/C2E87FAF-51B9-E611-9188-1866DAEB3628.root',
 ] )
+
 
 
 

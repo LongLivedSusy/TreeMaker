@@ -33,7 +33,7 @@ readFiles.extend( [
 #'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/C8490FCA-27B9-E611-BAD1-24BE05C49891.root',
 #'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/1067A836-26B9-E611-AACE-A0000420FE80.root',
 #'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/42F6DC36-26B9-E611-9882-A0000620FE80.root',
-'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/F6967C29-26B9-E611-B587-B8CA3A70A5E8.root',
+#'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/F6967C29-26B9-E611-B587-B8CA3A70A5E8.root',
 #'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/0452CFCA-27B9-E611-B8BA-A0000420FE80.root',
 #'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/DC5592A7-F1B9-E611-B5BB-A0369F301924.root',
 #'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/32CB14B9-1AB9-E611-A5BB-0242AC130004.root',
@@ -483,6 +483,7 @@ readFiles.extend( [
 #'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/98F6ADBB-1AB9-E611-875C-B083FECFEF7D.root',
 #'/store/mc/RunIISummer16DR80Premix/GJets_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/8EB499C0-1BB9-E611-8CD8-782BCB63EBF5.root',
 ] )
+
 
 
 

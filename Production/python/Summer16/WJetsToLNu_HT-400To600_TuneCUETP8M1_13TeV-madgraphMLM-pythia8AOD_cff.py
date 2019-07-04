@@ -40,17 +40,17 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/E8897ABA-EAB2-E611-B315-02163E01768F.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/505CB445-F0B2-E611-B4C9-02163E012EC2.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/9AA70B66-15B3-E611-B050-FA163E6CC06D.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/44B7E7DA-14B3-E611-BC85-FA163ED5B322.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/F60CE196-DAB2-E611-964A-001E675A6C2A.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/0EFC259D-DDB2-E611-B794-001E67DDD0AA.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/7A2A799E-DFB2-E611-9C84-A4BF01025A8B.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/E0E000A1-DEB2-E611-B08F-001E67A3EA89.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/44B7E7DA-14B3-E611-BC85-FA163ED5B322.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/F60CE196-DAB2-E611-964A-001E675A6C2A.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/0EFC259D-DDB2-E611-B794-001E67DDD0AA.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/7A2A799E-DFB2-E611-9C84-A4BF01025A8B.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/E0E000A1-DEB2-E611-B08F-001E67A3EA89.root',
 #'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/7ED4DEA4-DEB2-E611-ABB8-001E67E69E05.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/DA22B7C0-E0B2-E611-96C9-001E67DFF67C.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/56F02C10-E1B2-E611-BB21-001E67DDD0AA.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/88EB1D5A-E2B2-E611-BAD1-001E67DFF6E0.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/86CEE4C2-E0B2-E611-A0A2-E0CB4E1277DF.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/56A663B1-E4B2-E611-A01F-001E67DFFF5F.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/DA22B7C0-E0B2-E611-96C9-001E67DFF67C.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/56F02C10-E1B2-E611-BB21-001E67DDD0AA.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/88EB1D5A-E2B2-E611-BAD1-001E67DFF6E0.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/86CEE4C2-E0B2-E611-A0A2-E0CB4E1277DF.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/56A663B1-E4B2-E611-A01F-001E67DFFF5F.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/C087C7CD-EBB2-E611-A2EC-001E67A402B2.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/FCA956DF-14B3-E611-8BE5-001E67DDC2CC.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/FE7BD5FD-D0B2-E611-B265-FA163E182520.root',
@@ -239,6 +239,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/08458668-E2B2-E611-B11B-008CFA111280.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/18023BDF-F8B2-E611-9C83-008CFA197DA8.root',
 ] )
+
 
 
 

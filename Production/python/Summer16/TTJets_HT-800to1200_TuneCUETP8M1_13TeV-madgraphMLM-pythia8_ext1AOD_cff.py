@@ -1760,7 +1760,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/80000/7A74D6A3-47C6-E611-BB81-00266CFE6C40.root',
 '/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/80000/6ED97343-67C5-E611-ACC5-0090FAA57B20.root',
 '/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/80000/D6706FA4-2DC6-E611-A2CC-002590D0AFCA.root',
-'/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/80000/889BD071-A0C5-E611-9B61-001C23BEDBA9.root',
+#'/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/80000/889BD071-A0C5-E611-9B61-001C23BEDBA9.root',
 '/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/60000/DE7402B4-BAC6-E611-AD9A-A0369F7FC83C.root',
 '/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/80000/6EE99B24-6AC7-E611-AB66-34E6D7BDDEE8.root',
 '/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/80000/58E6314A-15C5-E611-8D7C-0023AEEEB226.root',
@@ -1900,6 +1900,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/60000/C6A97701-39C8-E611-BAD1-002590E7E07A.root',
 '/store/mc/RunIISummer16DR80Premix/TTJets_HT-800to1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/60000/CC39B006-1BC7-E611-9C78-002590E7D5A6.root',
 ] )
+
 
 
 

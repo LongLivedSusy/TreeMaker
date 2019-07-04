@@ -366,7 +366,7 @@ readFiles.extend( [
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/80670403-80B2-E611-94E5-24BE05C4D851.root',
 '/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/DAE4B363-7FB2-E611-AF9A-24BE05CEEC21.root',
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/D0225D30-80B2-E611-8085-24BE05C6C7E1.root',
-'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/ECE52047-80B2-E611-ACD4-A0000420FE80.root',
+#'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/ECE52047-80B2-E611-ACD4-A0000420FE80.root',
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/38728FF9-7CB2-E611-90C6-A0369F30FFD2.root',
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/58DF98DC-80B2-E611-A835-24BE05C33C71.root',
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/1414CB6A-7FB2-E611-B548-A0369F3102F6.root',
@@ -3540,6 +3540,7 @@ readFiles.extend( [
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/70000/7EDAA97B-3FB4-E611-95A1-44A842CFD5E5.root',
 '/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/70000/38780DB3-4CB4-E611-8201-484D7E8DF0D3.root',
 ] )
+
 
 
 
