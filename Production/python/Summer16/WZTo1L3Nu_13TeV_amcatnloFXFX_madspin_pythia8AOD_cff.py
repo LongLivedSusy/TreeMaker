@@ -33,7 +33,7 @@ readFiles.extend( [
 #'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/FEFEC2A6-B9C9-E611-B9C6-008CFA197A90.root',
 #'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/B079D45E-B9C9-E611-8E31-008CFA111170.root',
 #'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/C6231F02-BBC9-E611-B335-008CFA111314.root',
-'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/4C0DBC74-B9C9-E611-846D-008CFA197448.root',
+#'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/4C0DBC74-B9C9-E611-846D-008CFA197448.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/B6CF4752-BAC9-E611-B418-008CFA111270.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/0A6D7E52-BAC9-E611-94C1-008CFA1113E8.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/F05EA747-BAC9-E611-A9A6-008CFA1113F8.root',
@@ -53,7 +53,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/220F39D7-C5C9-E611-B002-008CFA1979EC.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/8C95A0AB-C6C9-E611-B52E-008CFA111320.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/92F78B3C-C9C9-E611-B22D-008CFA111218.root',
-'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/5E22273C-C9C9-E611-9B17-008CFA111334.root',
+#'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/5E22273C-C9C9-E611-9B17-008CFA111334.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/706E9550-CAC9-E611-BF60-008CFA197AC4.root',
 #'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/647FAF38-C8C9-E611-AEA1-008CFA197488.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/5C5219EB-CCC9-E611-BAAB-008CFA110B08.root',
@@ -90,7 +90,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/26A8400E-54C9-E611-B25B-008CFA111354.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/D0149054-57C9-E611-9A61-008CFA1113E8.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/38E81402-53C9-E611-8084-008CFA197B74.root',
-'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/1ECA2079-58C9-E611-8C59-008CFA111314.root',
+#'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/1ECA2079-58C9-E611-8C59-008CFA111314.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/16CE4091-5BC9-E611-8FAD-008CFA1113E8.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/C089F248-5AC9-E611-A366-008CFA111354.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/AAC7E8CB-5EC9-E611-8297-008CFA1112BC.root',
@@ -149,10 +149,11 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/489DD86D-4FC9-E611-A9BF-008CFA111354.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/A6D4356C-4FC9-E611-A600-008CFA1113F4.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/94B03778-4FC9-E611-8EAD-008CFA1974D8.root',
-'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/66AA6E29-ACC7-E611-9052-008CFA11118C.root',
+#'/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/66AA6E29-ACC7-E611-9052-008CFA11118C.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/1E5CE81A-CFCA-E611-8D57-02163E019CD9.root',
 '/store/mc/RunIISummer16DR80Premix/WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/38DAB3F7-CFCA-E611-9530-02163E019CA0.root',
 ] )
+
 
 
 

@@ -5,7 +5,7 @@ readFiles = cms.untracked.vstring()
 secFiles = cms.untracked.vstring()
 source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/1867F951-7AD7-E611-9DE6-02163E013C63.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/1867F951-7AD7-E611-9DE6-02163E013C63.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/E88EEFCA-81D7-E611-9C5F-02163E0131CB.root',
 #'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/EE7AD7C5-84D7-E611-9774-02163E013147.root',
 #'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/94C87128-9ED7-E611-A4B8-02163E00C5B8.root',
@@ -195,6 +195,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/8C96660D-7CD7-E611-8FF1-0CC47AD98D0C.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/F4B88665-A6D7-E611-9DEF-0CC47A6C1056.root',
 ] )
+
 
 
 
