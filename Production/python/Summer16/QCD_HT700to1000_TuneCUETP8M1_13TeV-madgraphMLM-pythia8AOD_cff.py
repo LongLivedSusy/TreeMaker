@@ -1854,7 +1854,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/DC91FC0B-D5B2-E611-96CB-1866DAEA7D94.root',
 '/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/6E2E520F-D5B2-E611-AB75-549F3525CD78.root',
 '/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/EC00FB0B-D5B2-E611-B2F6-141877343E6D.root',
-'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/AE64600D-D5B2-E611-B6B4-14187741278B.root',
+#'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/AE64600D-D5B2-E611-B6B4-14187741278B.root',
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/08A87E1A-D5B2-E611-AEEE-782BCB21110D.root',
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/68D90D13-D5B2-E611-A071-782BCB537DBB.root',
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/288EB8F1-D6B2-E611-AC01-1866DAEA8038.root',
@@ -1865,6 +1865,7 @@ readFiles.extend( [
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/12E892C0-DFB2-E611-A5B6-842B2B180C66.root',
 #'/store/mc/RunIISummer16DR80Premix/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/3664A8F7-3DB3-E611-AA6A-1866DAEA6E1C.root',
 ] )
+
 
 
 
