@@ -173,7 +173,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/30B0F14B-34BB-E611-BAE8-00238BCE4642.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/7C3E254D-34BB-E611-857B-0CC47AD98D0C.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/5A3F056E-31BB-E611-9DFC-0CC47A13CDB0.root',
-'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/48F11784-36BB-E611-A8C8-002590E2F5CE.root',
+#'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/48F11784-36BB-E611-A8C8-002590E2F5CE.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/02BE1E7A-35BB-E611-A975-0CC47A6C1038.root',
 #'/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/64014D54-37BB-E611-9744-0025907253B6.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/70000/88D6887B-35BB-E611-8EBB-90B11C2CA3F8.root',
@@ -2537,6 +2537,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/C043882A-58BD-E611-87C4-002590491AE4.root',
 '/store/mc/RunIISummer16DR80Premix/WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/D031B96F-6BBD-E611-BD39-0CC47A13D284.root',
 ] )
+
 
 
 

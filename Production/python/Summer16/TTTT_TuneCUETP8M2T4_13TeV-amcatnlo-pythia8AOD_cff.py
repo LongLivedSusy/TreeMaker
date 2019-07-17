@@ -8,11 +8,11 @@ readFiles.extend( [
 #'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/7EE80CF9-47CC-E611-8E3C-00259048AE52.root',
 #'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/24DDD5EF-56CC-E611-8C22-0025901AC3F8.root',
 #'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/D255AE36-61CC-E611-8737-0CC47A57CCEA.root',
-'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/2878B12C-68CC-E611-A1D9-0025907D2000.root',
-'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/F8666442-77CC-E611-902D-002590FD5A3A.root',
+#'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/2878B12C-68CC-E611-A1D9-0025907D2000.root',
+#'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/F8666442-77CC-E611-902D-002590FD5A3A.root',
 '/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/70B91C7A-7BCC-E611-9AF1-002590FD5A72.root',
-'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/DA44746F-89CC-E611-8F16-002590D9D8AC.root',
-'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/4A6B2C96-A0CC-E611-8603-0CC47A0AD6F8.root',
+#'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/DA44746F-89CC-E611-8F16-002590D9D8AC.root',
+#'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/4A6B2C96-A0CC-E611-8603-0CC47A0AD6F8.root',
 '/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/9430E366-AACC-E611-94B9-0CC47A57CB8E.root',
 '/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/246C1AD3-B8CC-E611-83EE-0025907D2430.root',
 #'/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/F23B7641-BFCC-E611-A55F-002590D9D96E.root',
@@ -349,6 +349,7 @@ readFiles.extend( [
 '/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/3473706C-79CE-E611-B884-00259029ECEA.root',
 '/store/mc/RunIISummer16DR80Premix/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/269768D7-AACE-E611-A325-0CC47A57CC8A.root',
 ] )
+
 
 
 
