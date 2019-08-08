@@ -21,17 +21,17 @@ parser.add_option('--test', action='store_true', dest='test')
 def get_catalogue(aod_file_name):
 
     catalogues = glob.glob("catalogue_*.dat")
+
+    # quick fix for Yuvi's samples:
+    if "RunIISummer16DR80Premix/DYJetsToLL_M-5to50" in aod_file_name:
+        return "RunIISummer16MiniAODv3"
     
     for catalogue in catalogues:
         catalogue_stripped_name = catalogue.split("/")[-1].split("catalogue_")[-1].split(".dat")[0]
         if catalogue_stripped_name in aod_file_name:
             print "Using catalogue %s" % catalogue_stripped_name
             return catalogue_stripped_name
-
-    # quick fix for Yuvi's samples:
-    if "RunIISummer16DR80Premix/DYJetsToLL_M-5to50" in aod_file_name:
-        return "RunIISummer16MiniAODv3"
-            
+           
     quit("No matching catalogue file found")
 
 
