@@ -89,9 +89,9 @@ for i_file, aod_file in enumerate(aod_files):
             cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
             cmd = cmd.replace("/%s/" % username, "/%s/" % user)
 
-            # check for Sams foldername:
-            if "ProductionRun2v4" in cmd and user != "sbein":
-                cmd = cmd.replace("ProductionRun2v4", "ProductionRun2v3")
+            ## check for Sams foldername:
+            #if "ProductionRun2v4" in cmd and user != "sbein":
+            #    cmd = cmd.replace("ProductionRun2v4", "ProductionRun2v3")
 
             # check if output file already exists for user
             status, output = runcmd(cmd)
