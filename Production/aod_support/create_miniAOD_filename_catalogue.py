@@ -28,6 +28,10 @@ def dataset_is_correct_miniAOD(i_File, dataset):
        ("Run2016H" in i_File and "/MINIAOD/17Jul2018-v1/" in dataset) or \
        ("Run2016H" in i_File and "/MINIAOD/17Jul2018-v2/" in dataset) or \
        ("Run2017"  in i_File and "/MINIAOD/31Mar2018-v1/" in dataset) or \
+       ("EGamma" in i_File and "Run2018A" in i_File and "/MINIAOD/17Sep2018-v2/" in dataset) or \
+       ("EGamma" in i_File and "Run2018B" in i_File and "/MINIAOD/26Sep2018-v1/" in dataset) or \
+       ("EGamma" in i_File and "Run2018C" in i_File and "/MINIAOD/17Sep2018-v1/" in dataset) or \
+       ("EGamma" in i_File and "Run2018D" in i_File and "/MINIAOD/22Jan2019-v2/" in dataset) or \
        ("Run2018A" in i_File and "/MINIAOD/17Sep2018-v1/" in dataset) or \
        ("Run2018B" in i_File and "/MINIAOD/17Sep2018-v1/" in dataset) or \
        ("Run2018C" in i_File and "/MINIAOD/17Sep2018-v1/" in dataset) or \
@@ -86,10 +90,13 @@ def main(treemaker_path, campaign, debug, outfile = ""):
         return
         
     if outfile == "":
-        outfile = campaign
+        #outfile = campaign
+        outfile = campaign + "_EGamma"
 
-    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/*AOD*py" % (treemaker_path, campaign))
+    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/EGamma*AOD*py" % (treemaker_path, campaign))
+    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/*AOD*py" % (treemaker_path, campaign))
     if status != 0:
+        print file_names_string
         return
 
     file_names = []
