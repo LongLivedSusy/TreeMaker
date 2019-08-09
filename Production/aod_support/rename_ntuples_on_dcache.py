@@ -7,7 +7,6 @@ import commands
 def get_all_processed_files(dcache_user):
 
     print "Getting file list from Desy pnfs..."
-
     return glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/*root" % dcache_user)
 
 
@@ -32,10 +31,16 @@ def rename_file(original_file_name):
     print cmd
     status, output = commands.getstatusoutput(cmd)
     print output
+    
+    # save logfile:
+    os.system("echo '%s' >> rename.log" % cmd)
+    os.system("echo '%s' >> rename.log" % output)
+    os.system("echo '============' >> rename.log")
+
     if status != 0:
         print "Error"
         quit()
-    
+
        
 if __name__ == "__main__":
 
@@ -47,5 +52,5 @@ if __name__ == "__main__":
 
     for file_name in files:
         rename_file(file_name)
-
+        break
 
