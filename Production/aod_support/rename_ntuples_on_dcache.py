@@ -17,10 +17,6 @@ def rename_file(original_file_name, message, dryrun):
 
     file_name = original_file_name
 
-    if len(original_file_name.split("_")) != 3:
-        print "Different file name format:", original_file_name
-        return
-
     folder = "/".join(file_name.split("/")[:-1])
     file_name_without_index = "_".join(original_file_name.split("_")[:-2])
 
@@ -30,7 +26,6 @@ def rename_file(original_file_name, message, dryrun):
 
     # check if file name follows naming scheme
     running_index = original_file_name.split("_")[-2]
-    print "running_index", running_index
     if "-" in running_index:
         print "Already renamed:", original_file_name
         return
@@ -48,7 +43,9 @@ def rename_file(original_file_name, message, dryrun):
         break
 
     cmd = 'edmPickEvents.py "/%s/%s/AOD" %s:%s:%s' % (datatream, identifier, RunNum, LumiBlockNum, EvtNum)
+    print cmd
     status, output = commands.getstatusoutput(cmd)
+    print output
     if status != 0:
         print "Error with running edmPickEvents"
         quit()
@@ -56,8 +53,12 @@ def rename_file(original_file_name, message, dryrun):
     aod_file_name = ""
     for line in output.split("\n"):
         if "inputFiles" in line:
-            aod_file_name =  line.split("/")[7] + "-" + line.split("/")[8].replace(".root", "")
-            break
+            try:
+                aod_file_name =  line.split("/")[7] + "-" + line.split("/")[8].replace(".root", "")
+                break
+            except:
+                print "edmPickEvent issue with:", original_file_name
+                return
 
     if len(aod_file_name)>0:
         updated_file_name = file_name_without_index +"_%s_RA2AnalysisTree.root" % aod_file_name
@@ -65,12 +66,9 @@ def rename_file(original_file_name, message, dryrun):
         print "Error with running edmPickEvents"
         quit()
 
-    # pick event:
     cmd = "gfal-rename srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s" % (original_file_name, updated_file_name)
     print cmd
-
     os.system("echo '%s' >> rename.log" % cmd)
-
     # also save script to revert all changes:
     cmd_revert = "gfal-rename srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s" % (updated_file_name, original_file_name)
     os.system("echo '%s' >> rename-revert.sh" % cmd_revert)
@@ -103,9 +101,15 @@ def rename_file_wrapper(parameters):
 if __name__ == "__main__":
 
     parser = OptionParser()
-    parser.add_option("--username", dest="username", default="vkutzner")
+    parser.add_option("--username", dest="username")
+    parser.add_option("--threads", dest="threads", default=5)
     parser.add_option("--dryrun", dest="dryrun", action="store_true")
     (options, args) = parser.parse_args()
+
+    # check username:
+    if not options.username:
+        print "No DCache/CERN username given, use --username to specify it"
+        quit()
 
     # check proxy
     status, output = commands.getstatusoutput("voms-proxy-info")
@@ -121,14 +125,17 @@ if __name__ == "__main__":
         print "Folder exists, that's fine"
     
     # loop over all files and rename them:
-    pool = multiprocessing.Pool(5)
+    pool = multiprocessing.Pool(int(options.threads))
     parameters = []
     files = get_all_processed_files(options.username)
     n_files = len(files)
 
     for i_file, file_name in enumerate(files):
+
+        # Only data for now!
+        if "Run201" not in file_name: continue
+
         message = "%s / %s" % (i_file, n_files)
-        #rename_file(file_name)
         parameters.append([file_name, message, options.dryrun])
 
     print pool.map(rename_file_wrapper, parameters) 
