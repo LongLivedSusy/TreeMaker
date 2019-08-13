@@ -11,6 +11,32 @@ def get_all_processed_files(dcache_user):
     return glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/*root" % dcache_user)
 
 
+def get_replacement_map():
+
+    replacement_map = {}
+
+    for datastream in ["MET", "JetHT", "SingleMuon", "SingleElectron"]:
+        for campaign in glob.glob("../python/Run201*"):
+
+            short_name = campaign.split("/")[-1]
+
+            cmd = "grep root %s/*%sAOD*py | head -n1" % (campaign, datastream)
+            status, out = commands.getstatusoutput(cmd)
+            if status == 0:
+
+                if "_cff.py:" in out:
+                    out = out.split(":")[1]
+
+                try:
+                    aod_dataset = out.split("/")[3]
+                    aod_name = out.split("/AOD/")[1].split("/")[0]
+                    replacement_map[datastream + "/" + short_name] = datastream + "/" + aod_dataset + "-" + aod_name
+                except:
+                    pass
+
+    return replacement_map
+
+
 def rename_file(original_file_name, message, dryrun):
 
     print message
@@ -24,6 +50,12 @@ def rename_file(original_file_name, message, dryrun):
     datatream = dataset.split(".")[1].split("AOD")[0]
     identifier = dataset.split(".")[0]
 
+    # replace dataset identifying tag if necessary:
+    replace_map = get_replacement_map()
+    if datatream + "/" + identifier in replace_map.keys():
+        updated_identifier = replace_map[datatream + "/" + identifier].split("/")[1]
+        identifier = updated_identifier
+
     # check if file name follows naming scheme
     running_index = original_file_name.split("_")[-2]
     if "-" in running_index:
@@ -31,24 +63,32 @@ def rename_file(original_file_name, message, dryrun):
         return
 
     # get run, lumi, event number of first event in tree:
-    tree = TChain("TreeMaker2/PreSelection")
-    tree.Add(file_name)
     RunNum = -1
     LumiBlockNum = -1
     EvtNum = -1
-    for event in tree:
-        RunNum = event.RunNum
-        LumiBlockNum = event.LumiBlockNum
-        EvtNum = event.EvtNum
-        break
+    try:
+        tree = TChain("TreeMaker2/PreSelection")
+        tree.Add(file_name)
+        for event in tree:
+            RunNum = event.RunNum
+            LumiBlockNum = event.LumiBlockNum
+            EvtNum = event.EvtNum
+            break
+    except:
+        print "Couldn't open tree, most likely a masked lumisection"
+        os.system("echo '%s' >> files_without_tree.log" % original_file_name)
+        return
+
+    if RunNum == -1:
+        os.system("echo '%s' >> files_without_runnum.log" % original_file_name)
+        return
 
     cmd = 'edmPickEvents.py "/%s/%s/AOD" %s:%s:%s' % (datatream, identifier, RunNum, LumiBlockNum, EvtNum)
-    print cmd
     status, output = commands.getstatusoutput(cmd)
-    print output
     if status != 0:
         print "Error with running edmPickEvents"
-        quit()
+        os.system("echo '%s' >> files_with_edmPick_isssue.log" % original_file_name)
+        return
 
     aod_file_name = ""
     for line in output.split("\n"):
@@ -57,14 +97,16 @@ def rename_file(original_file_name, message, dryrun):
                 aod_file_name =  line.split("/")[7] + "-" + line.split("/")[8].replace(".root", "")
                 break
             except:
-                print "edmPickEvent issue with:", original_file_name
+                print "Error with edmPickEvents output"
+                os.system("echo '%s' >> files_with_edmPick_isssue.log" % original_file_name)
                 return
 
     if len(aod_file_name)>0:
         updated_file_name = file_name_without_index +"_%s_RA2AnalysisTree.root" % aod_file_name
     else:
         print "Error with running edmPickEvents"
-        quit()
+        os.system("echo '%s' >> files_with_edmPick_isssue.log" % original_file_name)
+        return
 
     cmd = "gfal-rename srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s" % (original_file_name, updated_file_name)
     print cmd
@@ -81,16 +123,17 @@ def rename_file(original_file_name, message, dryrun):
     os.system("echo '============' >> rename.log")
     print output
     if status == 17:
-        print "File exists, moving to duplicates directory..."
-        cmd = "gfal-rename srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s" % (original_file_name, updated_file_name.replace("ProductionRun2v3", "ProductionRun2v3_duplicates"))
-        status, output = commands.getstatusoutput(cmd)
-        os.system("echo '%s' >> rename.log" % cmd)
-        os.system("echo '%s' >> rename.log" % output)
-        os.system("echo '============' >> rename.log")
-        print output
+        print "File exists"
+        os.system("echo '%s' >> files_duplicates_to_be_deleted.log" % original_file_name)
+        #cmd = "gfal-rename srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s" % (original_file_name, updated_file_name.replace("ProductionRun2v3", "ProductionRun2v3_duplicates"))
+        #status, output = commands.getstatusoutput(cmd)
+        #os.system("echo '%s' >> rename.log" % cmd)
+        #os.system("echo '%s' >> rename.log" % output)
+        #os.system("echo '============' >> rename.log")
+        #print output
     elif status != 0:
         print "Error with gfal-rename"
-        os.system("echo 'ERROR' >> rename.log")
+        os.system("echo '%s' >> files_gfal_error.log" % original_file_name)
        
 
 def rename_file_wrapper(parameters):
@@ -106,6 +149,12 @@ if __name__ == "__main__":
     parser.add_option("--dryrun", dest="dryrun", action="store_true")
     (options, args) = parser.parse_args()
 
+    print "Using this replacement map:"
+    replacement_map = get_replacement_map()
+    for item in replacement_map:    
+        print item, "\t-->\t", replacement_map[item]
+    print "\n"
+
     # check username:
     if not options.username:
         print "No DCache/CERN username given, use --username to specify it"
@@ -119,10 +168,10 @@ if __name__ == "__main__":
             quit()
 
     # create directory for duplicates:
-    cmd = "gfal-mkdir srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3_duplicates" % options.username
-    status, output = commands.getstatusoutput(cmd)
-    if status == 17:
-        print "Folder exists, that's fine"
+    #cmd = "gfal-mkdir srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3_duplicates" % options.username
+    #status, output = commands.getstatusoutput(cmd)
+    #if status == 17:
+    #    print "Folder exists, that's fine"
     
     # loop over all files and rename them:
     pool = multiprocessing.Pool(int(options.threads))
