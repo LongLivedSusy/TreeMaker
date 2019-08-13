@@ -11,28 +11,34 @@ def get_all_processed_files(dcache_user):
     return glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/*root" % dcache_user)
 
 
-def get_replacement_map():
+def get_replacement_map(recreate = False):
 
-    replacement_map = {}
+    if recreate:
 
-    for datastream in ["MET", "JetHT", "SingleMuon", "SingleElectron"]:
-        for campaign in glob.glob("../python/Run201*"):
+        replacement_map = {}
 
-            short_name = campaign.split("/")[-1]
+        for datastream in ["MET", "JetHT", "SingleMuon", "SingleElectron"]:
+            for campaign in glob.glob("../python/Run201*"):
 
-            cmd = "grep root %s/*%sAOD*py | head -n1" % (campaign, datastream)
-            status, out = commands.getstatusoutput(cmd)
-            if status == 0:
+                short_name = campaign.split("/")[-1]
 
-                if "_cff.py:" in out:
-                    out = out.split(":")[1]
+                cmd = "grep root %s/*%sAOD*py | head -n1" % (campaign, datastream)
+                status, out = commands.getstatusoutput(cmd)
+                if status == 0:
 
-                try:
-                    aod_dataset = out.split("/")[3]
-                    aod_name = out.split("/AOD/")[1].split("/")[0]
-                    replacement_map[datastream + "/" + short_name] = datastream + "/" + aod_dataset + "-" + aod_name
-                except:
-                    pass
+                    if "_cff.py:" in out:
+                        out = out.split(":")[1]
+
+                    try:
+                        aod_dataset = out.split("/")[3]
+                        aod_name = out.split("/AOD/")[1].split("/")[0]
+                        replacement_map[datastream + "/" + short_name] = datastream + "/" + aod_dataset + "-" + aod_name
+                    except:
+                        pass
+
+    else:
+    
+        replacement_map = {'SingleMuon/Run2016H-17Jul2018-v1': 'SingleMuon/Run2016H-07Aug17-v1', 'MET/Run2016F-17Jul2018-v1': 'MET/Run2016F-07Aug17-v1', 'SingleMuon/Run2016C-17Jul2018-v1': 'SingleMuon/Run2016C-07Aug17-v1', 'SingleMuon/Run2017C-31Mar2018-v1': 'SingleMuon/Run2017C-17Nov2017-v1', 'SingleMuon/Run2016F-17Jul2018-v1': 'SingleMuon/Run2016F-07Aug17-v1', 'JetHT/Run2016H-17Jul2018-v1': 'JetHT/Run2016H-07Aug17-v1', 'SingleElectron/Run2017E-31Mar2018-v1': 'SingleElectron/Run2017E-17Nov2017-v1', 'SingleElectron/Run2016F-17Jul2018-v1': 'SingleElectron/Run2016F-07Aug17-v1', 'JetHT/Run2018B-17Sep2018-v1': 'JetHT/Run2018B-17Sep2018-v1', 'MET/Run2018D-PromptReco-v2': 'MET/Run2018D-PromptReco-v2', 'JetHT/Run2016B-17Jul2018_ver1-v1': 'JetHT/Run2016B-07Aug17_ver1-v1', 'JetHT/Run2018A-17Sep2018-v1': 'JetHT/Run2018A-17Sep2018-v1', 'SingleMuon/Run2016B-17Jul2018_ver2-v1': 'SingleMuon/Run2016B-07Aug17_ver2-v1', 'JetHT/Run2016E-17Jul2018-v1': 'JetHT/Run2016E-07Aug17-v1', 'SingleElectron/Run2016H-17Jul2018-v1': 'SingleElectron/Run2016H-07Aug17-v1', 'SingleElectron/Run2017D-31Mar2018-v1': 'SingleElectron/Run2017D-17Nov2017-v1', 'SingleElectron/Run2017B-31Mar2018-v1': 'SingleElectron/Run2017B-17Nov2017-v1', 'MET/Run2017B-31Mar2018-v1': 'MET/Run2017B-17Nov2017-v1', 'MET/Run2017D-31Mar2018-v1': 'MET/Run2017D-17Nov2017-v1', 'JetHT/Run2017F-31Mar2018-v1': 'JetHT/Run2017F-17Nov2017-v1', 'MET/Run2018D-PromptReco-v1': 'MET/Run2018D-PromptReco-v1', 'MET/Run2016E-17Jul2018-v1': 'MET/Run2016E-07Aug17-v1', 'JetHT/Run2017C-31Mar2018-v1': 'JetHT/Run2017C-17Nov2017-v1', 'JetHT/Run2017B-31Mar2018-v1': 'JetHT/Run2017B-17Nov2017-v1', 'JetHT/Run2016G-17Jul2018-v1': 'JetHT/Run2016G-07Aug17-v1', 'SingleMuon/Run2016G-17Jul2018-v1': 'SingleMuon/Run2016G-07Aug17-v1', 'SingleMuon/Run2018C-17Sep2018-v1': 'SingleMuon/Run2018C-17Sep2018-v1', 'SingleElectron/Run2016B-17Jul2018_ver1-v1': 'SingleElectron/Run2016B-07Aug17_ver1-v1', 'SingleMuon/Run2017E-31Mar2018-v1': 'SingleMuon/Run2017E-17Nov2017-v1', 'SingleMuon/Run2016D-17Jul2018-v1': 'SingleMuon/Run2016D-07Aug17-v1', 'SingleMuon/Run2018A-17Sep2018-v1': 'SingleMuon/Run2018A-17Sep2018-v2', 'SingleMuon/Run2018D-PromptReco-v2': 'SingleMuon/Run2018D-PromptReco-v2', 'JetHT/Run2016C-17Jul2018-v1': 'JetHT/Run2016C-07Aug17-v1', 'MET/Run2016B-17Jul2018_ver2-v1': 'MET/Run2016B-07Aug17_ver2-v1', 'MET/Run2018A-17Sep2018-v1': 'MET/Run2018A-17Sep2018-v1', 'SingleElectron/Run2016D-17Jul2018-v1': 'SingleElectron/Run2016D-07Aug17-v1', 'JetHT/Run2017E-31Mar2018-v1': 'JetHT/Run2017E-17Nov2017-v1', 'MET/Run2017F-31Mar2018-v1': 'MET/Run2017F-17Nov2017-v1', 'MET/Run2017C-31Mar2018-v1': 'MET/Run2017C-17Nov2017-v1', 'SingleMuon/Run2017F-31Mar2018-v1': 'SingleMuon/Run2017F-17Nov2017-v1', 'SingleMuon/Run2017B-31Mar2018-v1': 'SingleMuon/Run2017B-17Nov2017-v1', 'MET/Run2016G-17Jul2018-v1': 'MET/Run2016G-07Aug17-v1', 'MET/Run2017E-31Mar2018-v1': 'MET/Run2017E-17Nov2017-v1', 'JetHT/Run2018D-PromptReco-v2': 'JetHT/Run2018D-PromptReco-v2', 'JetHT/Run2018D-PromptReco-v1': 'JetHT/Run2018D-PromptReco-v1', 'SingleElectron/Run2017F-31Mar2018-v1': 'SingleElectron/Run2017F-17Nov2017-v1', 'SingleElectron/Run2016G-17Jul2018-v1': 'SingleElectron/Run2016G-07Aug17-v1', 'JetHT/Run2018C-17Sep2018-v1': 'JetHT/Run2018C-17Sep2018-v1', 'SingleMuon/Run2018B-17Sep2018-v1': 'SingleMuon/Run2018B-17Sep2018-v1', 'SingleMuon/Run2016B-17Jul2018_ver1-v1': 'SingleMuon/Run2016B-07Aug17_ver1-v1', 'SingleMuon/Run2017D-31Mar2018-v1': 'SingleMuon/Run2017D-17Nov2017-v1', 'MET/Run2016B-17Jul2018_ver1-v1': 'MET/Run2016B-07Aug17_ver1-v1', 'JetHT/Run2017D-31Mar2018-v1': 'JetHT/Run2017D-17Nov2017-v1', 'SingleElectron/Run2017C-31Mar2018-v1': 'SingleElectron/Run2017C-17Nov2017-v1', 'SingleMuon/Run2016E-17Jul2018-v1': 'SingleMuon/Run2016E-07Aug17-v1', 'MET/Run2018C-17Sep2018-v1': 'MET/Run2018C-17Sep2018-v1', 'MET/Run2018B-17Sep2018-v1': 'MET/Run2018B-PromptReco-v1', 'JetHT/Run2016B-17Jul2018_ver2-v2': 'JetHT/Run2016B-07Aug17_ver2-v1', 'MET/Run2016H-17Jul2018-v2': 'MET/Run2016H-07Aug17-v1', 'SingleElectron/Run2016B-17Jul2018_ver2-v1': 'SingleElectron/Run2016B-07Aug17_ver2-v2', 'JetHT/Run2016D-17Jul2018-v1': 'JetHT/Run2016D-07Aug17-v1', 'MET/Run2016D-17Jul2018-v1': 'MET/Run2016D-07Aug17-v1', 'MET/Run2016C-17Jul2018-v1': 'MET/Run2016C-07Aug17-v1', 'SingleElectron/Run2016E-17Jul2018-v1': 'SingleElectron/Run2016E-07Aug17-v1', 'SingleElectron/Run2016C-17Jul2018-v1': 'SingleElectron/Run2016C-07Aug17-v1', 'JetHT/Run2016F-17Jul2018-v1': 'JetHT/Run2016F-07Aug17-v1', 'JetHT/Run2018B-26Sep2018-v1': 'JetHT/Run2018B-26Sep2018-v1'}
 
     return replacement_map
 
@@ -153,7 +159,7 @@ if __name__ == "__main__":
     replacement_map = get_replacement_map()
     for item in replacement_map:    
         print item, "\t-->\t", replacement_map[item]
-    print "\n"
+    print "\n" 
 
     # check username:
     if not options.username:
