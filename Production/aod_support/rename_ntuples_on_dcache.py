@@ -102,7 +102,7 @@ def rename_file(original_file_name, message, dryrun):
                 return
 
     if len(aod_file_name)>0:
-        updated_file_name = file_name_without_index +"_%s_RA2AnalysisTree.root" % aod_file_name
+        updated_file_name = file_name_without_index + "_%s_RA2AnalysisTree.root" % aod_file_name
     else:
         print "Error with running edmPickEvents"
         os.system("echo '%s' >> files_with_edmPick_isssue.log" % original_file_name)
