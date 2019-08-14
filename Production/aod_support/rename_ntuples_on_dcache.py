@@ -47,6 +47,12 @@ def rename_file(original_file_name, message, dryrun):
 
     print message
 
+    # check if file name follows naming scheme
+    running_index = original_file_name.split("_")[-2]
+    if "-" in running_index:
+        print "Already renamed:", original_file_name
+        return
+
     file_name = original_file_name
 
     folder = "/".join(file_name.split("/")[:-1])
@@ -61,12 +67,6 @@ def rename_file(original_file_name, message, dryrun):
     if datatream + "/" + identifier in replace_map.keys():
         updated_identifier = replace_map[datatream + "/" + identifier].split("/")[1]
         identifier = updated_identifier
-
-    # check if file name follows naming scheme
-    running_index = original_file_name.split("_")[-2]
-    if "-" in running_index:
-        print "Already renamed:", original_file_name
-        return
 
     # get run, lumi, event number of first event in tree:
     RunNum = -1
@@ -193,4 +193,8 @@ if __name__ == "__main__":
         message = "%s / %s" % (i_file, n_files)
         parameters.append([file_name, message, options.dryrun])
 
-    print pool.map(rename_file_wrapper, parameters) 
+    if options.threads>1:
+        pool.map(rename_file_wrapper, parameters) 
+    else:
+        for parameter in parameters:
+            rename_file_wrapper(parameter)
