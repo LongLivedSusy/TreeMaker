@@ -3,6 +3,7 @@ flist = {'scenario':
 'samples':
 [
 ['Run2018D-PromptReco-v1.JetHTAOD'],
+['Run2018D-PromptReco-v1.EGammaAOD'],
 ['Run2018D-PromptReco-v1.METAOD'],
 ['Run2018D-PromptReco-v2.JetHTAOD0'],
 ['Run2018D-PromptReco-v2.JetHTAOD1'],
@@ -23,4 +24,18 @@ flist = {'scenario':
 ['Run2018D-PromptReco-v2.SingleMuonAOD6'],
 ['Run2018D-PromptReco-v2.SingleMuonAOD7'],
 ['Run2018D-PromptReco-v2.SingleMuonAOD8']
+['Run2018D-PromptReco-v2.EGammaAOD0']
+['Run2018D-PromptReco-v2.EGammaAOD1']
+['Run2018D-PromptReco-v2.EGammaAOD2']
+['Run2018D-PromptReco-v2.EGammaAOD3']
+['Run2018D-PromptReco-v2.EGammaAOD4']
+['Run2018D-PromptReco-v2.EGammaAOD5']
+['Run2018D-PromptReco-v2.EGammaAOD6']
+['Run2018D-PromptReco-v2.EGammaAOD7']
+['Run2018D-PromptReco-v2.EGammaAOD8']
+['Run2018D-PromptReco-v2.EGammaAOD9']
+['Run2018D-PromptReco-v2.EGammaAOD10']
+['Run2018D-PromptReco-v2.EGammaAOD11']
+['Run2018D-PromptReco-v2.EGammaAOD12']
+['Run2018D-PromptReco-v2.EGammaAOD13']
 ]}
