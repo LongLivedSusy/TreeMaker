@@ -129,9 +129,15 @@ def rename_file(original_file_name, message, dryrun, selector, recreate):
         return
 
     if RunNum == -1:
-        print "Error with determining lumisection"
-        os.system("echo '%s: Error with determining lumisection' >> issues.log" % original_file_name)
-        return
+
+        if os.path.getsize(original_file_name) < 30000:
+            print "ignoring empty ROOT file, that's expected"
+            os.system("echo '%s: ignoring empty ROOT file' >> issues.log" % original_file_name)
+            return
+        else:
+            print "Couldn't determine lumisection, this could be an empty file..."
+            os.system("echo '%s: Error with determining lumisection' >> issues.log" % original_file_name)
+            return
 
     aod_file_name = ""
     if use_edmPickEvents:
