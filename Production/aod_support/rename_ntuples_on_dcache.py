@@ -162,8 +162,13 @@ def rename_file(original_file_name, message, dryrun, selector, recreate):
 
     if use_dbs:
         query = "file,run,lumi dataset=/%s/%s/%s" % (datatream, identifier, tier)
-        jsondict = das_client.get_data(query)
-        data = jsondict["data"]
+        try:
+            jsondict = das_client.get_data(query)
+            data = jsondict["data"]
+        except:
+            print "Error with DBS, maybe you're using too many threads!"     
+            os.system("echo '%s: Error with DBS' >> issues.log" % original_file_name)
+            return
       
         for item in data:
             if RunNum == item["run"][0]["run_number"]:
