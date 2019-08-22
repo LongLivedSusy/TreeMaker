@@ -90,19 +90,11 @@ def rename_file(original_file_name, message, dryrun, selector, recreate):
 
     print message
 
-<<<<<<< HEAD
     is_data = False
     tier = "AODSIM"
     if "Run201" in original_file_name:
         is_data = True
         tier = "AOD"
-=======
-    # check if file name follows naming scheme
-    running_index = original_file_name.split("_")[-2]
-    if "-" in running_index:
-        print "Already renamed:", original_file_name
-        return
->>>>>>> d1a4ac4c846cc7311644bc2d2c05418c2e4c4a0c
 
     file_name = original_file_name
 
@@ -314,4 +306,3 @@ if __name__ == "__main__":
         else:
             for parameter in parameters:
                 rename_file_wrapper(parameter)
-
