@@ -5,10 +5,13 @@ from optparse import OptionParser
 import commands
 import multiprocessing 
 import Utilities.General.cmssw_das_client as das_client
+import json
+import time
 
 ###### edmPickEvents is deprecated, set here to use DBS: ######
 use_edmPickEvents = False
-use_dbs = True
+use_dbs = False
+use_cache = True
 ###############################################################
 
 def get_userlist():
@@ -160,9 +163,11 @@ def rename_file(original_file_name, message, dryrun, selector, recreate):
 
         print "aod_file_name from edmPickEvents:", aod_file_name
 
-    if use_dbs:
+    elif use_dbs:
         query = "file,run,lumi dataset=/%s/%s/%s" % (datatream, identifier, tier)
+        print query
         try:
+            print "Using DBS directly, this is deprecated"
             jsondict = das_client.get_data(query)
             data = jsondict["data"]
         except:
@@ -184,7 +189,36 @@ def rename_file(original_file_name, message, dryrun, selector, recreate):
 
         print "aod_file_name from DBS:", aod_file_name
 
-    if len(aod_file_name)>0:
+    elif use_cache:
+
+        dataset = "/%s/%s/%s" % (datatream.replace("_ext1", "").replace("_ext2", "").replace("_ext3", ""), identifier, tier)
+
+        cmd = "grep -A1 '%s' dbs.cache |grep -v '%s'" % (dataset, dataset)
+        status, output = commands.getstatusoutput(cmd)
+        if status != 0:
+            print "Error when using cache"
+            print cmd
+            print output
+            quit()
+
+        data = json.loads(output)
+
+        for item in data:
+            if RunNum == item["run"][0]["run_number"]:
+                if LumiBlockNum in item["lumi"][0]["number"]:
+                    if len(item["file"]) == 1:
+                        full_aod_file_name = str(item["file"][0]["name"])
+                        print "full_aod_file_name", full_aod_file_name
+                        aod_file_name = full_aod_file_name.split("/")[7] + "-" + full_aod_file_name.split("/")[8].replace(".root", "")
+                    else:
+                        print "Lumisections span over multiple files!"
+                        os.system("echo '%s: Lumisections span over multiple files' >> issues.log" % original_file_name)
+                        return
+
+        print "aod_file_name from cache:", aod_file_name
+
+
+    if len(aod_file_name)>0 and "," not in aod_file_name:
         updated_file_name = file_name_without_index + "_%s_RA2AnalysisTree.root" % aod_file_name
     else:
         print "Error with getting AOD file name"
@@ -214,15 +248,74 @@ def rename_file_wrapper(parameters):
     rename_file(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4])
        
 
+def create_cache(replacement_map):
+
+    print "Create DBS cache..."
+
+    error_count = 0
+
+    for i, item in enumerate(replacement_map):
+
+        if "SMS-T1" in item: continue
+
+        print "Caching %s / %s" % (i, len(replacement_map))
+
+        datatream_identifier = replacement_map[item]
+
+        if "Run201" in datatream_identifier:
+            tier = "AOD"
+        else:
+            tier = "AODSIM"
+
+        if "_ext" in datatream_identifier:
+            print "_ext in dataset"
+        dataset = "/" + datatream_identifier.split("/")[0].replace("_ext1", "").replace("_ext2", "").replace("_ext3", "") + "/" + datatream_identifier.split("/")[1]+ "/" + tier
+
+        print dataset
+
+        status, output = commands.getstatusoutput("grep '%s' dbs.cache" % dataset)
+        if status == 0:
+            print "already done"
+            continue
+
+        query = "file,run,lumi dataset=%s" % dataset
+
+        try:
+            jsondict = das_client.get_data(query)
+            data = jsondict["data"]
+      
+            data_dump = json.dumps(data)
+        except:
+            print "Error with query"
+            error_count += 1
+
+        if data_dump != "[]":
+            print "OK"
+            txtoutput = "[%s]\n%s\n" % (dataset, data_dump)
+            with open("dbs.cache", "a+") as fo:
+                fo.write("[%s]\n" % dataset)
+                fo.write("%s\n" % data_dump)
+        else:
+            print "Couldn't get data!", dataset
+            error_count += 1
+
+        if error_count>20:
+            print "Too many DBS errors"
+            quit()
+
+
+
 if __name__ == "__main__":
 
     parser = OptionParser()
-    parser.add_option("--username", dest="username")
-    parser.add_option("--threads", dest="threads", default=5)
+    parser.add_option("--username", dest="username", default="*")
+    parser.add_option("--threads", dest="threads", default=1)
     parser.add_option("--recreate", dest="recreate", action="store_true")
     parser.add_option("--selector", dest="selector", default="*")
     parser.add_option("--dryrun", dest="dryrun", action="store_true")
     parser.add_option("--stats", dest="stats", action="store_true")
+    parser.add_option("--oldfiles", dest="oldfiles", action="store_true")
+    parser.add_option("--createcache", dest="createcache", action="store_true")
     parser.add_option("--moveoldfiles", dest="moveoldfiles", action="store_true")
     (options, args) = parser.parse_args()
 
@@ -241,11 +334,10 @@ if __name__ == "__main__":
         quit()
 
     replacement_map = get_replacement_map(selector = options.selector, recreate = options.recreate)
-    print "Using replacement_map: %s" % str(replacement_map)
+    print "Using map:", str(replacement_map)
 
-    # check username:
-    if not options.username:
-        print "No DCache/CERN username given, use --username to specify it"
+    if options.createcache:
+        create_cache(replacement_map)
         quit()
 
     # check proxy
@@ -275,11 +367,17 @@ if __name__ == "__main__":
 
     if options.moveoldfiles:
 
+        # check username:
+        #if options.username == "*":
+        #    print "No DCache/CERN username given, use --username to specify it"
+        #    quit()
+
         print "Creating directory for files using old naming scheme"
-        cmd = "gfal-mkdir srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3_disabled" % options.username
-        status, output = commands.getstatusoutput(cmd)
-        if status == 17:
-            print "Folder exists, that's fine"
+        for username in get_userlist():
+            cmd = "gfal-mkdir srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3_disabled" % username
+            status, output = commands.getstatusoutput(cmd)
+            if status == 17:
+                print "Folder exists, that's fine"
 
         print "Getting list of files using old naming scheme"
 
