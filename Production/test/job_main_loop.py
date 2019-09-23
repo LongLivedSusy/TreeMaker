@@ -73,7 +73,7 @@ for i_file, aod_file in enumerate(aod_files):
     # construct output file name from input AOD file:
     # example: /store/data/Run2018C/EGamma/AOD/17Sep2018-v1/100001/6300647F-B9D5-3348-B8BF-71F26C664BA5.root
     
-    aodfile_uuid = aod_file.split("/")[-2] + "-" + aod_file.split("/")[-1]
+    aodfile_uuid = aod_file.split("/")[-2] + "-" + aod_file.split("/")[-1].replace(".root", "")
     outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + aodfile_uuid + "_RA2AnalysisTree"
     
     print "\n\nDoing input file:", aod_file

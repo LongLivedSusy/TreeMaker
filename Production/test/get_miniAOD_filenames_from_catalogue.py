@@ -21,7 +21,7 @@ parser.add_option('--test', action='store_true', dest='test')
 
 def read_catalogue(aod_file_name):
     
-    for catalogue_name in glob.glob("catalogue_*.dat")
+    for catalogue_name in glob.glob("catalogue_*.dat"):
     
         aod_file_name = aod_file_name.replace("/", "\/") 
         command = "sed -n -e '/%s/,/\[/ p' catalogue_%s.dat | head -n -1 | tail -n +2" % (aod_file_name, catalogue_name)
@@ -46,11 +46,11 @@ def read_catalogue(aod_file_name):
             print "Multiple versions of miniAODs present, selecting v3 only"
             miniaod_filenames = [x for x in miniaod_filenames if not "-v1/" in x and not "-v2/" in x]
         
-    if len(miniaod_filenames) > 0:
-        print "Found miniAOD files: %s" % str(miniaod_filenames)
-        return miniaod_filenames
-    else:
-        quit("No miniaod file name(s) found")
+        if len(miniaod_filenames) > 0:
+            print "Found miniAOD files: %s" % str(miniaod_filenames)
+            return miniaod_filenames
+    
+    quit("No miniaod file name(s) found")
 
 
 def get_miniAOD_filenames(aod_file_name):

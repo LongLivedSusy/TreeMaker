@@ -15,8 +15,11 @@ def dochunks(l, n):
 #miniAOD_path = "/nfs/dust/cms/user/kutznerv/DisappTrksSignalMC/CMSSW10/miniAODSIM/"
 #pyfilename = "../python/PrivateSamples/g1800_chi1400_27_200970_CMSSW10_cff.py"
 
-miniAOD_path = "/nfs/dust/cms/user/kutznerv/DisappTrksSignalMC/CMSSW8/miniAODSIM/"
-pyfilename = "../python/PrivateSamples/g1800_chi1400_27_200970_CMSSW8_cff.py"
+#miniAOD_path = "/nfs/dust/cms/user/kutznerv/DisappTrksSignalMC/CMSSW8/miniAODSIM/"
+#pyfilename = "../python/PrivateSamples/g1800_chi1400_27_200970_CMSSW8_cff.py"
+
+miniAOD_path = "/nfs/dust/cms/user/beinsam/LongLiveTheChi/Production/FastScans/step3_test_higgsino_susyall_mChipm105GeV_dm0p36GeV_pu_inMINIAODSIM.root"
+pyfilename = "../python/PrivateSamples/sam_fasthiggsino.py"
 
 all_filenames = natsorted(glob.glob(miniAOD_path + "/*root"))
 chunks = list(dochunks(all_filenames, 254))
