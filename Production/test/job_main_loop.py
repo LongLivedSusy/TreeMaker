@@ -46,28 +46,35 @@ use_file_index_from_filelist = True
 
 for i_file, aod_file in enumerate(aod_files):
    
-    if use_file_index_from_filelist:
+    #if use_file_index_from_filelist:
+    #
+    #    print "using corrected file index derived from actual file list"
+    #
+    #    inputFilesConfig = options.arguments.split("inputFilesConfig=")[-1].split()[0]
+    #    campaign = inputFilesConfig.split(".")[0]
+    #    dataset = inputFilesConfig.split(".")[1]
+    #
+    #    status, file_position_plus_one = runcmd("grep '.root' $CMSSW_BASE/src/TreeMaker/Production/python/%s/%s_cff.py | grep -n '%s' | cut -d':' -f1" % (campaign, dataset, aod_file.split("/")[-1])   )
+    #
+    #    if status == 0:
+    #        file_number = int(file_position_plus_one) - 1
+    #        print "old file number: %s" % (numstart + i_file)
+    #        print "new file_number: %s" % file_number
+    #    else:
+    #        print "There was an error", status
+    #        quit()
+    #else:
+    #
+    #    file_number = numstart + i_file
+    #
+    # outfile with index
+    # outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str(file_number) + "_RA2AnalysisTree"
 
-        print "using corrected file index derived from actual file list"
-
-        inputFilesConfig = options.arguments.split("inputFilesConfig=")[-1].split()[0]
-        campaign = inputFilesConfig.split(".")[0]
-        dataset = inputFilesConfig.split(".")[1]
-
-        status, file_position_plus_one = runcmd("grep '.root' $CMSSW_BASE/src/TreeMaker/Production/python/%s/%s_cff.py | grep -n '%s' | cut -d':' -f1" % (campaign, dataset, aod_file.split("/")[-1])   )
-
-        if status == 0:
-            file_number = int(file_position_plus_one) - 1
-            print "old file number: %s" % (numstart + i_file)
-            print "new file_number: %s" % file_number
-        else:
-            print "There was an error", status
-            quit()
-    else:
-
-        file_number = numstart + i_file
-
-    outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + str(file_number) + "_RA2AnalysisTree"
+    # construct output file name from input AOD file:
+    # example: /store/data/Run2018C/EGamma/AOD/17Sep2018-v1/100001/6300647F-B9D5-3348-B8BF-71F26C664BA5.root
+    
+    aodfile_uuid = aod_file.split("/")[-2] + "-" + aod_file.split("/")[-1]
+    outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + aodfile_uuid + "_RA2AnalysisTree"
     
     print "\n\nDoing input file:", aod_file
     print "CMSSW arguments:", options.arguments
@@ -88,10 +95,6 @@ for i_file, aod_file in enumerate(aod_files):
 
             cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (options.outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
             cmd = cmd.replace("/%s/" % username, "/%s/" % user)
-
-            ## check for Sams foldername:
-            #if "ProductionRun2v4" in cmd and user != "sbein":
-            #    cmd = cmd.replace("ProductionRun2v4", "ProductionRun2v3")
 
             # check if output file already exists for user
             status, output = runcmd(cmd)

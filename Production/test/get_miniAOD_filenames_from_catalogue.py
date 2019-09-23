@@ -18,47 +18,33 @@ parser.add_option('--infile', dest='infile')
 parser.add_option('--test', action='store_true', dest='test')
 (options, args) = parser.parse_args()
 
-def get_catalogue(aod_file_name):
 
-    catalogues = glob.glob("catalogue_*.dat")
-
-    # quick fix for Yuvi's samples:
-    if "RunIISummer16DR80Premix/DYJetsToLL_M-5to50" in aod_file_name:
-        return "RunIISummer16MiniAODv3"
+def read_catalogue(aod_file_name):
     
-    for catalogue in catalogues:
-        catalogue_stripped_name = catalogue.split("/")[-1].split("catalogue_")[-1].split(".dat")[0]
-        if catalogue_stripped_name in aod_file_name:
-            print "Using catalogue %s" % catalogue_stripped_name
-            return catalogue_stripped_name
-           
-    quit("No matching catalogue file found")
-
-
-def read_catalogue(aod_file_name, catalogue_name):
+    for catalogue_name in glob.glob("catalogue_*.dat")
     
-    aod_file_name = aod_file_name.replace("/", "\/") 
-    command = "sed -n -e '/%s/,/\[/ p' catalogue_%s.dat | head -n -1 | tail -n +2" % (aod_file_name, catalogue_name)
-    status, output = commands.getstatusoutput(command)
-    miniaod_filenames = output.split("\n")
-    
-    # fix for multiple versions of miniAOD files present in catalogue:
-    miniaod_v1_present = False
-    miniaod_v2_present = False
-    miniaod_v3_present = False
-    for miniaod_filename in miniaod_filenames:
-        if "-v1/" in miniaod_filename:
-            miniaod_v1_present = True
-        elif "-v2/" in miniaod_filename:
-            miniaod_v2_present = True
-        elif "-v3/" in miniaod_filename:
-            miniaod_v2_present = True
-    if miniaod_v1_present and miniaod_v2_present:
-        print "Multiple versions of miniAODs present, selecting v2 only"
-        miniaod_filenames = [x for x in miniaod_filenames if not "-v1/" in x]
-    elif miniaod_v1_present and miniaod_v2_present and miniaod_v3_present:
-        print "Multiple versions of miniAODs present, selecting v3 only"
-        miniaod_filenames = [x for x in miniaod_filenames if not "-v1/" in x and not "-v2/" in x]
+        aod_file_name = aod_file_name.replace("/", "\/") 
+        command = "sed -n -e '/%s/,/\[/ p' catalogue_%s.dat | head -n -1 | tail -n +2" % (aod_file_name, catalogue_name)
+        status, output = commands.getstatusoutput(command)
+        miniaod_filenames = output.split("\n")
+        
+        # fix for multiple versions of miniAOD files present in catalogue:
+        miniaod_v1_present = False
+        miniaod_v2_present = False
+        miniaod_v3_present = False
+        for miniaod_filename in miniaod_filenames:
+            if "-v1/" in miniaod_filename:
+                miniaod_v1_present = True
+            elif "-v2/" in miniaod_filename:
+                miniaod_v2_present = True
+            elif "-v3/" in miniaod_filename:
+                miniaod_v2_present = True
+        if miniaod_v1_present and miniaod_v2_present:
+            print "Multiple versions of miniAODs present, selecting v2 only"
+            miniaod_filenames = [x for x in miniaod_filenames if not "-v1/" in x]
+        elif miniaod_v1_present and miniaod_v2_present and miniaod_v3_present:
+            print "Multiple versions of miniAODs present, selecting v3 only"
+            miniaod_filenames = [x for x in miniaod_filenames if not "-v1/" in x and not "-v2/" in x]
         
     if len(miniaod_filenames) > 0:
         print "Found miniAOD files: %s" % str(miniaod_filenames)
@@ -69,8 +55,7 @@ def read_catalogue(aod_file_name, catalogue_name):
 
 def get_miniAOD_filenames(aod_file_name):
     
-    catalogue_name = get_catalogue(aod_file_name)
-    miniaod_filenames = read_catalogue(aod_file_name, catalogue_name)
+    miniaod_filenames = read_catalogue(aod_file_name)
    
     miniaod_filenames = list(set(miniaod_filenames))
     print "miniaod_filenames", miniaod_filenames
