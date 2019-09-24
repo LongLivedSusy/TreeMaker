@@ -1,5 +1,5 @@
 flist = {'scenario':
-'Fall17',
+'Summer16MiniAODv3',
 'samples':
 [
 #['RunIIFall17MiniAODv2.SMS-T1qqqq-LLChipm_ctau-10_mLSP-1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
