@@ -18,27 +18,25 @@ parser.add_option('--infile', dest='infile')
 parser.add_option('--test', action='store_true', dest='test')
 (options, args) = parser.parse_args()
 
-
 def read_catalogue(aod_file_name):
     
     for catalogue_name in glob.glob("catalogue_*.dat"):
     
-        aod_file_name = aod_file_name.replace("/", "\/") 
-        command = "sed -n -e '/%s/,/\[/ p' catalogue_%s.dat | head -n -1 | tail -n +2" % (aod_file_name, catalogue_name)
+        command = "sed -n -e '/%s/,/\[/ p' %s | head -n -1 | tail -n +2" % (aod_file_name.replace("/", "\/"), catalogue_name)
         status, output = commands.getstatusoutput(command)
         miniaod_filenames = output.split("\n")
         
+        if miniaod_filenames == ['']: continue
+
         # fix for multiple versions of miniAOD files present in catalogue:
         miniaod_v1_present = False
         miniaod_v2_present = False
         miniaod_v3_present = False
+        miniaod_v4_present = False
         for miniaod_filename in miniaod_filenames:
-            if "-v1/" in miniaod_filename:
-                miniaod_v1_present = True
-            elif "-v2/" in miniaod_filename:
-                miniaod_v2_present = True
-            elif "-v3/" in miniaod_filename:
-                miniaod_v2_present = True
+            if "-v1/" in miniaod_filename:   miniaod_v1_present = True
+            elif "-v2/" in miniaod_filename: miniaod_v2_present = True
+            elif "-v3/" in miniaod_filename: miniaod_v3_present = True
         if miniaod_v1_present and miniaod_v2_present:
             print "Multiple versions of miniAODs present, selecting v2 only"
             miniaod_filenames = [x for x in miniaod_filenames if not "-v1/" in x]
@@ -46,24 +44,21 @@ def read_catalogue(aod_file_name):
             print "Multiple versions of miniAODs present, selecting v3 only"
             miniaod_filenames = [x for x in miniaod_filenames if not "-v1/" in x and not "-v2/" in x]
         
-        if len(miniaod_filenames) > 0:
-            print "Found miniAOD files: %s" % str(miniaod_filenames)
-            return miniaod_filenames
+        if len(miniaod_filenames) > 0 and miniaod_filenames != ['']:
+            return list(set(miniaod_filenames))
     
     quit("No miniaod file name(s) found")
 
 
 def get_miniAOD_filenames(aod_file_name):
     
-    miniaod_filenames = read_catalogue(aod_file_name)
-   
-    miniaod_filenames = list(set(miniaod_filenames))
+    miniaod_filenames = read_catalogue(aod_file_name)  
     print "miniaod_filenames", miniaod_filenames
     os.system("echo %s > info_miniaods" % ",".join(miniaod_filenames))
 
     if options.test:
-        print "Test successful", str(miniaod_filenames)
-        #return
+        print "Test successful\n\n"
+        return
     
     #first, get start / end of AOD file:
     print "Running edmFileUtil to get run number / lumisec information..."
@@ -125,14 +120,6 @@ if __name__ == "__main__":
         # run some tests:
         print "Running in testing mode"
 
-        print "@@@ Fall17"
-        options.infile = "/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/4A9A2A03-7BED-E711-B2C9-5065F38122A1.root"
-        get_miniAOD_filenames(options.infile)
-
-        #print "@@@ Summer16"
-        #options.infile = "/store/mc/RunIISummer16DR80Premix/DYJetsToLL_M-50_HT-2500toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/0C2ECF33-A1C0-E611-9A9C-0CC47A4C8F12.root"
-        #get_miniAOD_filenames(options.infile)
-
         print "@@@ 2016 data"
         options.infile = "/store/data/Run2016B/JetHT/AOD/07Aug17_ver2-v1/50001/84F70C55-397D-E711-8EA4-90B11C0BD63A.root"
         get_miniAOD_filenames(options.infile)
@@ -143,5 +130,13 @@ if __name__ == "__main__":
 
         print "@@@ 2018 data"
         options.infile = "/store/data/Run2018B/JetHT/AOD/26Sep2018-v1/120000/D80EE4EF-DA75-4B43-A187-42C8DE818C54.root"
+        get_miniAOD_filenames(options.infile)
+
+        print "@@@ Fall17"
+        options.infile = "/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/94X_mc2017_realistic_v10-v1/70000/4A9A2A03-7BED-E711-B2C9-5065F38122A1.root"
+        get_miniAOD_filenames(options.infile)
+
+        print "@@@ Summer16"
+        options.infile = "/store/mc/RunIISummer16DR80Premix/DYJetsToLL_M-50_HT-2500toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/0C2ECF33-A1C0-E611-9A9C-0CC47A4C8F12.root"
         get_miniAOD_filenames(options.infile)
 
