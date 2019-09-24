@@ -9,10 +9,6 @@ import time
 # loop over multiple AOD input files and process them one-by-one instead of loading all files
 # files are copied directly after each file has been processed
 
-# get dcache user directories:
-status, userlist = runcmd("curl http://www.desy.de/~kutznerv/ntuple-production/userlist")
-userlist = userlist.replace("\n", "").split(",")
-
 def runcmd(cmd):
     print cmd
     status, output = commands.getstatusoutput(cmd)
@@ -20,7 +16,7 @@ def runcmd(cmd):
     return status, output
 
 
-def check_dcache_if_file_exists(outpath, outfile):
+def check_dcache_if_file_exists(outpath, outfile, userlist):
 
     print "\nCheck if output file already exists in a user folder..."
     username = outpath.split("/store/user/")[1].split("/")[0]
@@ -65,6 +61,10 @@ if __name__ == "__main__":
     with open("info_outfilename", "r") as fin:
         outfile_general = fin.read().split("\n")[0]
 
+    # get dcache user directories:
+    status, userlist = runcmd("curl http://www.desy.de/~kutznerv/ntuple-production/userlist")
+    userlist = userlist.replace("\n", "").split(",")
+
     numstart = int(options.arguments.split("nstart=")[-1].split()[0])
     print "numstart", numstart
 
@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
         runcmd("echo %s > info_aods" % aod_file)
 
-        if check_dcache_if_file_exists(options.outpath, outfile):
+        if check_dcache_if_file_exists(options.outpath, outfile, userlist):
             continue
            
         print "\nLocate the corresponding miniAODs..."
