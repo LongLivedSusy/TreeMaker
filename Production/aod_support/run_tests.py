@@ -45,9 +45,10 @@ if __name__ == "__main__":
               #["2016MiniAODv3", "Run2016H-17Jul2018-v2.METAOD"],
               #["2016MiniAODv3", "Run2016H-17Jul2018-v2.METAOD"],
               #["2017ReReco31Mar", "Run2017E-31Mar2018-v1.METAOD"],
-              ["2018ReReco17Sep", "Run2018C-17Sep2018-v1.EGammaAOD0"],
+              #["2018ReReco17Sep", "Run2018C-17Sep2018-v1.EGammaAOD0"],
               #["2018ReReco17Sep", "Run2018A-17Sep2018-v1.METAOD"],
               #["Summer16MiniAODv3", "RunIISummer16MiniAODv3.DYJetsToLL_M-5to50_HT-100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD"],
+              ["Summer16MiniAODv3", "RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-200_mLSP-800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD"],
             ]
 
     for test in tests:
