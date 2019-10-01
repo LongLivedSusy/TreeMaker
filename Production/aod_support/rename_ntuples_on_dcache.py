@@ -83,8 +83,10 @@ def get_replacement_map(selector = "", recreate = False):
 def file_is_renamed(original_file_name):
 
     running_index = original_file_name.split("_")[-2]
-    if "-" in running_index:
-        return True
+    #if "-" in running_index:
+    #    return True
+    if len(running_index.split("-")) == 6:
+         return True
     else:
         return False
 
@@ -209,7 +211,8 @@ def rename_file(original_file_name, message, dryrun, selector, recreate):
                     if len(item["file"]) == 1:
                         full_aod_file_name = str(item["file"][0]["name"])
                         print "full_aod_file_name", full_aod_file_name
-                        aod_file_name = full_aod_file_name.split("/")[7] + "-" + full_aod_file_name.split("/")[8].replace(".root", "")
+                        # e.g. full_aod_file_name /store/data/Run2018D/JetHT/AOD/PromptReco-v2/000/321/149/00000/5E855B33-EA9F-E811-827E-FA163E1FD66F.root
+                        aod_file_name = full_aod_file_name.split("/")[-2] + "-" + full_aod_file_name.split("/")[-1].replace(".root", "")
                     else:
                         print "Lumisections span over multiple files!"
                         os.system("echo '%s: Lumisections span over multiple files' >> issues.log" % original_file_name)

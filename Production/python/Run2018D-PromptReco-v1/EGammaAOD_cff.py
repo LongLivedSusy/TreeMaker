@@ -10,3 +10,4 @@ readFiles.extend( [
 '/store/data/Run2018D/EGamma/AOD/PromptReco-v1/000/320/434/00000/966E12EA-BC93-E811-9D72-02163E00CDCE.root',
 '/store/data/Run2018D/EGamma/AOD/PromptReco-v1/000/320/416/00000/7001A75C-5893-E811-9386-FA163EFCC9EE.root',
 ] )
+

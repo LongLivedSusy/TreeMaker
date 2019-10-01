@@ -20,7 +20,7 @@ def file_has_been_processed(campaign, aod_file, file_count, processed_files, fil
         return False
 
 
-def main(campaign, processed_files, debug = False):
+def main(campaign, processed_files, debug = False, comment_already_processed_files = False):
 
     # read processed files
     processed_files_string = ""
@@ -50,15 +50,14 @@ def main(campaign, processed_files, debug = False):
                 # remove old hashes...
                 if "#" in file_contents[i]:
                     file_contents[i] = file_contents[i].replace("#", "")
-
-                filename = file_contents[i].split("'")[1]
-                if file_has_been_processed(campaign.split("/")[-1], aod_file.split("/")[-1], file_count, processed_files, filename, debug = debug):
-                    file_contents[i] = "#" + file_contents[i]
-                else:
-                    file_contents[i] = file_contents[i]
-
-                file_count += 1
-
+                
+                if comment_already_processed_files:
+                    filename = file_contents[i].split("'")[1]
+                    if file_has_been_processed(campaign.split("/")[-1], aod_file.split("/")[-1], file_count, processed_files, filename, debug = debug):
+                        file_contents[i] = "#" + file_contents[i]
+                    else:
+                        file_contents[i] = file_contents[i]
+                    file_count += 1
 
         with open(aod_file, "w") as fout:
             fout.write("\n".join(file_contents) + "\n")
