@@ -1,4 +1,5 @@
 #!/bin/env python
+from  __builtin__ import any as b_any
 import os, glob
 from optparse import OptionParser
 import socket
@@ -7,32 +8,37 @@ import commands
 # to be run at DESY
 
 def create_processed_filelist():
-    os.system("ls /pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v*/ > finished_ntuples.dat")
+    os.system("ls /pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v3/ > finished_ntuples.dat")
 
 
-def file_has_been_processed(campaign, aod_file, file_count, processed_files, filename, debug = False):
+def file_has_been_processed(campaign, processed_files, aod_file, debug = False):
+        
+    aodfile_uuid = aod_file.split("/")[-2] + "-" + aod_file.split("/")[-1].replace(".root", "")        
 
-    output_file_name = "%s.%s_%s_RA2AnalysisTree.root" % (campaign, aod_file.replace("_cff.py", ""), file_count)
-   
-    if output_file_name in processed_files:
+    status, output = commands.getstatusoutput("grep %s %s" % (aodfile_uuid, processed_files))
+
+    if status == 0:
         return True
     else:
         return False
 
 
-def main(campaign, processed_files, debug = False, comment_already_processed_files = False):
+def main(campaign, processed_files, debug = False, comment_already_processed_files = True):
 
     # read processed files
-    processed_files_string = ""
-    with open(processed_files, "r") as fin:
-        processed_files_string = fin.read()
-    processed_files = set(processed_files_string.split("\n"))
+    #processed_files_string = ""
+    #with open(processed_files, "r") as fin:
+    #    processed_files_string = fin.read()
+    #processed_files = list(set(processed_files_string.split("\n")))
 
     print "%s/*AOD_cff.py" % campaign
 
     aod_filelists = sorted(glob.glob("%s/*AOD_cff.py" % campaign))
     
     for i_aod_file, aod_file in enumerate(aod_filelists):
+
+        #FIXME
+        if "DYJetsToLL_M-5to50_HT" in aod_file: continue
        
         print "Checking %s/%s (%s)..." % (i_aod_file, len(aod_filelists), aod_file)
 
@@ -53,7 +59,7 @@ def main(campaign, processed_files, debug = False, comment_already_processed_fil
                 
                 if comment_already_processed_files:
                     filename = file_contents[i].split("'")[1]
-                    if file_has_been_processed(campaign.split("/")[-1], aod_file.split("/")[-1], file_count, processed_files, filename, debug = debug):
+                    if file_has_been_processed(campaign.split("/")[-1], processed_files, filename):
                         file_contents[i] = "#" + file_contents[i]
                     else:
                         file_contents[i] = file_contents[i]
@@ -68,21 +74,16 @@ def main(campaign, processed_files, debug = False, comment_already_processed_fil
 if __name__ == "__main__":
 
     parser = OptionParser()
-    parser.add_option("--create_processed_filelist", dest="create_processed_filelist", action="store_true")
+    parser.add_option("--update_filelist", dest="update_filelist", action="store_true")
     parser.add_option("--campaign", dest="campaign", default="all")
     parser.add_option("--processed_files", dest="processed_files", default="finished_ntuples.dat")
     parser.add_option("--debug", dest="debug", action="store_true")
     (options, args) = parser.parse_args()
 
-    if options.create_processed_filelist:
+    if options.update_filelist or not os.path.exists(os.getcwd() + "/" + options.processed_files):
         create_processed_filelist()
-    elif options.campaign and options.processed_files:
 
-        if "naf-" in socket.gethostname():
-            print "Running on NAF, we can update the already processed file list. Just wait a sec..."
-            create_processed_filelist()
-            print "OK"
-
+    if options.campaign and options.processed_files:
         if options.campaign == "all":
             campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"]
             print "Using campaigns:", campaigns
