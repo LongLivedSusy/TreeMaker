@@ -53,7 +53,7 @@ def collect_progress(filelist_name, uuids_from_pnfs):
     return (n_done, n_total)
 
 
-def get_progress_dict(treemakerpath):
+def get_progress_dict():
 
     uuids_from_pnfs = get_uuids_from_pnfs()
 
@@ -109,7 +109,7 @@ def get_progress_dict(treemakerpath):
             if datastream == "EGamma" and "Run2018" not in campaign: continue
             if "Run2018" in campaign and datastream == "SingleElectron": continue
 
-            filelist_names = treemakerpath + "/Production/python/%s/%s*AOD*_cff.py" % (campaign, datastream)
+            filelist_names = "../python/%s/%s*AOD*_cff.py" % (campaign, datastream)
             n_global_done = 0
             n_global_total = 0
             for filelist_name in glob.glob(filelist_names):
@@ -166,10 +166,8 @@ def invert_dict(progress, selected_campaigns = []):
 
 def save_datapoint_to_file(logfile = "progress-monitor.log"):
 
-    progress = get_progress_dict(options.treemakerpath)
-
+    progress = get_progress_dict()
     timestamp = datetime.datetime.now()
-
     with open(logfile, "a") as fout:
         fout.write(str(timestamp) + " = " + str(progress) + "\n")
 
@@ -209,7 +207,7 @@ def produce_html(xvals, yvals_dict, title):
     myuuid = uuid.uuid1()
 
     template = """
-        <canvas id="%s" width="600px" height="200px"></canvas>
+        <canvas id="%s" width="600px" height="200px" bg="white"></canvas>
         <script language="Javascript">
 
         new Chart(document.getElementById("%s"), {
@@ -244,9 +242,6 @@ def get_plots(selected_campaigns, title):
     dates = []
     yvals = OrderedDict()
 
-    webcolors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff']
-    webcolors += webcolors
-
     for line in contents.split("\n"):
         if len(line) == 0: continue
 
@@ -256,8 +251,13 @@ def get_plots(selected_campaigns, title):
         progress = eval(line.split(" = ")[1])
         progress = invert_dict(progress, selected_campaigns)
 
+        print progress
+
         dates.append(date)
-        
+
+        webcolors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff']
+        webcolors += webcolors
+
         for item in progress:
 
             color = webcolors.pop(0)
@@ -278,18 +278,22 @@ def get_plots(selected_campaigns, title):
 if __name__ == "__main__":
 
     parser = OptionParser()
-    parser.add_option("--treemakerpath", dest="treemakerpath", default="./CMSSW_10_2_7/src/TreeMaker/")
+    parser.add_option("--update", dest="update", action="store_true")
     (options, args) = parser.parse_args()
 
-    #save_datapoint_to_file()
+    if options.update:
+        save_datapoint_to_file()
 
     html = """
+                <body style="background-color:fcfbfb;">
                 <script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
            """
+    html += "<font face=Arial><h1>TreeMaker ntuple production</h2></font>"
+    html += "<font face=Arial>Note: RunIISummer16 contains the T2bt and T1qqq SMS</font>"
     html += "<font face=Arial><h2>Totals:</h2></font>"
     html += get_plots([], "Grand totals")
     html += "<p><hr><p>"
-    html += "<h2>Years:</h2></font>"
+    html += "<font face=Arial><h2>Years:</h2></font>"
     html += get_plots(["Run2016"], "2016")
     html += get_plots(["Run2017"], "2017")
     html += get_plots(["Run2018"], "2018")
