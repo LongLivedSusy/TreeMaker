@@ -11,13 +11,11 @@ def create_processed_filelist():
     os.system("ls /pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v3/ > finished_ntuples.dat")
 
 
-def file_has_been_processed(campaign, processed_files, aod_file, debug = False):
+def file_has_been_processed(campaign, processed_uuids, aod_file, debug = False):
         
     aodfile_uuid = aod_file.split("/")[-2] + "-" + aod_file.split("/")[-1].replace(".root", "")        
 
-    status, output = commands.getstatusoutput("grep %s %s" % (aodfile_uuid, processed_files))
-
-    if status == 0:
+    if aodfile_uuid in processed_uuids:
         return True
     else:
         return False
@@ -26,10 +24,16 @@ def file_has_been_processed(campaign, processed_files, aod_file, debug = False):
 def main(campaign, processed_files, debug = False, comment_already_processed_files = True):
 
     # read processed files
-    #processed_files_string = ""
-    #with open(processed_files, "r") as fin:
-    #    processed_files_string = fin.read()
-    #processed_files = list(set(processed_files_string.split("\n")))
+    processed_files_string = ""
+    with open(processed_files, "r") as fin:
+        processed_files_string = fin.read()
+    processed_files = list(set(processed_files_string.split("\n")))
+
+    for i in range(len(processed_files)):
+        if len(processed_files[i].split("_"))>1:
+            processed_files[i] = processed_files[i].split("_")[-2]
+
+    processed_uuids = processed_files
 
     print "%s/*AOD_cff.py" % campaign
 
@@ -59,7 +63,7 @@ def main(campaign, processed_files, debug = False, comment_already_processed_fil
                 
                 if comment_already_processed_files:
                     filename = file_contents[i].split("'")[1]
-                    if file_has_been_processed(campaign.split("/")[-1], processed_files, filename):
+                    if file_has_been_processed(campaign.split("/")[-1], processed_uuids, filename):
                         file_contents[i] = "#" + file_contents[i]
                     else:
                         file_contents[i] = file_contents[i]
@@ -85,7 +89,7 @@ if __name__ == "__main__":
 
     if options.campaign and options.processed_files:
         if options.campaign == "all":
-            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"]
+            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
             print "Using campaigns:", campaigns
         else:
             campaigns = options.campaign.split(",")
