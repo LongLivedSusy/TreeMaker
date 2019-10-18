@@ -172,6 +172,59 @@ def save_datapoint_to_file(logfile = "progress-monitor.log"):
         fout.write(str(timestamp) + " = " + str(progress) + "\n")
 
 
+def collect_production_rate(days, timeframe):
+
+    counts = {}
+    now_list = []
+    for i_day in range(days):
+        if timeframe == "days":
+            now = dt.datetime.now() - dt.timedelta(days=i_day)
+            now_list.append(now)
+        elif timeframe == "hours":
+            now = dt.datetime.now() - dt.timedelta(hours=i_day)
+            now_list.append(now)
+
+    for user in get_userlist():
+        print "Counting files for", user
+        folder = '/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/' % user             
+        counts[user] = [0] * days
+                
+        for root, dirs, files in os.walk(folder):
+            for fname in files:
+                path = os.path.join(root, fname)
+                st = os.stat(path)    
+                mtime = dt.datetime.fromtimestamp(st.st_mtime)
+
+                for i_day, now in enumerate(now_list):
+                    if timeframe == "days":
+                        ago = now - dt.timedelta(days=1)
+                    elif timeframe == "hours":
+                        ago = now - dt.timedelta(hours=1)
+                    if mtime <= now and mtime > ago:
+                        counts[user][i_day] += 1
+                       
+    print counts
+    return counts
+
+
+def produce_productionrate_html(number_of_days):
+
+    rates = collect_production_rate(number_of_days, "days")
+    xvals = []
+    yvals = {}
+    webcolors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff']
+    for user in rates:
+        yvals[user] = {}
+        yvals[user]["yvals"] = []
+        yvals[user]["color"] = webcolors.pop(0)
+        xvals = []
+        for i_day in range(len(rates[user])):
+            yvals[user]["yvals"].append(rates[user][i_day])
+            xvals.append(i_day + 1)
+    
+    return produce_html(xvals, yvals, "Production rates for the last 10 days")
+
+
 def produce_html(xvals, yvals_dict, title):
 
     def get_dataset_html(yvals, label, color):
@@ -231,6 +284,41 @@ def produce_html(xvals, yvals_dict, title):
     """ % (myuuid, myuuid, xvals, datasets, title)
 
     return template
+
+
+def produce_piechart():
+
+    return """
+        <script language="Javascript">
+
+        new Chart(document.getElementById("2416c94c-ef39-11e9-b663-7845c4facb81"), {
+          type: 'pie',
+          data: {
+            labels: ['2019-10-14 15:52:18', '2019-10-14 17:42:42', '2019-10-14 19:04:23'],
+            datasets: [
+             
+                          { 
+                            data: [50, 25, 25],
+                            label: "JetHT_total",
+                            backgroundColor: ['#e6194b', '#3cb44b', '#ffe119'],
+                            fill: true,
+                            borderDash: [10,5],
+                            display: false,
+                          },
+            ]
+          },
+          options: {
+            responsive: true,
+            title: {
+              display: true,
+              text: 'Grand totals'
+            }
+          }
+        });
+
+        </script>
+    """
+
     
 
 def get_plots(selected_campaigns, title):
@@ -281,15 +369,20 @@ if __name__ == "__main__":
     parser.add_option("--update", dest="update", action="store_true")
     (options, args) = parser.parse_args()
 
-    if options.update:
-        save_datapoint_to_file()
+    save_datapoint_to_file()
+
+    html_rates = produce_productionrate_html(10)
 
     html = """
                 <body style="background-color:fcfbfb;">
                 <script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
            """
+
     html += "<font face=Arial><h1>TreeMaker ntuple production</h2></font>"
-    html += "<font face=Arial>Note: RunIISummer16 contains the T2bt and T1qqq SMS</font>"
+    html += "<font face=Arial>Note: RunIISummer16 contains the T2bt and T1qqqq SMS</font>"
+    html += "<font face=Arial><h2>Production rates for the last 10 days:</h2></font>"
+    html += html_rates
+    html += "<p><hr><p>"
     html += "<font face=Arial><h2>Totals:</h2></font>"
     html += get_plots([], "Grand totals")
     html += "<p><hr><p>"

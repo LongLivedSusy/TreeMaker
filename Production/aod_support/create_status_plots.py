@@ -307,12 +307,12 @@ def write_html():
             </center>
            '''
 
-    with open("/afs/desy.de/user/k/kutznerv/www/ntuple-production/index.html", "w") as fout:
+    with open("/afs/desy.de/user/k/kutznerv/www/ntuple-production/old.html", "w") as fout:
         fout.write(html)
 
 
 # plot last 10 hours/days:
-plot_ntuple_count(10)
-plot_production_rate(24, "hours")
+#plot_ntuple_count(10)
+#plot_production_rate(24, "hours")
 plot_production_rate(10, "days")
-write_html()
+#write_html()
