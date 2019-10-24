@@ -33,7 +33,7 @@ for user in get_userlist():
     if user == "sbein":
         path = "/home/%s/ShortTrackSusy/NtupleMakerWithMiniaod/%s/src/TreeMaker/Production/test/myProduction" % (user, cmsswver)
     elif user == "aksingh":
-        path = "/home/akshansh/treemaker/%s/src/TreeMaker/Production/test/condorSub" & (cmsswver)
+        path = "/home/akshansh/treemaker/%s/src/TreeMaker/Production/test/condorSub" % (cmsswver)
 
     print "user: %s" % user    
     n_total = run_on_uscms('grep "Doing input file" *stdout | wc -l', path)

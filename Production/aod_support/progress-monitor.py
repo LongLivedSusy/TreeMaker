@@ -9,6 +9,7 @@ import time
 import datetime
 from time import gmtime, strftime
 import uuid
+import json
 
 def get_userlist():
     userlist = []
@@ -361,6 +362,57 @@ def get_plots(selected_campaigns, title):
     html = produce_html(dates, yvals, title)
 
     return html
+
+
+def get_combined_json():
+
+    dbscache = "dbs.cache"
+
+    all_files = []
+    for username in get_userlist():
+        print "Checking for files of %s..." % username
+        all_files += glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/*.root" % username)
+
+    jsons = {}
+    for run_period in [2016, 2017, 2018]:
+        jsons["Run%s" % run_period] = {}
+        for datastream in ["MET", "SingleElectron", "SingleMuon", "JetHT"]:
+            jsons["Run%s" % run_period][datastream] = []
+    
+    #for ifile in all_files:
+    #
+    #    cmd = "grep -A1 '%s' dbs.cache |grep -v '%s'" % (dataset, dataset)
+    #
+    #    for run_period in [2016, 2017, 2018]:
+    #        for datastream in ["MET", "SingleElectron", "SingleMuon", "JetHT"]:
+    #            if      
+    #
+    #cmd = "grep -A1 '%s' dbs.cache |grep -v '%s'" % (dataset, dataset)
+    #status, output = commands.getstatusoutput(cmd)
+    #if status != 0:
+    #    print "Error when using cache"
+    #    print cmd
+    #    print output
+    #    quit()
+    #
+    #data = json.loads(output)
+    #
+    #for item in data:
+    #    if RunNum == item["run"][0]["run_number"]:
+    #        if LumiBlockNum in item["lumi"][0]["number"]:
+    #            if len(item["file"]) == 1:
+    #                full_aod_file_name = str(item["file"][0]["name"])
+    #                print "full_aod_file_name", full_aod_file_name
+    #                # e.g. full_aod_file_name /store/data/Run2018D/JetHT/AOD/PromptReco-v2/000/321/149/00000/5E855B33-EA9F-E811-827E-FA163E1FD66F.root
+    #                aod_file_name = full_aod_file_name.split("/")[-2] + "-" + full_aod_file_name.split("/")[-1].replace(".root", "")
+    #            else:
+    #                print "Lumisections span over multiple files!"
+    #                os.system("echo '%s: Lumisections span over multiple files' >> issues.log" % original_file_name)
+    #                return
+    #
+    #print "aod_file_name from cache:", aod_file_name
+
+
 
 
 if __name__ == "__main__":
