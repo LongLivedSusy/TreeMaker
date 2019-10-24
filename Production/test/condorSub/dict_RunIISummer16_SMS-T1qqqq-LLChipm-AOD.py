@@ -97,7 +97,7 @@ flist = {'scenario':
     ['RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-200_mLSP-800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
     ['RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-200_mLSP-900_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
     ['RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-200_mLSP-975_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
-    ['RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-200_TuneCP2_13TeV-madgraphMLM-pythia8-AOD'],
+    #['RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-200_TuneCP2_13TeV-madgraphMLM-pythia8-AOD'],
     #['RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-50_mLSP-1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
     #['RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-50_mLSP-1075_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
     #['RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-50_mLSP-1100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
