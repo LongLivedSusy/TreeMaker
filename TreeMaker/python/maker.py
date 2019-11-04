@@ -96,7 +96,7 @@ class maker:
         if self.dataset!=[] :    
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
-            if '/store/' in rf:
+            if '/store/' in rf and '/eos' not in rf:
                 # check if miniAOD file is present:
                 if not os.path.exists("info_miniaods"):
                     os.system("echo %s > info_aodfilenames" % ",".join(self.readFiles))
@@ -120,7 +120,7 @@ class maker:
 
             else:
                 # private production: now miniAOD as primary file
-            	shpingy = rf.replace('mini','').replace('step4','step3')
+            	shpingy = rf.replace('mini','').replace('_inMINIAODSIM','').replace('step4','step3')
             	self.readFiles_sidecar.append(shpingy)
 
         if os.path.exists("info_aods"):
