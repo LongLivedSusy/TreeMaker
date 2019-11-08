@@ -120,7 +120,7 @@ class maker:
 
             else:
                 # private production: now miniAOD as primary file
-            	shpingy = rf.replace('mini','').replace('step4','step3')
+            	shpingy = rf.replace('mini','').replace('step4','step3').replace('_inMINIAODSIM','')
             	self.readFiles_sidecar.append(shpingy)
 
         if os.path.exists("info_aods"):

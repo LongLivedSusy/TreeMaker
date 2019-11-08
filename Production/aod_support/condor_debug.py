@@ -16,8 +16,7 @@ def run_on_uscms(cmd, path):
     status, output = commands.getstatusoutput(cmd)
     
     if status != 0:
-        print "Problem:", path, cmd
-        quit()
+        return "Problem: %s, %s" % (path, cmd)
 
     try:
         return int(output)
@@ -25,9 +24,11 @@ def run_on_uscms(cmd, path):
         return output
 
 
-for user in get_userlist():
+#for user in get_userlist():
+for user in ["vkutzner"]:
 
-    cmsswver = "CMSSW_9_4_11"
+    #cmsswver = "CMSSW_9_4_11"
+    cmsswver = "CMSSW_10_2_7"
 
     path = "/home/%s/treemaker/%s/src/TreeMaker/Production/test/condorSub" % (user, cmsswver)
     if user == "sbein":
@@ -36,6 +37,8 @@ for user in get_userlist():
         path = "/home/akshansh/treemaker/%s/src/TreeMaker/Production/test/condorSub" % (cmsswver)
 
     print "user: %s" % user    
+    n_totaljobs = run_on_uscms('ls *.condor | wc -l', path)
+    print "  n_totaljobs:", n_totaljobs
     n_total = run_on_uscms('grep "Doing input file" *stdout | wc -l', path)
     print "  n_total:", n_total
     n_alreadydone = run_on_uscms('grep "outfile file already exists on dcache." *stdout | wc -l', path)
