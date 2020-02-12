@@ -70,7 +70,7 @@ def main(campaign, processed_files, debug = False, comment_already_processed_fil
                     file_count += 1
 
         with open(aod_file, "w") as fout:
-            fout.write("\n".join(file_contents) + "\n")
+            fout.write("\n".join(file_contents))
         
         print "%s written!" % aod_file
         
