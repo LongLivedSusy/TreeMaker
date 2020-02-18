@@ -35,9 +35,9 @@ def main(campaign, processed_files, debug = False, comment_already_processed_fil
 
     processed_uuids = processed_files
 
-    print "%s/*AOD_cff.py" % campaign
+    print "%s/*AOD*_cff.py" % campaign
 
-    aod_filelists = sorted(glob.glob("%s/*AOD_cff.py" % campaign))
+    aod_filelists = sorted(glob.glob("%s/*AOD?_cff.py" % campaign))
     
     for i_aod_file, aod_file in enumerate(aod_filelists):
 
@@ -89,7 +89,8 @@ if __name__ == "__main__":
 
     if options.campaign and options.processed_files:
         if options.campaign == "all":
-            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
+            #campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
+            campaigns = glob.glob("../python/Run2018A*") + glob.glob("../python/Run2018B*")
             print "Using campaigns:", campaigns
         else:
             campaigns = options.campaign.split(",")
