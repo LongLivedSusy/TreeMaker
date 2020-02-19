@@ -16,5 +16,5 @@ flist = {'scenario':
 ['RunIIFall17MiniAODv2.TTJets_SingleLeptFromTbar_TuneCP5_13TeV-madgraphMLM-pythia8AOD'],
 ['RunIIFall17MiniAODv2.TTJets_SingleLeptFromTbar_genMET-150_TuneCP5_13TeV-madgraphMLM-pythia8AOD'],
 ['RunIIFall17MiniAODv2.TTJets_TuneCP5_13TeV-madgraphMLM-pythia8AOD'],
-['RunIIFall17MiniAODv2.TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8AOD']
+['RunIIFall17MiniAODv2.TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8AOD'],
 ]}

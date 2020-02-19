@@ -5,5 +5,5 @@ flist = {'scenario':
 ['Run2016H-17Jul2018-v1.JetHTAOD'],
 ['Run2016H-17Jul2018-v1.SingleElectronAOD'],
 ['Run2016H-17Jul2018-v1.SingleMuonAOD'],
-['Run2016H-17Jul2018-v2.METAOD']
+['Run2016H-17Jul2018-v2.METAOD'],
 ]}

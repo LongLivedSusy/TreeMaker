@@ -107,5 +107,5 @@ flist = {'scenario':
 ['RunIIFall17MiniAODv2.SMS-T1qqqq-LLChipm_ctau-50_mLSP-400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
 ['RunIIFall17MiniAODv2.SMS-T1qqqq-LLChipm_ctau-50_mLSP-600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
 ['RunIIFall17MiniAODv2.SMS-T1qqqq-LLChipm_ctau-50_mLSP-75_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
-['RunIIFall17MiniAODv2.SMS-T1qqqq-LLChipm_ctau-50_mLSP-800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD']
+['RunIIFall17MiniAODv2.SMS-T1qqqq-LLChipm_ctau-50_mLSP-800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD'],
 ]}

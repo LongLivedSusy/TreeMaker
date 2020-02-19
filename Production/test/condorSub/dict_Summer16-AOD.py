@@ -161,5 +161,5 @@ flist = {'scenario':
 ['Summer16.ZZ_TuneCUETP8M1_13TeV-pythia8_ext1AOD'],
 ['Summer16.tZq_W_lept_Z_hadron_4f_ckm_NLO_13TeV_amcatnlo_pythia8AOD'],
 ['Summer16.ttHJetToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8_mWCutfix_ext1AOD'],
-['Summer16.ttHJetTobb_M125_13TeV_amcatnloFXFX_madspin_pythia8_ext3AOD']
+['Summer16.ttHJetTobb_M125_13TeV_amcatnloFXFX_madspin_pythia8_ext3AOD'],
 ]}
