@@ -25,16 +25,22 @@ def run_on_uscms(cmd, path):
 
 
 #for user in get_userlist():
-for user in ["vkutzner"]:
+for user in ["sbein"]:
 
     #cmsswver = "CMSSW_9_4_11"
     cmsswver = "CMSSW_10_2_7"
 
     path = "/home/%s/treemaker/%s/src/TreeMaker/Production/test/condorSub" % (user, cmsswver)
-    if user == "sbein":
+    if user == "sbein" and cmsswver == "CMSSW_9_4_11":
         path = "/home/%s/ShortTrackSusy/NtupleMakerWithMiniaod/%s/src/TreeMaker/Production/test/myProduction" % (user, cmsswver)
+    if user == "sbein" and cmsswver == "CMSSW_10_2_7":
+        path == "/home/sbein/ShortTrackSusy/NtupleMakerWithMiniaod/Effort2018/CMSSW_10_2_7/src/TreeMaker/Production/test/condorSub"
     elif user == "aksingh":
         path = "/home/akshansh/treemaker/%s/src/TreeMaker/Production/test/condorSub" % (cmsswver)
+
+    print path
+
+    path = "/home/sbein/ShortTrackSusy/NtupleMakerWithMiniaod/Effort2018/CMSSW_10_2_7/src/TreeMaker/Production/test/condorSub"
 
     print "user: %s" % user    
     n_totaljobs = run_on_uscms('ls *.condor | wc -l', path)
