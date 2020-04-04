@@ -59,7 +59,7 @@ def makeTreeFromMiniAOD(self,process):
             print 'yep, we"re in sidecar'
             from TreeMaker.Utils.isotrackproducer_cfi import isotrackproducer
             process.IsoTrackProducer = isotrackproducer.clone(
-                doDeDx = cms.bool(not self.fastsim),
+                doDeDx = cms.bool(True),
                 minTrackPt = cms.double(1.9),
                 maxTrackEta = cms.double(5.0),
                 maxDxy = cms.double(0.2),
@@ -86,7 +86,7 @@ def makeTreeFromMiniAOD(self,process):
             self.VectorDouble.extend(['IsoTrackProducer:tracks@chargedPtSum(tracks_chargedPtSum)'])
             self.VectorDouble.extend(['IsoTrackProducer:tracks@neutralPtSum(tracks_neutralPtSum)'])
             self.VectorDouble.extend(['IsoTrackProducer:tracks@neutralWithoutGammaPtSum(tracks_neutralWithoutGammaPtSum)'])
-            if not self.fastsim: 
+            if True:#not self.fastsim: 
                 self.VectorDouble.extend(['IsoTrackProducer:tracks@deDxHarmonic2strips(tracks_deDxHarmonic2strips)']) 
                 self.VectorDouble.extend(['IsoTrackProducer:tracks@deDxHarmonic2pixel(tracks_deDxHarmonic2pixel)'])                
             self.VectorBool.extend(['IsoTrackProducer:tracks@passExo16044DeadNoisyECALVeto(tracks_passExo16044DeadNoisyECALVeto)']) 
@@ -469,7 +469,11 @@ def makeTreeFromMiniAOD(self,process):
         elecIsoValue       = cms.double(0.1), # only has an effect when used with miniIsolation
         UseMiniIsolation   = cms.bool(True),
         METTag             = METTag  ,
-        rhoCollection      = cms.InputTag("fixedGridRhoFastjetCentralNeutral")  
+        rhoCollection      = cms.InputTag("fixedGridRhoFastjetCentralNeutral"),
+	minElecPt                              = cms.double(0),
+    	maxElecEta                             = cms.double(2.5),
+        minMucPt                              = cms.double(0),
+        maxMuEta                             = cms.double(5) 
     )
     # from: https://indico.cern.ch/event/732971/contributions/3022843/attachments/1658685/2656462/eleIdTuning.pdf
     (TMeras.TM2017 | TMeras.TM2018).toModify(process.LeptonsNew,
