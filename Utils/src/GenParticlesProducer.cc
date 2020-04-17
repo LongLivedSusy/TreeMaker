@@ -64,6 +64,7 @@ debug(iConfig.getParameter<bool>("debug"))
     produces< std::vector< TLorentzVector > >(""); 
     produces< std::vector< int > >("PdgId");
     produces< std::vector< int > >("Status");
+    produces< std::vector< int > >("LabXYmm");
     produces< std::vector< int > >("Parent");
     produces< std::vector< int > >("ParentId");
     produces< std::vector< bool > >("TTFlag");
@@ -86,6 +87,7 @@ void GenParticlesProducer::produce(edm::StreamID, edm::Event& iEvent, const edm:
     auto genParticle_vec = std::make_unique<std::vector<TLorentzVector>>();
     auto PdgId_vec = std::make_unique<std::vector<int>>();
     auto Status_vec = std::make_unique<std::vector<int>>();
+    auto LabXYmm_vec = std::make_unique<std::vector<int>>();
     auto Parent_vec = std::make_unique<std::vector<int>>();
     auto ParentId_vec = std::make_unique<std::vector<int>>();
     auto parents = std::make_unique<std::vector<TLorentzVector>>();
@@ -113,6 +115,34 @@ void GenParticlesProducer::produce(edm::StreamID, edm::Event& iEvent, const edm:
         //bool acceptableChild = typicalChild && (status==1 || status==2 || (status>20 && status<30));
         bool acceptableChild = typicalChild && iPart.isLastCopy();
         if (!(acceptableChild || acceptableParent || keepAllThese || firstDecayProducts)) continue;
+
+        if (iPart.numberOfDaughters()>0)
+        {
+            //std::cout << "numberOfDaughters " << iPart.numberOfDaughters() << std::endl;
+  	        const reco::Candidate * daughter1 = iPart.daughter(0);
+            //std::cout << "iPart.vx() " << iPart.vx() << std::endl;
+            //std::cout << "daughter1->vx() " << daughter1->vx() << std::endl;
+            //std::cout << "iPart.vy() " << iPart.vy() << std::endl;
+            //std::cout << "daughter1->vy() " << daughter1->vy() << std::endl;
+            //
+            //for (unsigned int idau = 0; idau < iPart.numberOfDaughters(); ++idau) 
+            //{
+            //    std::cout << "iPart.vx() " << iPart.vx() << std::endl;
+            //    std::cout << "daughteri->vx() " << iPart.daughter(idau)->vx() << std::endl;
+            //    std::cout << "iPart.vy() " << iPart.vy() << std::endl;
+            //    std::cout << "daughteri->vy() " << iPart.daughter(idau)->vy() << std::endl;
+            //     
+            //}
+  	        float displacement_cm = sqrt(std::pow(iPart.vx()-daughter1->vx(),2)+std::pow(iPart.vy()-daughter1->vy(),2));
+            //std::cout << "displacement_cm " << displacement_cm << std::endl;
+            int displacementMM = displacement_cm*10.0;
+  	        LabXYmm_vec->push_back(displacementMM);
+            //std::cout << "LabXYmm_vec " << displacementMM << std::endl;
+            
+  	      }
+        else LabXYmm_vec->push_back(0);
+        if( debug )std::cout<<"acceptable particle" << iPart.pdgId() << " status=" << iPart.status() << std::endl;
+        
 
         TLorentzVector temp;
         temp.SetPxPyPzE(iPart.px(), iPart.py(), iPart.pz(), iPart.energy());
@@ -164,6 +194,7 @@ void GenParticlesProducer::produce(edm::StreamID, edm::Event& iEvent, const edm:
     iEvent.put(std::move(genParticle_vec)); 
     iEvent.put(std::move(PdgId_vec      ), "PdgId");
     iEvent.put(std::move(Status_vec     ), "Status");
+    iEvent.put(std::move(LabXYmm_vec ), "LabXYmm" );
     iEvent.put(std::move(ParentId_vec   ), "ParentId");
     iEvent.put(std::move(Parent_vec     ), "Parent");
     iEvent.put(std::move(TTFlag_vec     ), "TTFlag");
