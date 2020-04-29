@@ -188,6 +188,7 @@ def makeTreeFromMiniAOD(self,process):
     ## GenParticles
     ## ----------------------------------------------------------------------------------------------
     if self.geninfo:
+
         process.genParticles = cms.EDProducer("GenParticlesProducer",
             genCollection = cms.InputTag("prunedGenParticles"),
             debug = cms.bool(False),
@@ -212,7 +213,7 @@ def makeTreeFromMiniAOD(self,process):
         self.VectorInt.append("genParticles:ParentId(GenParticles_ParentId)")
         self.VectorBool.append("genParticles:TTFlag(GenParticles_TTFlag)")
         self.VectorInt.append("genParticles:LabXYmm(GenParticles_LabXYmm)")
-        
+
         #GEANT4:
         if self.signal and not self.fastsim:
             process.genParticlesPlusGeant = cms.EDProducer("GenParticlesProducer",
@@ -236,7 +237,6 @@ def makeTreeFromMiniAOD(self,process):
             self.VectorInt.append("genParticlesPlusGeant:LabXYmm(GenParticlesGeant_LabXYmm)")
             self.VectorInt.append("genParticlesPlusGeant:Parent(GenParticlesGeant_ParentIdx)")
             self.VectorInt.append("genParticlesPlusGeant:ParentId(GenParticlesGeant_ParentId)")        
-        
         
         # for ttbar pT reweighting
         # params from: https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopPtReweighting#Run_2_strategy
@@ -498,7 +498,7 @@ def makeTreeFromMiniAOD(self,process):
         rhoCollection      = cms.InputTag("fixedGridRhoFastjetCentralNeutral"),
 	minElecPt                              = cms.double(0),
     	maxElecEta                             = cms.double(2.5),
-        minMucPt                              = cms.double(0),
+        minMuPt                              = cms.double(0),
         maxMuEta                             = cms.double(5) 
     )
     # from: https://indico.cern.ch/event/732971/contributions/3022843/attachments/1658685/2656462/eleIdTuning.pdf
