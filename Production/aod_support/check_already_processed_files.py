@@ -61,6 +61,9 @@ def main(campaign, processed_files, debug = False, comment_already_processed_fil
                 if "#" in file_contents[i]:
                     file_contents[i] = file_contents[i].replace("#", "")
                 
+                #FIXME
+                continue
+                
                 if comment_already_processed_files:
                     filename = file_contents[i].split("'")[1]
                     if file_has_been_processed(campaign.split("/")[-1], processed_uuids, filename):
@@ -89,7 +92,8 @@ if __name__ == "__main__":
 
     if options.campaign and options.processed_files:
         if options.campaign == "all":
-            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
+            #campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
+            campaigns = ["../python/RunIISummer16MiniAODv3"]
             #campaigns = glob.glob("../python/Run2018A*") + glob.glob("../python/Run2018B*")
             print "Using campaigns:", campaigns
         else:

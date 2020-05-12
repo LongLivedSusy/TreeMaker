@@ -226,7 +226,7 @@ def produce_productionrate_html(number_of_days):
     return produce_html(xvals, yvals, "Production rates for the last 10 days")
 
 
-def produce_html(xvals, yvals_dict, title):
+def produce_html(xvals, yvals_dict, title, datetimeplot = False):
 
     def get_dataset_html(yvals, label, color):
 
@@ -260,6 +260,32 @@ def produce_html(xvals, yvals_dict, title):
 
     myuuid = uuid.uuid1()
 
+    if datetimeplot:
+
+        # do as here:
+        # https://www.chartjs.org/docs/latest/axes/cartesian/time.html
+        # https://stackoverflow.com/questions/47875045/chart-js-creating-a-line-graph-using-dates
+
+        moreoptions = """
+        scales: {
+            xAxes: [{
+                type: 'time',
+                distribution: 'linear'
+                   }]
+                 }
+                  """
+        moreoptions = ""
+        for i in range(len(xvals)):
+            xvals[i] = 'new Date("%s").toLocaleString()' % xvals[i]
+        
+        xvals = "[" + ", ".join(xvals) + "]"
+
+        #datasets = []
+        
+
+    else:
+        moreoptions = ""
+
     template = """
         <canvas id="%s" width="600px" height="200px" bg="white"></canvas>
         <script language="Javascript">
@@ -277,12 +303,13 @@ def produce_html(xvals, yvals_dict, title):
             title: {
               display: true,
               text: '%s'
-            }
+            },
+            %s
           }
         });
 
         </script>
-    """ % (myuuid, myuuid, xvals, datasets, title)
+    """ % (myuuid, myuuid, xvals, datasets, title, moreoptions)
 
     return template
 
@@ -336,7 +363,7 @@ def get_plots(selected_campaigns, title):
 
         date = line.split(" = ")[0]
         date = datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
-        date = date.strftime("%Y-%m-%d %H:%M:%S")
+        date = date.strftime("%Y-%m-%d %H:%M")
         progress = eval(line.split(" = ")[1])
         progress = invert_dict(progress, selected_campaigns)
 
@@ -359,7 +386,7 @@ def get_plots(selected_campaigns, title):
             yvals[item + "_done"]["yvals"].append(progress[item][0])
             yvals[item + "_total"]["yvals"].append(progress[item][1])
    
-    html = produce_html(dates, yvals, title)
+    html = produce_html(dates, yvals, title, datetimeplot = True)
 
     return html
 
@@ -423,8 +450,6 @@ if __name__ == "__main__":
 
     save_datapoint_to_file()
 
-    html_rates = produce_productionrate_html(10)
-
     html = """
                 <body style="background-color:fcfbfb;">
                 <script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
@@ -433,7 +458,7 @@ if __name__ == "__main__":
     html += "<font face=Arial><h1>TreeMaker ntuple production</h2></font>"
     html += "<font face=Arial>Note: RunIISummer16 contains the T2bt and T1qqqq SMS</font>"
     html += "<font face=Arial><h2>Production rates for the last 10 days:</h2></font>"
-    html += html_rates
+    html += produce_productionrate_html(10)
     html += "<p><hr><p>"
     html += "<font face=Arial><h2>Totals:</h2></font>"
     html += get_plots([], "Grand totals")
