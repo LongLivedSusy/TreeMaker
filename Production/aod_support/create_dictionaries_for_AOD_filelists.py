@@ -4,32 +4,35 @@ import glob
 import commands
 
 aod_scenarios = {
-                 "Summer16": ["Summer16", "Summer16"],
-                 "Fall17":   ["Fall17", "Fall17"],
-                 "Autumn18":  ["Autumn18", "Autumn18"],
-                 "Run2016A":  ["re2016A", "2016MiniAODv3AOD"],
-                 "Run2016B":  ["re2016B", "2016MiniAODv3AOD"],
-                 "Run2016C":  ["re2016C", "2016MiniAODv3AOD"],
-                 "Run2016D":  ["re2016D", "2016MiniAODv3AOD"],
-                 "Run2016E":  ["re2016E", "2016MiniAODv3AOD"],
-                 "Run2016F":  ["re2016F", "2016MiniAODv3AOD"],
-                 "Run2016G":  ["re2016G", "2016MiniAODv3AOD"],
-                 "Run2016H":  ["re2016H", "2016MiniAODv3AOD"],
-                 "Run2017B":  ["re2017B", "2017ReReco31MarAOD"],
-                 "Run2017C":  ["re2017C", "2017ReReco31MarAOD"],
-                 "Run2017D":  ["re2017D", "2017ReReco31MarAOD"],
-                 "Run2017E":  ["re2017E", "2017ReReco31MarAOD"],
-                 "Run2017F":  ["re2017F", "2017ReReco31MarAOD"],
-                 "Run2018A": ["re2018A", "2018ReReco17SepAOD"],
-                 "Run2018B": ["re2018B", "2018ReReco17SepAOD"],
-                 "Run2018C": ["re2018C", "2018ReReco17SepAOD"],                
-                 "Run2018D": ["2018D", "2018PromptRecoAOD"],
+                 #"Summer16": ["Summer16", "Summer16"],
+                 #"Fall17":   ["Fall17", "Fall17"],
+                 #"Autumn18":  ["Autumn18", "Autumn18"],
+                 #"Run2016A":  ["re2016A", "2016MiniAODv3AOD"],
+                 #"Run2016B":  ["re2016B", "2016MiniAODv3AOD"],
+                 #"Run2016C":  ["re2016C", "2016MiniAODv3AOD"],
+                 #"Run2016D":  ["re2016D", "2016MiniAODv3AOD"],
+                 #"Run2016E":  ["re2016E", "2016MiniAODv3AOD"],
+                 #"Run2016F":  ["re2016F", "2016MiniAODv3AOD"],
+                 #"Run2016G":  ["re2016G", "2016MiniAODv3AOD"],
+                 #"Run2016H":  ["re2016H", "2016MiniAODv3AOD"],
+                 #"Run2017B":  ["re2017B", "2017ReReco31MarAOD"],
+                 #"Run2017C":  ["re2017C", "2017ReReco31MarAOD"],
+                 #"Run2017D":  ["re2017D", "2017ReReco31MarAOD"],
+                 #"Run2017E":  ["re2017E", "2017ReReco31MarAOD"],
+                 #"Run2017F":  ["re2017F", "2017ReReco31MarAOD"],
+                 #"Run2018A": ["re2018A", "2018ReReco17SepAOD"],
+                 #"Run2018B": ["re2018B", "2018ReReco17SepAOD"],
+                 #"Run2018C": ["re2018C", "2018ReReco17SepAOD"],                
+                 #"Run2018D": ["2018D", "2018PromptRecoAOD"],
+                 #"Run2018D": ["2018D", "2018PromptRecoAOD"],
+                 "Summer16": ["RunIISummer16MiniAODv3Fast", "RunIIFall17"]
                 } 
 
 
 for campaign in [
                  #"Summer16",
-                 "RunIIFall17MiniAODv2",
+                 #"RunIIFall17MiniAODv2",
+                 "RunIISummer16MiniAODv3Fast",
                  #"RunIIAutumn18MiniAOD",
                  #"Run2016B-17Jul2018_ver*",
                  #"Run2016C-17Jul2018-v1",
@@ -105,7 +108,7 @@ for campaign in [
 
     print contents  
 
-    pyfilename = "../test/condorSub/dict_%snowrongPU-AOD.py" % pyfilename.replace("Run", "")
+    pyfilename = "../test/condorSub/dict_%s-AOD.py" % pyfilename.replace("Run", "")
 
     with open(pyfilename, "w+") as fout:
 

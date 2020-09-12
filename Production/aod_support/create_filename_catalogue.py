@@ -92,12 +92,13 @@ def main(treemaker_path, campaign, debug, outfile = ""):
         
     if outfile == "":
         #outfile = campaign
-        outfile = campaign + "_sms"
+        outfile = campaign + "_sms" + "_ext"
 
-    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/SMS-T2bt*AOD*py" % (treemaker_path, campaign))
+    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/SMS-T2bt*AOD*py" % (treemaker_path, campaign))
+    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/RunIISummer16MiniAODv3Fast/SMS-T2bt*AOD*py" % (treemaker_path))
     #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/SMS-T1qqqq-LLChipm_ctau-200*AOD*py" % (treemaker_path, campaign))
     #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/EGamma*AOD*py" % (treemaker_path, campaign))
-    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/*AOD*py" % (treemaker_path, campaign))
+    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/*ext*AOD*py" % (treemaker_path, campaign))
     if status != 0:
         print file_names_string
         return

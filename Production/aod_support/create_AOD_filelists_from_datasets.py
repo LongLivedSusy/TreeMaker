@@ -297,6 +297,14 @@ miniaod_datastreams = [
 ]
 
 
+cff_folder = "RunIISummer16MiniAODv3Fast"
+miniaod_datastreams = [
+   ##"/SMS-T1qqqq-LLChipm_ctau-200_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15-v1/MINIAODSIM",
+   "/SMS-T1qqqq-LLChipm_ctau-200_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15_ext1-v1/MINIAODSIM",
+   "/SMS-T1qqqq-LLChipm_ctau-50_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15_ext1-v1/MINIAODSIM",
+   ##"/SMS-T1qqqq-LLChipm_ctau-10_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15_ext1-v1/MINIAODSIM",
+   ##"/SMS-T1qqqq-LLChipm_ctau-50_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15-v1/MINIAODSIM",
+]
 
 
 for dataset in miniaod_datastreams:
@@ -375,6 +383,13 @@ for dataset in miniaod_datastreams:
     for ichunk, filechunks in enumerate(chunks_per_submission_file):
 
         identifier = dataset.split("/")[1]
+
+        if "ext1" in dataset:
+            identifier += "ext1"
+        elif "ext2" in dataset:
+            identifier += "ext2"
+        elif "ext3" in dataset:
+            identifier += "ext3"
 
         if len(chunks_per_submission_file) == 1:
             pyfilename = cff_folder + "/" + identifier + "-AOD_cff.py"
