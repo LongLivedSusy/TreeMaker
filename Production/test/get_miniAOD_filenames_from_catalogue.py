@@ -20,7 +20,7 @@ parser.add_option('--test', action='store_true', dest='test')
 
 def read_catalogue(aod_file_name):
     
-    for catalogue_name in glob.glob("catalogue_*.dat"):
+    for catalogue_name in glob.glob("catalogue_*.dat"):         #FIXME!!!
     
         command = "sed -n -e '/%s/,/\[/ p' %s | head -n -1 | tail -n +2" % (aod_file_name.replace("/", "\/"), catalogue_name)
         status, output = commands.getstatusoutput(command)
