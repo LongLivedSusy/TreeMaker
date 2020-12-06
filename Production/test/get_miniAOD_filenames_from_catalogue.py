@@ -63,8 +63,10 @@ def get_miniAOD_filenames(aod_file_name):
     #first, get start / end of AOD file:
     print "Running edmFileUtil to get run number / lumisec information..."
     if aod_file_name[0:7] == "/store/":
-        print "edmFileUtil root://cmsxrootd.fnal.gov/%s -e > TMPFILE" % aod_file_name
-        os.system("edmFileUtil root://cmsxrootd.fnal.gov/%s -e > TMPFILE" % aod_file_name)
+        #print "edmFileUtil root://cmsxrootd.fnal.gov/%s -e > TMPFILE" % aod_file_name
+        #os.system("edmFileUtil root://cmsxrootd.fnal.gov/%s -e > TMPFILE" % aod_file_name)
+        print "edmFileUtil root://dcache-cms-xrootd.desy.de/%s -e > TMPFILE" % aod_file_name
+        os.system("edmFileUtil root://dcache-cms-xrootd.desy.de/%s -e > TMPFILE" % aod_file_name)
     else:
         print "edmFileUtil %s -e > TMPFILE" % aod_file_name
         os.system("edmFileUtil %s -e > TMPFILE" % aod_file_name)
