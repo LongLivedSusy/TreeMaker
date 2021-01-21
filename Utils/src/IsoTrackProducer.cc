@@ -298,18 +298,24 @@ template <typename T>
 double LoopOverRecHits(T hitcollection, reco::Track track, edm::ESHandle<CaloGeometry> CaloGeomHandle, double caloEnergyDepositionMaxDR){
 
   // get deposited energy for a single recHit collection inside a cone of max DR around a selected track
+
+  double energyDepositedPerCalorimeter = 0;
    
-  double energyDepositedPerCalorimeter = 0;      
-  for( const auto& hit : *hitcollection){ 
-          
-    double hitEnergy = hit.energy();
-    double cellEta = CaloGeomHandle.product()->getPosition(hit.detid()).eta();
-    double cellPhi = CaloGeomHandle.product()->getPosition(hit.detid()).phi();
-        
-    if (deltaR(cellEta, cellPhi, track.eta(), track.phi()) < caloEnergyDepositionMaxDR) {
-      energyDepositedPerCalorimeter += hitEnergy;
-    }
-  }
+  try {
+  	for( const auto& hit : *hitcollection){ 
+  	        
+  	  double hitEnergy = hit.energy();
+  	  double cellEta = CaloGeomHandle.product()->getPosition(hit.detid()).eta();
+  	  double cellPhi = CaloGeomHandle.product()->getPosition(hit.detid()).phi();
+  	      
+  	  if (deltaR(cellEta, cellPhi, track.eta(), track.phi()) < caloEnergyDepositionMaxDR) {
+  	    energyDepositedPerCalorimeter += hitEnergy;
+  	  }
+  	}
+  } catch (const std::exception& e) {
+  	   std::cout << e.what();
+  	   energyDepositedPerCalorimeter = -1;
+  } 
        
   return energyDepositedPerCalorimeter;
 }

@@ -357,7 +357,8 @@ for dataset in miniaod_datastreams:
                 os.system('echo "%s" >> samples_available' % item)
 
     # FIXME: only collect missing samples
-           
+    continue
+         
     # create python configuration:
     all_filenames = ""
     for item in complete_output:

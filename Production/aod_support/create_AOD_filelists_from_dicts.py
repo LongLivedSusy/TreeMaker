@@ -17,8 +17,14 @@ write_file_lists = True
 #campaign = "RunIIFall17MiniAODv2"
 #datastreams = []
 
+#campaign = "Run2018*"
+#datastreams = ["EGamma"]
+
+#campaign = "Run2018*"
+#datastreams = ["MET", "EGamma", "SingleMuon", "JetHT"]
+
 campaign = "Run2018*"
-datastreams = ["EGamma"]
+datastreams = ["MET"]
 
 
 # Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
@@ -113,7 +119,14 @@ for datastream in datastreams:
             sample_available = False 
             for item in complete_output:
                 print item
-                status, sites = commands.getstatusoutput('dasgoclient -query="site dataset=%s"' % item)
+                
+                #status, sites = commands.getstatusoutput('dasgoclient -query="site dataset=%s instance=prod/phys03 system=dbs3 detail=true"' % item)
+                
+                status, filenames = commands.getstatusoutput('dasgoclient -query="file dataset=%s"' % item)
+                first_file = filenames.split("\n")[0]
+                
+                status, sites = commands.getstatusoutput('dasgoclient -query="site file=%s"' % first_file)
+                
                 for line in sites.split("\n"):
                     if "MSS" not in line and "Buffer" not in line and "T0_CH_CERN_Export" not in line:
                         print "\t", line
@@ -121,7 +134,10 @@ for datastream in datastreams:
             
                 if not sample_available:
                     print "### warning, sample not readily available on any site: %s" % item
-                    os.system('echo "%s" >> samples_not_available_%s' % (item, campaign))
+                    os.system('echo "%s" >> samples_not_available_%s' % (item, campaign.replace("*", "")))
+                else:
+                    print "OK"
+                    os.system('echo "%s" >> samples_available_%s' % (item, campaign.replace("*", "")))
 
         if not write_file_lists: continue
                 
