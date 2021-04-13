@@ -4,11 +4,13 @@ import os, glob
 from optparse import OptionParser
 import socket
 import commands
+import json
+import GridEngineTools
 
 # to be run at DESY
 
 def create_processed_filelist():
-    os.system("ls /pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v3/ > finished_ntuples.dat")
+    os.system("ls /pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v3*/ > finished_ntuples.dat")
 
 
 def file_has_been_processed(campaign, processed_uuids, aod_file, debug = False):
@@ -20,8 +22,56 @@ def file_has_been_processed(campaign, processed_uuids, aod_file, debug = False):
     else:
         return False
 
+with open('../test/data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt') as f:
+    golden16 = json.loads(f.read())
+with open('../test/data/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt') as f:
+    golden17 = json.loads(f.read())
+with open('../test/data/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt') as f:
+    golden18 = json.loads(f.read())
 
-def main(campaign, processed_files, debug = False, comment_already_processed_files = True):
+def is_in_goldenjson(mydbs_struct, filename):
+    
+    # for MC:
+    if "Run201" not in filename:
+        return True 
+    
+    # for Data:
+    for i_mydbs in mydbs_struct:
+        if filename in i_mydbs:
+                        
+            flist = eval(i_mydbs)
+            for i_flist in flist:
+                for i in range(len(i_flist["file"])):
+                    if filename in i_flist["file"][i]["name"]:
+                        run = i_flist["run"][0]["run_number"]
+                        lumisecs = i_flist["lumi"][0]["number"]
+                        if not (str(run) in golden16 or str(run) in golden17 or str(run) in golden18):
+                            print "NOT IN GOLDEN JSON:", filename, ", run:", str(run)
+                            return False
+                        else:    
+                            # run in golden json, check lumisections:
+                            
+                            lumi_golden = []
+                            for golden in [golden16, golden17, golden18]:
+                                if str(run) in golden:
+                                    lumi_golden = golden[str(run)]
+                            
+                            is_in_golden = False
+                            for i_lumi_file in lumisecs:
+                                for interval in lumi_golden:
+                                    if i_lumi_file >= interval[0] and i_lumi_file <= interval[1]:
+                                        is_in_golden = True
+                                        break
+                            
+                            if is_in_golden:
+                                return True
+                            else:
+                                print "NOT IN GOLDEN JSON:", filename, ", run:", str(run), ", lumisecs:", lumisecs
+                                return False             
+                                            
+    return True
+
+def main(campaign, processed_files, specific_aod_file = -1, debug = False, comment_already_processed_files = True, write = True):
 
     # read processed files
     processed_files_string = ""
@@ -33,13 +83,24 @@ def main(campaign, processed_files, debug = False, comment_already_processed_fil
         if len(processed_files[i].split("_"))>1:
             processed_files[i] = processed_files[i].split("_")[-2]
 
-    processed_uuids = processed_files
+    processed_uuids = "\n".join(processed_files)
 
     print "%s/*AOD*_cff.py" % campaign
 
     aod_filelists = sorted(glob.glob("%s/*AOD*_cff.py" % campaign))
     
+    with open('dbs.cache') as f:
+        mydbs = f.read().split("\n")
+    
+    mydbs_struct = []
+    for i_mydbs in mydbs:
+        if len(i_mydbs)>0 and i_mydbs[1] == "/": continue
+        mydbs_struct.append(i_mydbs)
+    
     for i_aod_file, aod_file in enumerate(aod_filelists):
+
+        if int(specific_aod_file) > -1 and int(specific_aod_file) != i_aod_file:
+            continue
 
         #FIXME
         if "DYJetsToLL_M-5to50_HT" in aod_file: continue
@@ -60,22 +121,21 @@ def main(campaign, processed_files, debug = False, comment_already_processed_fil
                 # remove old hashes...
                 if "#" in file_contents[i]:
                     file_contents[i] = file_contents[i].replace("#", "")
-                
-                #FIXME
-                continue
-                
+                                
                 if comment_already_processed_files:
                     filename = file_contents[i].split("'")[1]
                     if file_has_been_processed(campaign.split("/")[-1], processed_uuids, filename):
                         file_contents[i] = "#" + file_contents[i]
+                    elif not is_in_goldenjson(mydbs_struct, filename):
+                        file_contents[i] = "##" + file_contents[i]
                     else:
                         file_contents[i] = file_contents[i]
                     file_count += 1
-
-        with open(aod_file, "w") as fout:
-            fout.write("\n".join(file_contents))
-        
-        print "%s written!" % aod_file
+                    
+        if write:
+            with open(aod_file, "w") as fout:
+                fout.write("\n".join(file_contents))
+            print "%s written!" % aod_file
         
 
 if __name__ == "__main__":
@@ -84,24 +144,32 @@ if __name__ == "__main__":
     parser.add_option("--update_filelist", dest="update_filelist", action="store_true")
     parser.add_option("--campaign", dest="campaign", default="all")
     parser.add_option("--processed_files", dest="processed_files", default="finished_ntuples.dat")
+    parser.add_option("--specific_aod_file", dest="specific_aod_file", default=-1)    
     parser.add_option("--debug", dest="debug", action="store_true")
     (options, args) = parser.parse_args()
 
     if options.update_filelist or not os.path.exists(os.getcwd() + "/" + options.processed_files):
         create_processed_filelist()
 
-    if options.campaign and options.processed_files:
-        if options.campaign == "all":
-            #campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
-            campaigns = ["../python/RunIISummer16MiniAODv3"]
-            #campaigns = glob.glob("../python/Run2018A*") + glob.glob("../python/Run2018B*")
-            print "Using campaigns:", campaigns
-        else:
-            campaigns = options.campaign.split(",")
-
+    if options.campaign == "all":
+        campaigns = ["../python/Run2018D-PromptReco-v2"]
+        #campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
+        #campaigns = ["../python/RunIISummer16MiniAODv3"]
+        #campaigns = glob.glob("../python/Run2018A*") + glob.glob("../python/Run2018B*")
+        print "Using campaigns:", campaigns
+    
+        commands = []
         for campaign in campaigns:
-            main("../python/" + campaign, options.processed_files, debug = options.debug)
+            aod_filelists = sorted(glob.glob("%s/*AOD*_cff.py" % campaign))
+            for i, aod_filelist in enumerate(aod_filelists):
+                commands.append("./check_already_processed_files.py --campaign %s --specific_aod_file %s" % (campaign, i))
+        print commands
+        GridEngineTools.runParallel(commands, "grid")
 
     else:
-        print "Run with e.g.\n ./check_already_processed_files.py --campaign RunIIFall17MiniAODv2 --processed_files finished_ntuples.dat \n"
-        print "Can also run with multiple campaigns separated by commas."
+        campaigns = options.campaign.split(",")
+        for campaign in campaigns:
+            main("../python/" + campaign, options.processed_files, debug = options.debug, specific_aod_file = options.specific_aod_file)
+
+    #print "Run with e.g.\n ./check_already_processed_files.py --campaign RunIIFall17MiniAODv2 --processed_files finished_ntuples.dat \n"
+    #print "Can also run with multiple campaigns separated by commas."

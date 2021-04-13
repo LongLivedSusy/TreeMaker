@@ -18,7 +18,7 @@ def run_test(sample, scenario):
     os.chdir("../test/")
 
     outfile = "test_" + sample.split(".")[-1]
-    cmsRun_command = "cmsRun runMakeTreeFromMiniAOD_cfg.py outfile=%s inputFilesConfig=%s nstart=100 nfiles=1 scenario=%s numevents=1" % (outfile, sample, scenario)
+    cmsRun_command = "singularity exec --contain --bind /afs:/afs --bind /nfs:/nfs --bind /pnfs:/pnfs --bind /cvmfs:/cvmfs --bind /var/lib/condor:/var/lib/condor --bind /tmp:/tmp --pwd . ~/dust/slc6_latest.sif sh -c 'source /cvmfs/cms.cern.ch/cmsset_default.sh; cd /nfs/dust/cms/user/kutznerv/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/test/; export SCRAM_ARCH=slc6_amd64_gcc700; eval `scramv1 runtime -sh`; cmsRun runMakeTreeFromMiniAOD_cfg.py outfile=%s inputFilesConfig=%s nstart=100 nfiles=1 scenario=%s numevents=-1'" % (outfile, sample, scenario)
 
     status, output = runcmd("rm info_*")
     status, output = runcmd(cmsRun_command)
@@ -47,7 +47,8 @@ if __name__ == "__main__":
               #["2017ReReco31Mar", "Run2017E-31Mar2018-v1.METAOD"],
               #["2018ReReco17Sep", "Run2018C-17Sep2018-v1.EGammaAOD0"],
               #["2018ReReco17Sep", "Run2018A-17Sep2018-v1.METAOD"],
-              ["2018ReReco17Sep", "Run2018B-17Sep2018-v1.METAOD"],
+              #["2018ReReco17Sep", "Run2018B-17Sep2018-v1.METAOD"],
+              ["2018PromptReco", "Run2018D-PromptReco-v2.EGammaAOD1"],
               #["Summer16MiniAODv3", "RunIISummer16MiniAODv3.DYJetsToLL_M-5to50_HT-100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD"],
               #["Summer16MiniAODv3sig", "RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-200_mLSP-800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD"],
               #["Summer16MiniAODv3sig", "RunIISummer16MiniAODv3.SMS-T1qqqq-LLChipm_ctau-200_mLSP-800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-AOD"],
