@@ -111,6 +111,8 @@ if __name__ == "__main__":
             job_return_status = status
             runcmd("rm %s.root" % outfile)
             continue
+        else:
+            print "Success!"
         
         print "run test script to check if output file has a tracks collection:"
         runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/check_if_tracks_present.py" .')
@@ -138,18 +140,18 @@ if __name__ == "__main__":
     with open("script_gfalcopy", "w+") as fout:
         fout.write(shell_script)
     runcmd("chmod +x script_gfalcopy")
+    job_return_status, output = runcmd("./script_gfalcopy")
 
-    for i in range(4):
-        status, output = runcmd("./script_gfalcopy")
-        if status != 0:
-            job_return_status = status
-        if status == 0 or status == 17:
-            # status code 17: file exists
-            break
-        print "Copy failed, retry in 60s"
-        time.sleep(400)
+    #for i in range(4):
+    #    status, output = runcmd("./script_gfalcopy")
+    #    if status != 0:
+    #        job_return_status = status
+    #    if status == 0 or status == 17:
+    #        # status code 17: file exists
+    #        break
+    #    print "Copy failed, retry in 60s"
+    #    time.sleep(400)
 
-    print "rm *.root"
     runcmd("rm *.root")
 
     quit(job_return_status)
