@@ -120,54 +120,35 @@ if __name__ == "__main__":
         
         if status != 0:
             job_return_status = status
-        
-        # copy file:
-        shell_script = """
-        #!/bin/bash
-        echo "prepare gfal tools"
-        if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
-            . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
-        fi        
+           
+    # copy output (retry 10 times if failed):
+    shell_script = """
+    #!/bin/bash
+    echo "prepare gfal tools"
+    if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
+        . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
+    fi        
 
-        gfal-copy -n 1 file://%s/%s.root %s/%s.root
-        #find $PWD -type f -name "*.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
-        #gfal-copy -n 1 -f --from-file files.txt %s/
-        exit $?
-        """ % (os.getcwd(), outfile, options.outpath, outfile, options.outpath)
+    #gfal-copy -n 1 file://%s/%s.root %s/%s.root
+    find $PWD -type f -name "*.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
+    gfal-copy -n 1 -f --from-file files.txt %s/
+    exit $?
+    """ % (os.getcwd(), outfile, options.outpath, outfile, options.outpath)
 
-        with open("script_gfalcopy", "w") as fout:
-            fout.write(shell_script)
-        runcmd("chmod +x script_gfalcopy")
-        job_return_status, output = runcmd("./script_gfalcopy")
-                   
-    ## copy output (retry 10 times if failed):
-    #shell_script = """
-    ##!/bin/bash
-    #echo "prepare gfal tools"
-    #if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
-    #    . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
-    #fi        
-    #
-    ##gfal-copy -n 1 file://%s/%s.root %s/%s.root
-    #find $PWD -type f -name "*.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
-    #gfal-copy -n 1 -f --from-file files.txt %s/
-    #exit $?
-    #""" % (os.getcwd(), outfile, options.outpath, outfile, options.outpath)
-    #
-    #with open("script_gfalcopy", "w+") as fout:
-    #    fout.write(shell_script)
-    #runcmd("chmod +x script_gfalcopy")
-    #
-    #for i in range(4):
-    #    status, output = runcmd("./script_gfalcopy")
-    #    if status != 0:
-    #        job_return_status = status
-    #    if status == 0 or status == 17:
-    #        # status code 17: file exists
-    #        break
-    #    print "Copy failed, retry in 60s"
-    #    time.sleep(400)
-    
+    with open("script_gfalcopy", "w+") as fout:
+        fout.write(shell_script)
+    runcmd("chmod +x script_gfalcopy")
+
+    for i in range(4):
+        status, output = runcmd("./script_gfalcopy")
+        if status != 0:
+            job_return_status = status
+        if status == 0 or status == 17:
+            # status code 17: file exists
+            break
+        print "Copy failed, retry in 60s"
+        time.sleep(400)
+
     print "rm *.root"
     runcmd("rm *.root")
 
