@@ -22,6 +22,7 @@ def file_has_been_processed(campaign, processed_uuids, aod_file, debug = False):
     else:
         return False
 
+
 with open('../test/data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt') as f:
     golden16 = json.loads(f.read())
 with open('../test/data/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt') as f:
@@ -71,7 +72,8 @@ def is_in_goldenjson(mydbs_struct, filename):
                                             
     return True
 
-def main(campaign, processed_files, specific_aod_file = -1, debug = False, comment_already_processed_files = True, write = True):
+
+def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor_old_hashes = True, comment_already_processed_files = True, write = True):
 
     # read processed files
     processed_files_string = ""
@@ -118,9 +120,12 @@ def main(campaign, processed_files, specific_aod_file = -1, debug = False, comme
             ignore_file = False
             if ".root" in file_contents[i]:
 
-                # remove old hashes...
+                # existing hashes...
                 if "#" in file_contents[i]:
-                    file_contents[i] = file_contents[i].replace("#", "")
+                    if honor_old_hashes:
+                        continue
+                    else:
+                        file_contents[i] = file_contents[i].replace("#", "")
                                 
                 if comment_already_processed_files:
                     filename = file_contents[i].split("'")[1]
@@ -128,8 +133,6 @@ def main(campaign, processed_files, specific_aod_file = -1, debug = False, comme
                         file_contents[i] = "#" + file_contents[i]
                     elif not is_in_goldenjson(mydbs_struct, filename):
                         file_contents[i] = "##" + file_contents[i]
-                    else:
-                        file_contents[i] = file_contents[i]
                     file_count += 1
                     
         if write:
@@ -152,7 +155,7 @@ if __name__ == "__main__":
         create_processed_filelist()
 
     if options.campaign == "all":
-        campaigns = ["../python/Run2018D-PromptReco-v2"]
+        campaigns = glob.glob("../python/Run201*")
         #campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
         #campaigns = ["../python/RunIISummer16MiniAODv3"]
         #campaigns = glob.glob("../python/Run2018A*") + glob.glob("../python/Run2018B*")

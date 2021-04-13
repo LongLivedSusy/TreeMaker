@@ -5,8 +5,8 @@ import commands
 
 # create AOD file lists from exisiting miniAOD file lists. Configuration:
 
-check_dataset_availablity = False
-write_file_lists = True
+check_dataset_availablity = True
+write_file_lists = False
 
 #campaign = "Run2016*"
 #datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
@@ -23,8 +23,8 @@ write_file_lists = True
 #campaign = "Run2018*"
 #datastreams = ["MET", "EGamma", "SingleMuon", "JetHT"]
 
-campaign = "Run2018*"
-datastreams = ["MET"]
+campaign = "Run2018D-PromptReco*"
+datastreams = ["MET", "EGamma", "SingleMuon", "JetHT"]
 
 
 # Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
@@ -128,7 +128,7 @@ for datastream in datastreams:
                 status, sites = commands.getstatusoutput('dasgoclient -query="site file=%s"' % first_file)
                 
                 for line in sites.split("\n"):
-                    if "MSS" not in line and "Buffer" not in line and "T0_CH_CERN_Export" not in line:
+                    if "MSS" not in line and "Buffer" not in line and "T0_CH_CERN_Export" not in line and "Tape" not in line:
                         print "\t", line
                         sample_available = True
             
@@ -136,7 +136,7 @@ for datastream in datastreams:
                     print "### warning, sample not readily available on any site: %s" % item
                     os.system('echo "%s" >> samples_not_available_%s' % (item, campaign.replace("*", "")))
                 else:
-                    print "OK"
+                    print "Available"
                     os.system('echo "%s" >> samples_available_%s' % (item, campaign.replace("*", "")))
 
         if not write_file_lists: continue
