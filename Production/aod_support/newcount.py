@@ -31,6 +31,8 @@ campaigns = [
 
 datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
 
+print "To update counts: \n ./check_already_processed_files.py --update_filelist \n"
+
 print "Dataset \t pending/total \t Available datasets"
 print "========================================================================================"
 
