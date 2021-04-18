@@ -18,9 +18,14 @@ parser.add_option('--infile', dest='infile')
 parser.add_option('--test', action='store_true', dest='test')
 (options, args) = parser.parse_args()
 
+if "Run2018" in options.infile:
+    testpath = "/nfs/dust/cms/user/kutznerv/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/test"
+else:
+    testpath = "/nfs/dust/cms/user/kutznerv/shorttrack/treemaker/CMSSW_9_4_11/src/TreeMaker/Production/test"
+
 def read_catalogue(aod_file_name):
     
-    for catalogue_name in glob.glob("catalogue_*.dat"):         #FIXME!!!
+    for catalogue_name in glob.glob("%s/catalogue_*.dat" % testpath):
     
         command = "sed -n -e '/%s/,/\[/ p' %s | head -n -1 | tail -n +2" % (aod_file_name.replace("/", "\/"), catalogue_name)
         status, output = commands.getstatusoutput(command)
@@ -106,7 +111,7 @@ def get_miniAOD_filenames(aod_file_name):
     if "Run201" in aod_file_name:
         with open("lumisecs.json", "w") as fo:
              fo.write(json_content)
-        os.system("compareJSON.py --and $(cat info_jsonfilename) lumisecs.json > lumisecs_union.json")
+        os.system("compareJSON.py --and %s/$(cat info_jsonfilename) lumisecs.json > lumisecs_union.json" % testpath)
     else:
         with open("lumisecs_union.json", "w") as fo:
             fo.write(json_content)
