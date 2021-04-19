@@ -58,6 +58,7 @@ def read_catalogue(aod_file_name):
             miniaod_filenames = [x for x in miniaod_filenames if not "-v1/" in x and not "-v2/" in x]
         
         if len(miniaod_filenames) > 0 and miniaod_filenames != ['']:
+            print "Found in ", catalogue_name
             return list(set(miniaod_filenames))
     
     quit("No miniaod file name(s) found")
