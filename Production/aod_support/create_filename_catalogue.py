@@ -97,8 +97,9 @@ def main(treemaker_path, campaign, debug, outfile = ""):
     #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/SMS-T2bt*AOD*py" % (treemaker_path, campaign))
     #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/RunIISummer16MiniAODv3Fast/SMS-T2bt*AOD*py" % (treemaker_path))
     #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/SMS-T1qqqq-LLChipm_ctau-200*AOD*py" % (treemaker_path, campaign))
-    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/EGamma*AOD*py" % (treemaker_path, campaign))
-    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/METAOD*py" % (treemaker_path, campaign))
+    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/EGamma*AOD*py | grep '#' -v " % (treemaker_path, campaign))
+    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/*AOD*py | grep '#' -v " % (treemaker_path, campaign))
+    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/METAOD*py" % (treemaker_path, campaign))
     if status != 0:
         print file_names_string
         return
@@ -124,7 +125,7 @@ def main(treemaker_path, campaign, debug, outfile = ""):
         print "%s / %s done" % (i, len(file_names))
 
         # check if we already have the info:
-        status, ignore = commands.getstatusoutput("grep %s ../test/catalogue_%s.dat" % (aod_file_name, outfile))
+        status, ignore = commands.getstatusoutput("grep %s ../test/catalogue*.dat" % (aod_file_name))
         if status == 0: continue
 
         file_has_issues = False
@@ -168,6 +169,32 @@ if __name__ == "__main__":
     parser.add_option('--debug', action = "store_true", dest = 'debug')
     (options, args) = parser.parse_args()
 
-    main(options.treemaker_path, options.campaign, options.debug)
+    if options.campaign == "all":
+        for campaign in [
+                          "Run2018D-PromptReco-v2",
+                          "Run2018A-17Sep2018-v1",
+                          "Run2018B-17Sep2018-v1",
+                          "Run2018C-17Sep2018-v1",
+                          "Run2018D-PromptReco-v1",
+                          "Run2016B-17Jul2018_ver1-v1",
+                          "Run2016B-17Jul2018_ver2-v1",
+                          "Run2016B-17Jul2018_ver2-v2",
+                          "Run2016C-17Jul2018-v1",
+                          "Run2016D-17Jul2018-v1",
+                          "Run2016E-17Jul2018-v1",
+                          "Run2016F-17Jul2018-v1",
+                          "Run2016G-17Jul2018-v1",
+                          "Run2016H-17Jul2018-v1",
+                          "Run2016H-17Jul2018-v2",
+                          "Run2017B-31Mar2018-v1",
+                          "Run2017C-31Mar2018-v1",
+                          "Run2017D-31Mar2018-v1",
+                          "Run2017E-31Mar2018-v1",
+                          "Run2017F-31Mar2018-v1",
+        ]:
+            main(options.treemaker_path, campaign, options.debug)
+        
+    else:
+        main(options.treemaker_path, options.campaign, options.debug)
 
 

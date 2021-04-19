@@ -42,7 +42,7 @@ for datastream in datastreams:
         if "Run2018" in campaign and datastream == "SingleElectron":
             datastream = "EGamma"
     
-        status_t, total = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep %s | grep %s | wc -l" % (campaign, datastream))
+        status_t, total = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep %s | grep %s | grep '##' -v | wc -l" % (campaign, datastream))
         #status_c, completed = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep %s | grep %s | grep '#' | wc -l" % (campaign, datastream))
         status_p, pending = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep %s | grep %s | grep '#' -v | wc -l" % (campaign, datastream))
         status_a, availability = commands.getstatusoutput("grep %s samples_available | grep %s" % (campaign, datastream))
