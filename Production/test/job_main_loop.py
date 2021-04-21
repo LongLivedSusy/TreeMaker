@@ -79,10 +79,17 @@ if __name__ == "__main__":
         print "Output file:", outfile
         print "Output path:", options.outpath
 
-        runcmd("echo %s > info_aods" % aod_file)
-
         if check_dcache_if_file_exists(options.outpath, outfile):
             continue
+          
+        # copy all necessary files manually:
+        print "Copy AOD file..."
+        status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % aod_file.replace("\n", ""))
+        if status == 0:
+            runcmd("echo %s > info_aods" % aod_file.split("/")[-1])
+            aod_file = aod_file.split("/")[-1]
+        else:
+            runcmd("echo %s > info_aods" % aod_file)
            
         print "\nLocate the corresponding miniAODs..."
         runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
@@ -99,7 +106,20 @@ if __name__ == "__main__":
             job_return_status = status
             print "error while getting miniAOD file name..."
             continue
-          
+        
+        # copy all necessary files manually:
+        print "Copy miniAOD file(s)..."
+        with open("info_miniaods", "r") as fin:
+            miniaod_list = fin.read().split(",")
+        for i, miniaod in enumerate(miniaod_list):
+            status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % miniaod.replace("\n", ""))
+            if status == 0:
+                miniaod_list[i] = miniaod_list[i].split("/")[-1]
+            
+        # update miniAOD file list
+        with open("info_miniaods", "w") as fin:
+            fin.write(",".join(miniaod_list))
+        
         print "run cmsRun the second time to run with miniaod.root in sidecar:"
         runcmd("echo %s > info_outfilename" % outfile)
         cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
