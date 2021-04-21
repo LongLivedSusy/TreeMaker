@@ -16,7 +16,9 @@ def runcmd(cmd):
     return status, output
 
 
-def check_dcache_if_file_exists(outpath, outfile, userlist):
+def check_dcache_if_file_exists(outpath, outfile):
+
+    userlist = ["aksingh", "spak", "jarieger", "tokramer", "ssekmen", "jsonneve", "sbein", "vkutzner", "vormwald", "ynissan"]
 
     print "\nCheck if output file already exists in a user folder..."
     username = outpath.split("/store/user/")[1].split("/")[0]
@@ -61,10 +63,6 @@ if __name__ == "__main__":
     with open("info_outfilename", "r") as fin:
         outfile_general = fin.read().split("\n")[0]
 
-    # get dcache user directories:
-    status, userlist = runcmd("curl http://www.desy.de/~kutznerv/ntuple-production/userlist")
-    userlist = userlist.replace("\n", "").split(",")
-
     numstart = int(options.arguments.split("nstart=")[-1].split()[0])
     print "numstart", numstart
 
@@ -83,7 +81,7 @@ if __name__ == "__main__":
 
         runcmd("echo %s > info_aods" % aod_file)
 
-        if check_dcache_if_file_exists(options.outpath, outfile, userlist):
+        if check_dcache_if_file_exists(options.outpath, outfile):
             continue
            
         print "\nLocate the corresponding miniAODs..."
