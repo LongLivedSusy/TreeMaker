@@ -75,7 +75,11 @@ class maker:
         self.getParamDefault("localera",self.scenario.localera)
         
         # temporary redirector fix
-        self.getParamDefault("redir", "root://cmsxrootd.fnal.gov/")
+        #self.getParamDefault("redir", "root://cmsxrootd.fnal.gov/")
+        #self.getParamDefault("redir", "root://dcache-cms-xrootd.desy.de/")
+        #self.getParamDefault("redir", "root://cmsxrootd-kit.gridka.de/")
+        self.getParamDefault("redir", "root://xrootd-cms.infn.it/")
+        #self.getParamDefault("redir", "file:///pnfs/desy.de/cms/tier2/")
         # handle site name usage
         if self.redir[0]=="T":
             self.redir = "root://cmsxrootd.fnal.gov//store/test/xrootd/"+self.redir
@@ -109,7 +113,15 @@ class maker:
                     with open("info_miniaods", "r") as fin:
                         miniaod_list = fin.read().split(",")
                     for miniaod in miniaod_list:
-                        self.readFiles_sidecar += ["root://cmsxrootd.fnal.gov/%s" % miniaod.replace("\n", "")]
+                        if "/" in miniaod:
+                            #self.readFiles_sidecar += ["file:///pnfs/desy.de/cms/tier2/%s" % miniaod.replace("\n", "")]
+                            self.readFiles_sidecar += ["root://xrootd-cms.infn.it/%s" % miniaod.replace("\n", "")]
+                            #self.readFiles_sidecar += ["root://cmsxrootd.fnal.gov/%s" % miniaod.replace("\n", "")]
+                            #self.readFiles_sidecar += ["root://dcache-cms-xrootd.desy.de/%s" % miniaod.replace("\n", "")]
+                            #self.readFiles_sidecar += ["root://cmsxrootd-kit.gridka.de/%s" % miniaod.replace("\n", "")]
+                        else:
+                            self.readFiles_sidecar += ["file://" + miniaod.replace("\n", "")]
+                            
                    
                     # corresponding json mask (union of golden JSON and AOD file)    
                     self.jsonfile = "lumisecs_union.json"
@@ -129,7 +141,15 @@ class maker:
             with open("info_aods", "r") as fin:
                 aod_list = fin.read().split(",")
             for aod in aod_list:
-                self.readFiles += ["root://cmsxrootd.fnal.gov/%s" % aod.replace("\n", "")]
+                if "/" in aod:
+                    self.readFiles += ["root://xrootd-cms.infn.it/%s" % aod.replace("\n", "")]
+                    #self.readFiles += ["file:///pnfs/desy.de/cms/tier2/%s" % aod.replace("\n", "")]
+                    #self.readFiles += ["root://cmsxrootd.fnal.gov/%s" % aod.replace("\n", "")]
+                    #self.readFiles += ["root://dcache-cms-xrootd.desy.de/%s" % aod.replace("\n", "")]
+                    #self.readFiles += ["root://cmsxrootd-kit.gridka.de/%s" % aod.replace("\n", "")]
+                else:
+                    self.readFiles += ["file://" + aod.replace("\n", "")]
+                    
 
             print "using new readFiles:", self.readFiles
 

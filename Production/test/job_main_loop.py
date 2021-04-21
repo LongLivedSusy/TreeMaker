@@ -25,7 +25,9 @@ def check_dcache_if_file_exists(outpath, outfile):
 
     for user in userlist:
 
-        cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
+        cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %sProductionRun2v3/%s.root" % (outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
+        if user == "vkutzner":
+            cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %sProductionRun2v3_akshansh/%s.root" % (outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
         cmd = cmd.replace("/%s/" % username, "/%s/" % user)
 
         # check if output file already exists for user
@@ -79,7 +81,7 @@ if __name__ == "__main__":
         print "Output file:", outfile
         print "Output path:", options.outpath
 
-        if check_dcache_if_file_exists(options.outpath, outfile):
+        if check_dcache_if_file_exists(options.outpath, options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile):
             continue
           
         # copy all necessary files manually:
@@ -140,25 +142,27 @@ if __name__ == "__main__":
         
         if status != 0:
             job_return_status = status
-           
-    # copy output (retry 10 times if failed):
-    shell_script = """
-    #!/bin/bash
-    echo "prepare gfal tools"
-    if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
-        . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
-    fi        
-
-    #gfal-copy -n 1 file://%s/%s.root %s/%s.root
-    find $PWD -type f -name "*.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
-    gfal-copy -n 1 -f --from-file files.txt %s/
-    exit $?
-    """ % (os.getcwd(), outfile, options.outpath, outfile, options.outpath)
-
-    with open("script_gfalcopy", "w+") as fout:
-        fout.write(shell_script)
-    runcmd("chmod +x script_gfalcopy")
-    job_return_status, output = runcmd("./script_gfalcopy")
+            
+        complete_outfile = options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile    
+        
+        # copy output:
+        shell_script = """
+        #!/bin/bash
+        echo "prepare gfal tools"
+        if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
+            . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
+        fi        
+        
+        gfal-copy -n 1 file://%s/%s.root %s/%s.root
+        #find $PWD -type f -name "*.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
+        #gfal-copy -n 1 -f --from-file files.txt %s/
+        exit $?
+        """ % (os.getcwd(), complete_outfile, options.outpath, complete_outfile, options.outpath)
+        
+        with open("script_gfalcopy", "w+") as fout:
+            fout.write(shell_script)
+        runcmd("chmod +x script_gfalcopy")
+        job_return_status, output = runcmd("./script_gfalcopy")
 
     #for i in range(4):
     #    status, output = runcmd("./script_gfalcopy")
@@ -171,5 +175,4 @@ if __name__ == "__main__":
     #    time.sleep(400)
 
     runcmd("rm *.root")
-
     quit(job_return_status)
