@@ -102,11 +102,12 @@ if __name__ == "__main__":
 
         if status == 123:
             print "Lumisection was masked (empty JSON)"
-            print "Creating empty ROOT file..."
-            os.system("echo masked > %s.root" % outfile)
+            runcmd("rm *.root")
+            continue
         elif status != 0:
             job_return_status = status
             print "error while getting miniAOD file name..."
+            runcmd("rm *.root")
             continue
         
         # copy all necessary files manually:
@@ -129,7 +130,7 @@ if __name__ == "__main__":
         
         if status != 0:
             job_return_status = status
-            runcmd("rm %s.root" % outfile)
+            runcmd("rm *.root")
             continue
         else:
             print "Success!"
@@ -153,26 +154,15 @@ if __name__ == "__main__":
             . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
         fi        
         
-        gfal-copy -n 1 file://%s/%s.root %s/%s.root
-        #find $PWD -type f -name "*.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
-        #gfal-copy -n 1 -f --from-file files.txt %s/
+        find $PWD -type f -name "*RA2AnalysisTree.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
+        gfal-copy -n 1 -f --from-file files.txt %s/
         exit $?
-        """ % (os.getcwd(), complete_outfile, options.outpath, complete_outfile, options.outpath)
-        
+        """ % (options.outpath)
+                
         with open("script_gfalcopy", "w+") as fout:
             fout.write(shell_script)
         runcmd("chmod +x script_gfalcopy")
         job_return_status, output = runcmd("./script_gfalcopy")
+        runcmd("rm *.root")
 
-    #for i in range(4):
-    #    status, output = runcmd("./script_gfalcopy")
-    #    if status != 0:
-    #        job_return_status = status
-    #    if status == 0 or status == 17:
-    #        # status code 17: file exists
-    #        break
-    #    print "Copy failed, retry in 60s"
-    #    time.sleep(400)
-
-    runcmd("rm *.root")
     quit(job_return_status)
