@@ -35,6 +35,12 @@ def read_catalogue(aod_file_name):
                 if "PromptReco" in miniaod_filename:
                     updated_miniaod_filenames.append(miniaod_filename)
             miniaod_filenames = updated_miniaod_filenames
+        if "Run2018" in miniaod_filenames[0] and "17Sep2018" in miniaod_filenames[0]:
+            updated_miniaod_filenames = []
+            for miniaod_filename in miniaod_filenames:
+                if "17Sep2018" in miniaod_filename:
+                    updated_miniaod_filenames.append(miniaod_filename)
+            miniaod_filenames = updated_miniaod_filenames
 
         # fix for multiple versions of miniAOD files present in catalogue:
         miniaod_v1_present = False
