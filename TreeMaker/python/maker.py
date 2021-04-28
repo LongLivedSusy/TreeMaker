@@ -113,7 +113,7 @@ class maker:
                     with open("info_miniaods", "r") as fin:
                         miniaod_list = fin.read().split(",")
                     for miniaod in miniaod_list:
-                        if "/" in miniaod:
+                        if "//" in miniaod:
                             #self.readFiles_sidecar += ["file:///pnfs/desy.de/cms/tier2/%s" % miniaod.replace("\n", "")]
                             self.readFiles_sidecar += ["root://xrootd-cms.infn.it/%s" % miniaod.replace("\n", "")]
                             #self.readFiles_sidecar += ["root://cmsxrootd.fnal.gov/%s" % miniaod.replace("\n", "")]
@@ -141,7 +141,7 @@ class maker:
             with open("info_aods", "r") as fin:
                 aod_list = fin.read().split(",")
             for aod in aod_list:
-                if "/" in aod:
+                if "//" in aod:
                     self.readFiles += ["root://xrootd-cms.infn.it/%s" % aod.replace("\n", "")]
                     #self.readFiles += ["file:///pnfs/desy.de/cms/tier2/%s" % aod.replace("\n", "")]
                     #self.readFiles += ["root://cmsxrootd.fnal.gov/%s" % aod.replace("\n", "")]

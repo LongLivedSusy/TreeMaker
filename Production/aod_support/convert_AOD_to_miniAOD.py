@@ -4,20 +4,20 @@ from optparse import OptionParser
 import commands
 
 # create miniAOD file from AOD file, e.g.:
-# ./createMiniAOD.py --aodfile=root://cmsxrootd.fnal.gov//store/data/Run2018A/MET/AOD/17Sep2018-v1/120000/8B09BCD4-ACB4-D343-823F-9FFF2EC9472E.root --outfile miniaod.root
+# ./createMiniAOD.py --infile=root://cmsxrootd.fnal.gov//store/data/Run2018A/MET/AOD/17Sep2018-v1/120000/8B09BCD4-ACB4-D343-823F-9FFF2EC9472E.root --outfile miniaod.root
 
 parser = OptionParser()
 parser.add_option('--infile', dest='infile')
 parser.add_option('--outfile', dest='outfile')
-parser.add_option('--nev', dest='nev')
+parser.add_option('--nev', dest='nev', default=-1)
 (options, args) = parser.parse_args()
 
 print 'Creating miniAOD file for AOD:', options.infile
 
-if not 'root://' in options.infile:
-    options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
+#if not 'root://' in options.infile:
+#    options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
 
-if '/data/' in options.infile:
+if '/data/' in options.infile or '_data_' in options.infile:
     is_data = True
 else:
     is_data = False
@@ -79,7 +79,8 @@ else:
 
 jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-export SCRAM_ARCH=slc6_amd64_gcc530
+#export SCRAM_ARCH=slc6_amd64_gcc530
+export SCRAM_ARCH=slc6_amd64_gcc700
 cmsrel CMSBASE
 cd CMSBASE/src
 eval `scramv1 runtime -sh`

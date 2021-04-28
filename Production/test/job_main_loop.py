@@ -65,104 +65,131 @@ if __name__ == "__main__":
     with open("info_outfilename", "r") as fin:
         outfile_general = fin.read().split("\n")[0]
 
+    retries = 3
+
     numstart = int(options.arguments.split("nstart=")[-1].split()[0])
     print "numstart", numstart
 
     for i_file, aod_file in enumerate(aod_files):
        
-        # construct output file name from input AOD file:
-        # example: /store/data/Run2018C/EGamma/AOD/17Sep2018-v1/100001/6300647F-B9D5-3348-B8BF-71F26C664BA5.root
-        
-        aodfile_uuid = aod_file.split("/")[-2] + "-" + aod_file.split("/")[-1].replace(".root", "")
-        outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + aodfile_uuid + "_RA2AnalysisTree"
-        
-        print "\n\nDoing input file:", aod_file
-        print "CMSSW arguments:", options.arguments
-        print "Output file:", outfile
-        print "Output path:", options.outpath
-
-        if check_dcache_if_file_exists(options.outpath, options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile):
-            continue
-          
-        # copy all necessary files manually:
-        print "Copy AOD file..."
-        status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % aod_file.replace("\n", ""))
-        if status == 0:
-            runcmd("echo %s > info_aods" % aod_file.split("/")[-1])
-            aod_file = aod_file.split("/")[-1]
-        else:
-            runcmd("echo %s > info_aods" % aod_file)
-           
-        print "\nLocate the corresponding miniAODs..."
-        runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
-        runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
-        runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
-        cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file
-        status, output = runcmd(cmd)
-
-        if status == 123:
-            print "Lumisection was masked (empty JSON)"
-            runcmd("rm *.root")
-            continue
-        elif status != 0:
-            job_return_status = status
-            print "error while getting miniAOD file name..."
-            runcmd("rm *.root")
-            continue
-        
-        # copy all necessary files manually:
-        print "Copy miniAOD file(s)..."
-        with open("info_miniaods", "r") as fin:
-            miniaod_list = fin.read().split(",")
-        for i, miniaod in enumerate(miniaod_list):
-            status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % miniaod.replace("\n", ""))
+        for i_retry in range(retries):
+       
+            print "Attempt %s" % (i_retry+1)
+       
+            # construct output file name from input AOD file:
+            # example: /store/data/Run2018C/EGamma/AOD/17Sep2018-v1/100001/6300647F-B9D5-3348-B8BF-71F26C664BA5.root
+            
+            aodfile_uuid = aod_file.split("/")[-2] + "-" + aod_file.split("/")[-1].replace(".root", "")
+            outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + aodfile_uuid + "_RA2AnalysisTree"
+            
+            print "\n\nDoing input file:", aod_file
+            print "CMSSW arguments:", options.arguments
+            print "Output file:", outfile
+            print "Output path:", options.outpath
+            
+            if check_dcache_if_file_exists(options.outpath, options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile):
+                continue
+              
+            # copy all necessary files manually:
+            print "Copy AOD file..."
+            status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./%s" % (aod_file.replace("\n", ""), aod_file.replace("\n", "").replace("/", "_")))
             if status == 0:
-                miniaod_list[i] = miniaod_list[i].split("/")[-1]
-            
-        # update miniAOD file list
-        with open("info_miniaods", "w") as fin:
-            fin.write(",".join(miniaod_list))
-        
-        print "run cmsRun the second time to run with miniaod.root in sidecar:"
-        runcmd("echo %s > info_outfilename" % outfile)
-        cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
-        status, output = runcmd(cmd)
-        
-        if status != 0:
-            job_return_status = status
-            runcmd("rm *.root")
-            continue
-        else:
-            print "Success!"
-        
-        print "run test script to check if output file has a tracks collection:"
-        runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/check_if_tracks_present.py" .')
-        runcmd('chmod +x check_if_tracks_present.py')
-        cmd = 'python check_if_tracks_present.py'
-        status, output = runcmd(cmd)
-        
-        if status != 0:
-            job_return_status = status
-            
-        complete_outfile = options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile    
-        
-        # copy output:
-        shell_script = """
-        #!/bin/bash
-        echo "prepare gfal tools"
-        if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
-            . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
-        fi        
-        
-        find $PWD -type f -name "*RA2AnalysisTree.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
-        gfal-copy -n 1 -f --from-file files.txt %s/
-        exit $?
-        """ % (options.outpath)
+                runcmd("echo %s > info_aods" % aod_file.replace("\n", "").replace("/", "_"))
+                aod_file = aod_file.replace("\n", "").replace("/", "_")
+            else:
+                runcmd("echo %s > info_aods" % aod_file)
+               
+            # locate miniAOD files...
+            if "Run2018D" in aod_file and "EGamma" in aod_file:
+                print "redo miniAOD file..."
                 
-        with open("script_gfalcopy", "w+") as fout:
-            fout.write(shell_script)
-        runcmd("chmod +x script_gfalcopy")
-        job_return_status, output = runcmd("./script_gfalcopy")
-        runcmd("rm *.root")
+                if "://" not in aod_file:
+                    AODurl = "file://" + aod_file
+                else:
+                    AODurl = aod_file
+                runcmd("../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile miniaod.root" % (AODurl))
+                with open("info_miniaods", "w") as fin:
+                    fin.write("miniaod.root")
+                runcmd("cp $(cat info_jsonfilename) lumisecs_union.json")                
+            
+            else:
+                print "\nLocate the corresponding miniAODs..."
+                runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
+                runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
+                runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
+                cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file
+                status, output = runcmd(cmd)
+                
+                if status == 123:
+                    print "Lumisection was masked (empty JSON)"
+                    runcmd("rm *.root")
+                    continue
+                elif status != 0:
+                    job_return_status = status
+                    print "error while getting miniAOD file name..."
+                    runcmd("rm *.root")
+                    continue
+            
+                # copy all necessary files manually:
+                print "Copy miniAOD file(s)..."
+                with open("info_miniaods", "r") as fin:
+                    miniaod_list = fin.read().split(",")
+                for i, miniaod in enumerate(miniaod_list):
+                    status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % miniaod.replace("\n", ""))
+                    if status == 0:
+                        miniaod_list[i] = miniaod_list[i].split("/")[-1]
+                
+                # update miniAOD file list
+                with open("info_miniaods", "w") as fin:
+                    fin.write(",".join(miniaod_list))
+            
+            print "run cmsRun the second time to run with miniaod.root in sidecar:"
+            runcmd("echo %s > info_outfilename" % outfile)
+            cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
+            status, output = runcmd(cmd)
+            
+            if status != 0:
+                job_return_status = status
+                runcmd("rm *.root")
+                continue
+            else:
+                print "Success!"
+            
+            print "run test script to check if output file has a tracks collection:"
+            runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/check_if_tracks_present.py" .')
+            runcmd('chmod +x check_if_tracks_present.py')
+            cmd = 'python check_if_tracks_present.py'
+            status, output = runcmd(cmd)
+            
+            if status != 0:
+                job_return_status = status
+                
+            complete_outfile = options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile    
+            
+            # copy output:
+            shell_script = """
+            #!/bin/bash
+            echo "prepare gfal tools"
+            if [ -e "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh" ]; then
+                . /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.3/current/el6-x86_64/setup.sh
+            fi        
+            
+            find $PWD -type f -name "*RA2AnalysisTree.root" -maxdepth 1 | awk '{print "file://"$0}' > files.txt
+            gfal-copy -n 1 -f --from-file files.txt %s/
+            exit $?
+            """ % (options.outpath)
+                    
+            with open("script_gfalcopy", "w+") as fout:
+                fout.write(shell_script)
+            runcmd("chmod +x script_gfalcopy")
+            job_return_status, output = runcmd("./script_gfalcopy")
+
+            runcmd("rm *.root")
+            if job_return_status == 0:
+                print "Success!"
+                break
+            else:
+                print "Failed!"
+                time.sleep(120)
 
     quit(job_return_status)
