@@ -96,18 +96,17 @@ if __name__ == "__main__":
             if status == 0:
                 runcmd("echo %s > info_aods" % aod_file.replace("\n", "").replace("/", "_"))
                 aod_file = aod_file.replace("\n", "").replace("/", "_")
+                AODurl = "file://" + aod_file
             else:
+                AODurl = aod_file
                 runcmd("echo %s > info_aods" % aod_file)
                
             # locate miniAOD files...
             if "Run2018D" in aod_file and "EGamma" in aod_file:
                 print "redo miniAOD file..."
-                
-                if "://" not in aod_file:
-                    AODurl = "file://" + aod_file
-                else:
-                    AODurl = aod_file
-                runcmd("../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile miniaod.root" % (AODurl))
+                runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/aod_support/convert_AOD_to_miniAOD.py" .')
+                runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
+                runcmd("./convert_AOD_to_miniAOD.py --infile=%s --outfile miniaod.root" % (AODurl))
                 with open("info_miniaods", "w") as fin:
                     fin.write("miniaod.root")
                 runcmd("cp $(cat info_jsonfilename) lumisecs_union.json")                
@@ -116,7 +115,7 @@ if __name__ == "__main__":
                 print "\nLocate the corresponding miniAODs..."
                 runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
                 runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
-                runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
+                runcmd('chmod +x convert_AOD_to_miniAOD.py')
                 cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file
                 status, output = runcmd(cmd)
                 
