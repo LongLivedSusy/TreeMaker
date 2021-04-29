@@ -14,15 +14,18 @@ parser.add_option('--nev', dest='nev', default=-1)
 
 print 'Creating miniAOD file for AOD:', options.infile
 
-#if not 'root://' in options.infile:
-#    options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
+if not '://' in options.infile:
+    options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
 
 if '/data/' in options.infile or '_data_' in options.infile:
     is_data = True
 else:
     is_data = False
 
-miniaod_args_2016 = "REMINIAOD -s PAT,DQM:@miniAODDQM --runUnscheduled --data --scenario pp --eventcontent MINIAOD,DQM --datatier MINIAOD,DQMIO --customise_unsch PhysicsTools/PatAlgos/slimming/customizeMiniAOD_HcalFixLegacy2016.customizeAll --processName=PAT"
+# the process name (RECO, PAT) is specified in scenarios.py
+
+#miniaod_args_2016 = "REMINIAOD -s PAT,DQM:@miniAODDQM --runUnscheduled --data --scenario pp --eventcontent MINIAOD,DQM --datatier MINIAOD,DQMIO --customise_unsch PhysicsTools/PatAlgos/slimming/customizeMiniAOD_HcalFixLegacy2016.customizeAll --processName=PAT"
+miniaod_args_2016 = "REMINIAOD -s PAT,DQM:@miniAODDQM --runUnscheduled --data --scenario pp --eventcontent MINIAOD,DQM --datatier MINIAOD,DQMIO --customise_unsch PhysicsTools/PatAlgos/slimming/customizeMiniAOD_HcalFixLegacy2016.customizeAll --processName=RECO"
 
 conditions = {
                 'RunIISummer16': {'version': 'CMSSW_8_0_21', 'tag': '80X_mcRun2_asymptotic_2016_TrancheIV_v6', 'era': 'Run2_2016'},
