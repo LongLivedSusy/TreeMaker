@@ -76,9 +76,9 @@ if cmssw_version == "":
 if custom_args != "":
     command = 'cmsDriver.py %s --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (custom_args, global_tag, era, options.infile, options.outfile, options.nev)
 elif is_data:
-    command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
+    command = 'cmsDriver.py miniAOD-prod -s PAT --processName=RECO --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
 else:
-    command = 'cmsDriver.py miniAOD-prod -s PAT --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
+    command = 'cmsDriver.py miniAOD-prod -s PAT --processName=RECO --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
 
 jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh
