@@ -101,6 +101,7 @@ fjob.close()
 print "Now running cmsDriver command in %s environment:\n%s\n" % (cmssw_version, command)
 
 status, output = commands.getstatusoutput('sh createMiniAOD.sh')
+print output
 
 print 'Output status:', status
 with open("miniaod.log", "w+") as fout:

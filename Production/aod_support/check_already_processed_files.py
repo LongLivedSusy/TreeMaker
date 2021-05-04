@@ -42,6 +42,9 @@ def create_dbs_cache(sample_aod_file):
     return data
         
 
+#status, fnames = commands.getstatusoutput("cat yeah2.log")
+#fnames = fnames.split("\n")
+
 with open('../test/data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt') as f:
     golden16 = json.loads(f.read())
 with open('../test/data/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt') as f:
@@ -85,8 +88,8 @@ def is_in_goldenjson(flist, filename):
                         print "NOT IN GOLDEN JSON:", filename, ", run:", str(run), ", lumisecs:", lumisecs
                         return False             
                  
-    print "file not found in dbs..."         
-    quit()
+    print "file not found in dbs...:", filename    
+    return True
     
 
 def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor_old_hashes = True, comment_already_processed_files = True, write = True):
@@ -131,6 +134,8 @@ def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor
             if ".root" in file_contents[i]:
 
                 # existing hashes...
+                #if len([s for s in fnames if file_contents[i].split("'")[1] in s])>0:
+                #    file_contents[i] = file_contents[i].replace("#", "")
                 if "#" in file_contents[i]:
                     if honor_old_hashes:
                         continue
@@ -183,6 +188,10 @@ if __name__ == "__main__":
         for campaign in campaigns:
             aod_filelists = sorted(glob.glob("%s/*AOD*_cff.py" % campaign))
             for i, aod_filelist in enumerate(aod_filelists):
+                
+                #FIXME
+                #if "EGamma" not in aod_filelist: continue
+                
                 commands.append("HOME=%s; ./check_already_processed_files.py --campaign %s --specific_aod_file %s" % (homedir, campaign, i))
         print commands[0]
         GridEngineTools.runParallel(commands, "multi")
@@ -192,9 +201,6 @@ if __name__ == "__main__":
     else:
         campaigns = options.campaign.split(",")
         for campaign in campaigns:
-            
-            time.sleep(2 * (int(options.specific_aod_file)+2) )
-            
             main("../python/" + campaign, options.processed_files, debug = options.debug, specific_aod_file = options.specific_aod_file)
 
     #print "Run with e.g.\n ./check_already_processed_files.py --campaign RunIIFall17MiniAODv2 --processed_files finished_ntuples.dat \n"

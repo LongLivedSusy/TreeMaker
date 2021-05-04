@@ -43,18 +43,18 @@ for datastream in datastreams:
             datastream = "EGamma"
     
         status_t, total = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep %s | grep %s | grep '##' -v | wc -l" % (campaign, datastream))
-        #status_c, completed = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep %s | grep %s | grep '#' | wc -l" % (campaign, datastream))
         status_p, pending = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep %s | grep %s | grep '#' -v | wc -l" % (campaign, datastream))
         status_a, availability = commands.getstatusoutput("grep %s samples_available | grep %s" % (campaign, datastream))
+        status_a, nonavailability = commands.getstatusoutput("grep %s samples_not_available | grep %s" % (campaign, datastream))
         
         if availability == "":
-            availability = "on tape..."
+            availability = "on tape: %s" % nonavailability.replace("\n", " ")
         
         print "%s/%s: \t %s/%s \t %s" % (datastream, campaign, pending, total, availability.replace("\n", " "))
         
 print "========================================================================================"
 
-status, total = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep Run201 | grep '#' -v | wc -l")
-status, pending = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep Run201 | wc -l")
+status, pending = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep Run201 | grep '#' -v | wc -l")
+status, total = commands.getstatusoutput("grep root ~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/python/*/*AOD*_cff.py | grep Run201 | wc -l")
 
 print "Total pending/total          %s/%s" % (pending, total)

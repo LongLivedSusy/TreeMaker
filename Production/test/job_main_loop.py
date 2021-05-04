@@ -137,6 +137,7 @@ if __name__ == "__main__":
                 runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/aod_support/convert_AOD_to_miniAOD.py" .')
                 runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
                 status_redo, output = runcmd("./convert_AOD_to_miniAOD.py --infile=%s --outfile miniaod.root" % (AODurl))
+                print output
                 with open("info_miniaods", "w") as fin:
                     fin.write("miniaod.root")
                 runcmd("cp $(cat info_jsonfilename) lumisecs_union.json")                
