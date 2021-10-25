@@ -1,5 +1,5 @@
 flist = {
-    "scenario": "Autumn18sigFS",
+    "scenario": "Autumn18Fastsig",
     "samples": [
         ['RunIIAutumn18FS.PMSSM_set_1_LL_TuneCP2_13TeV-pythia8-AOD0'],
         ['RunIIAutumn18FS.PMSSM_set_1_LL_TuneCP2_13TeV-pythia8-AOD1'],

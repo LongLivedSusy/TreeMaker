@@ -218,7 +218,7 @@ class Scenario:
                 era="Run2_2018",
                 localera="TM2018",
             )
-        elif sname == "Autumn18sigFS":
+        elif sname == "Autumn18Fastsig":
             self.set_vars(
                 globaltag="102X_upgrade2018_realistic_v16",
                 tagname="PAT",
