@@ -73,9 +73,7 @@ if __name__ == "__main__":
     print "numstart", numstart
 
     for i_file, aod_file in enumerate(aod_files):
-            
-        print "Attempt %s" % (i_retry+1)
-       
+                   
         # construct output file name from input AOD file:
         # example: /store/data/Run2018C/EGamma/AOD/17Sep2018-v1/100001/6300647F-B9D5-3348-B8BF-71F26C664BA5.root
         
