@@ -26,11 +26,20 @@ def check_dcache_if_file_exists(outpath, outfile):
     for user in userlist:
         
         cmd = "xrdfs root://dcache-cms-xrootd.desy.de/ stat %s/%s.root" % (outpath.replace("srm://dcache-se-cms.desy.de", ""), outfile)
-        
+
+        # moved files, need to change path:        
         if user == "aksingh":
-            # moved files, need to change path:
             cmd = cmd.replace("/%s/" % username, "/vkutzner/")
             cmd = cmd.replace("ProductionRun2v3", "ProductionRun2v3_akshansh")
+        elif user == "vormwald":
+            cmd = cmd.replace("/%s/" % username, "/vkutzner/")
+            cmd = cmd.replace("ProductionRun2v3", "ProductionRun2v3_vormwald")
+        elif user == "jarieger":
+            cmd = cmd.replace("/%s/" % username, "/sbein/")
+            cmd = cmd.replace("ProductionRun2v3", "ProductionRun2v3_jarieger")
+        elif user == "jsonneve":
+            cmd = cmd.replace("/%s/" % username, "/sbein/")
+            cmd = cmd.replace("ProductionRun2v3", "ProductionRun2v3_jsonneve")
         else:
             cmd = cmd.replace("/%s/" % username, "/%s/" % user)
 
@@ -50,7 +59,11 @@ if __name__ == "__main__":
     parser.add_option('--outpath', dest='outpath')
     parser.add_option('--arguments', dest='arguments')
     (options, args) = parser.parse_args()
-       
+
+    redo_miniaod = False
+    copy_aod_file = False
+    check_already_produced = True
+
     job_return_status = 0
 
     # cleanup
@@ -85,16 +98,21 @@ if __name__ == "__main__":
         print "Output file:", outfile
         print "Output path:", options.outpath
         
-        if check_dcache_if_file_exists(options.outpath, options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile):
+        if check_already_produced and check_dcache_if_file_exists(options.outpath, options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile):
             continue
           
         # copy all necessary files manually:
-        print "Copy AOD file..."
-        status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./%s" % (aod_file.replace("\n", ""), aod_file.replace("\n", "").replace("/", "_")))
-        if status == 0:
-            runcmd("echo %s > info_aods" % aod_file.replace("\n", "").replace("/", "_"))
-            aod_file_mod = aod_file.replace("\n", "").replace("/", "_")
-            AODurl = "file://" + aod_file_mod
+        if copy_aod_file:
+            print "Copy AOD file..."
+            status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./%s" % (aod_file.replace("\n", ""), aod_file.replace("\n", "").replace("/", "_")))
+            if status == 0:
+                runcmd("echo %s > info_aods" % aod_file.replace("\n", "").replace("/", "_"))
+                aod_file_mod = aod_file.replace("\n", "").replace("/", "_")
+                AODurl = "file://" + aod_file_mod
+            else:
+                aod_file_mod = aod_file
+                AODurl = aod_file
+                runcmd("echo %s > info_aods" % aod_file)
         else:
             aod_file_mod = aod_file
             AODurl = aod_file
@@ -127,7 +145,7 @@ if __name__ == "__main__":
             runcmd("rm *.root")
             continue
 
-        else:
+        elif redo_miniaod:
             print "cannot get the miniAOD file name..."
             #runcmd("rm *.root")
             #continue
@@ -143,7 +161,12 @@ if __name__ == "__main__":
                 print "Failed to redo the miniAOD file, skipping"
                 runcmd("rm *.root")
                 job_return_status = status_redo
-                continue              
+                continue   
+
+        else:
+            job_return_status = status
+            runcmd("rm *.root")
+            continue
         
         print "run cmsRun the second time to run with miniaod.root in sidecar:"
         runcmd("echo %s > info_outfilename" % outfile)
