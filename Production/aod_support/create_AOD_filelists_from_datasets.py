@@ -5,7 +5,7 @@ import commands
 
 # create AOD file lists from exisiting miniAOD file lists. Configuration:
 
-check_dataset_availablity = True
+check_dataset_availablity = False
 
 cff_folder = "RunIIAutumn18MiniAOD"
 miniaod_datastreams = [
@@ -307,6 +307,24 @@ miniaod_datastreams = [
 ]
 
 
+cff_folder = "RunIIAutumn18FS"
+miniaod_datastreams = [
+   "/PMSSM_set_1_LL_TuneCP2_13TeV-pythia8/RunIIAutumn18MiniAOD-PUFall18Fast_GridpackScan_102X_upgrade2018_realistic_v15-v1/MINIAODSIM",
+]
+
+cff_folder = "RunIIAutumn18FS"
+miniaod_datastreams = [
+   "/SMS-T1btbt-LLC1_ctau10to200-mGluino-1000to2800-mLSP0to2800_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-PUFall18Fast_GridpackScan_102X_upgrade2018_realistic_v15-v1/MINIAODSIM",
+]
+
+cff_folder = "RunIIFall17FS"
+miniaod_datastreams = [
+   "/SMS-T1btbt-LLC1_ctau10to200-mGluino-1000to2800-mLSP0to2800_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v1/MINIAODSIM",
+   "/SMS-T2tb-LLChipm_ctau10to200-mStop-400to1750-mLSP0to1650_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v1/MINIAODSIM",
+]
+
+
+
 for dataset in miniaod_datastreams:
 
     print "Querying:", 'dasgoclient --query="parent dataset=%s"' % dataset
@@ -357,7 +375,7 @@ for dataset in miniaod_datastreams:
                 os.system('echo "%s" >> samples_available' % item)
 
     # FIXME: only collect missing samples
-    continue
+    #continue
          
     # create python configuration:
     all_filenames = ""

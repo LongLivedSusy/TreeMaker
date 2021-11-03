@@ -24,8 +24,8 @@ else:
 
 # the process name (RECO, PAT) is specified in scenarios.py
 
-#miniaod_args_2016 = "REMINIAOD -s PAT,DQM:@miniAODDQM --runUnscheduled --data --scenario pp --eventcontent MINIAOD,DQM --datatier MINIAOD,DQMIO --customise_unsch PhysicsTools/PatAlgos/slimming/customizeMiniAOD_HcalFixLegacy2016.customizeAll --processName=PAT"
-miniaod_args_2016 = "REMINIAOD -s PAT,DQM:@miniAODDQM --runUnscheduled --data --scenario pp --eventcontent MINIAOD,DQM --datatier MINIAOD,DQMIO --customise_unsch PhysicsTools/PatAlgos/slimming/customizeMiniAOD_HcalFixLegacy2016.customizeAll --processName=RECO"
+miniaod_args_2016 = "REMINIAOD -s PAT,DQM:@miniAODDQM --runUnscheduled --data --scenario pp --eventcontent MINIAOD,DQM --datatier MINIAOD,DQMIO --customise_unsch PhysicsTools/PatAlgos/slimming/customizeMiniAOD_HcalFixLegacy2016.customizeAll --processName=PAT"
+#miniaod_args_2016 = "REMINIAOD -s PAT,DQM:@miniAODDQM --runUnscheduled --data --scenario pp --eventcontent MINIAOD,DQM --datatier MINIAOD,DQMIO --customise_unsch PhysicsTools/PatAlgos/slimming/customizeMiniAOD_HcalFixLegacy2016.customizeAll --processName=RECO"
 
 conditions = {
                 'RunIISummer16': {'version': 'CMSSW_8_0_21', 'tag': '80X_mcRun2_asymptotic_2016_TrancheIV_v6', 'era': 'Run2_2016'},
@@ -76,9 +76,9 @@ if cmssw_version == "":
 if custom_args != "":
     command = 'cmsDriver.py %s --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (custom_args, global_tag, era, options.infile, options.outfile, options.nev)
 elif is_data:
-    command = 'cmsDriver.py miniAOD-prod -s PAT --processName=RECO --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
+    command = 'cmsDriver.py miniAOD-prod -s PAT --processName=PAT --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
 else:
-    command = 'cmsDriver.py miniAOD-prod -s PAT --processName=RECO --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
+    command = 'cmsDriver.py miniAOD-prod -s PAT --processName=PAT --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
 
 jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh
