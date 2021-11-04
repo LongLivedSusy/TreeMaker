@@ -99,8 +99,9 @@ if __name__ == "__main__":
         print "Output path:", options.outpath
         
         if check_already_produced and check_dcache_if_file_exists(options.outpath, options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile):
+            print "already produced"
             continue
-          
+         
         # copy all necessary files manually:
         if copy_aod_file:
             print "Copy AOD file..."
