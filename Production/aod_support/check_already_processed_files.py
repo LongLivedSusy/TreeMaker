@@ -176,7 +176,7 @@ if __name__ == "__main__":
     if options.submit:
         
         if options.campaign == "all":
-            #campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
+            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
             campaigns = glob.glob("../python/Run201*")
         else:
             campaigns = glob.glob(options.campaign)
@@ -194,8 +194,8 @@ if __name__ == "__main__":
                 
                 commands.append("HOME=%s; ./check_already_processed_files.py --campaign %s --specific_aod_file %s" % (homedir, campaign, i))
         print commands[0]
-        GridEngineTools.runParallel(commands, "multi")
-        #GridEngineTools.runParallel(commands, "grid")
+        #GridEngineTools.runParallel(commands, "multi")
+        GridEngineTools.runParallel(commands, "grid")
         #GridEngineTools.runParallel([commands[0]], "grid")
 
     else:
