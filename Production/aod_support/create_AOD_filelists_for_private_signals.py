@@ -21,10 +21,21 @@ def dochunks(l, n):
 #miniAOD_path = "/nfs/dust/cms/user/beinsam/LongLiveTheChi/Production/FastScans/step3_test_higgsino_susyall_mChipm105GeV_dm0p36GeV_pu_inMINIAODSIM.root"
 #pyfilename = "../python/PrivateSamples/sam_fasthiggsino.py"
 
-miniAOD_path = "/nfs/dust/cms/user/beinsam/CommonSamples/MC_BSM/CompressedHiggsino/RadiativeMu/"
-pyfilename = "../python/PrivateSamples/sam_CompressedHiggsino.py"
+#miniAOD_path = "/nfs/dust/cms/user/beinsam/CommonSamples/MC_BSM/CompressedHiggsino/RadiativeMu/"
+#pyfilename = "../python/PrivateSamples/sam_CompressedHiggsino.py"
 
-all_filenames = natsorted(glob.glob(miniAOD_path + "/step3_higgsino_susyall*MINIAODSIM.root"))
+#miniAOD_path = "/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/SMS-T1btbt-LLChipm/*/*/*/*.root"
+#pyfilename = "../python/PrivateSamples/sam_resms-T1btbt-LLChipm-AOD.py"
+
+#miniAOD_path = "/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/SMS-T2bt-LLChipm/*/*/*/*.root"
+#filename = "../python/PrivateSamples/sam_resms-T2bt-LLChipm-AOD.py"
+
+miniAOD_path = "/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/SMS-T2tb-LLChipm/*/*/*/*.root"
+pyfilename = "../python/PrivateSamples/sam_resms-T2tb-LLChipm-AOD.py"
+
+#all_filenames = natsorted(glob.glob(miniAOD_path + "/step3_higgsino_susyall*MINIAODSIM.root"))
+all_filenames = natsorted(glob.glob(miniAOD_path))
+
 chunks = list(dochunks(all_filenames, 254))
 
 with open(pyfilename, "w+") as fout:

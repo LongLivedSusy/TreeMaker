@@ -100,7 +100,18 @@ class maker:
         if self.dataset!=[] :    
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
-            if '/store/' in rf:
+            if "SMS2" in rf:
+                # do own miniAOD
+                print "Re-do miniAOD..."
+                os.system("mkdir -p miniaods")
+                miniaodfile = os.getcwd() + "/miniaods/miniaod_" + "_".join(rf.split("/")[-5:])
+                logfile = "miniaods/" + miniaodfile.split("/")[-1].replace(".root", ".log")
+                cmd = "../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile=%s --nev 5 > %s" % (rf, miniaodfile, logfile)
+                print cmd
+                os.system(cmd)
+                print "Done creating miniAOD"
+                self.readFiles_sidecar += ["file://" + miniaodfile]
+            elif '/store/' in rf:
                 # check if miniAOD file is present:
                 if not os.path.exists("info_miniaods"):
                     os.system("echo %s > info_aodfilenames" % ",".join(self.readFiles))
