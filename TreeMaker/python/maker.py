@@ -9,6 +9,7 @@ from TreeMaker.TreeMaker.doLostLeptonBkg import doLostLeptonBkg
 from TreeMaker.TreeMaker.doZinvBkg import doZinvBkg, reclusterZinv
 
 import os
+import commands
 
 class maker:
     def __init__(self,parameters):
@@ -103,13 +104,15 @@ class maker:
             if "SMS2" in rf:
                 # do own miniAOD
                 print "Re-do miniAOD..."
-                os.system("mkdir -p miniaods")
-                miniaodfile = os.getcwd() + "/miniaods/miniaod_" + "_".join(rf.split("/")[-5:])
-                logfile = "miniaods/" + miniaodfile.split("/")[-1].replace(".root", ".log")
-                cmd = "../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile=%s --nev 5 > %s" % (rf, miniaodfile, logfile)
+                miniaodfile = os.getcwd() + "/miniaod_" + "_".join(rf.split("/")[-5:])
+                logfile = miniaodfile.replace(".root", ".log")
+                cmd = "../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile=%s --nev %s > %s" % (rf, miniaodfile, self.numevents, logfile)
                 print cmd
-                os.system(cmd)
-                print "Done creating miniAOD"
+                status, output = commands.getstatusoutput(cmd)
+                print "status", status
+                print output
+                if status != 0:
+                    quit()
                 self.readFiles_sidecar += ["file://" + miniaodfile]
             elif '/store/' in rf:
                 # check if miniAOD file is present:
