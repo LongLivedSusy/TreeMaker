@@ -114,6 +114,7 @@ class maker:
                 if status != 0:
                     quit()
                 self.readFiles_sidecar += ["file://" + miniaodfile]
+                switch_primary_secondary_files = True
             elif '/store/' in rf:
                 # check if miniAOD file is present:
                 if not os.path.exists("info_miniaods"):
