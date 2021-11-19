@@ -44,7 +44,7 @@ def run_test(sample, scenario):
     if "sam_resms" in cmsRun_command:
         status, output = runcmd(cmsRun_command)
     else:
-        status, output = runcmd("rm info_*")
+        status, output = runcmd("rm info_* *json")
         status, output = runcmd(cmsRun_command)
         status, output = runcmd('./get_miniAOD_filenames_from_catalogue.py --infile="$(cat info_aodfilenames)"')
         if status == 0:
@@ -72,8 +72,8 @@ if __name__ == "__main__":
               #["2018ReReco17Sep", "Run2018A-17Sep2018-v1.METAOD"],
               #["2018ReReco17Sep", "Run2018B-17Sep2018-v1.METAOD"],
               #["2018PromptReco", "Run2018D-PromptReco-v2.EGammaAOD1"],
-              #["Autumn18Fastsig", "RunIIAutumn18FS.PMSSM_set_1_LL_TuneCP2_13TeV-pythia8-AOD0"],
-              ["Autumn18Fastsig", "PrivateSamples.sam_resms-T1btbt-LLChipm-AOD"],
+              ["Autumn18Fastsig", "RunIIAutumn18FS.PMSSM_set_1_LL_TuneCP2_13TeV-pythia8-AOD0"],
+              #["Autumn18Fastsig", "PrivateSamples.sam_resms-T1btbt-LLChipm-AOD"],
               #["Fall17Fastsig", "RunIIFall17FS.SMS-T1btbt-LLC1_ctau10to200-mGluino-1000to2800-mLSP0to2800_TuneCP2_13TeV-madgraphMLM-pythia8-AOD"],
               #["Fall17Fastsig", "RunIIFall17FS.SMS-T2tb-LLChipm_ctau10to200-mStop-400to1750-mLSP0to1650_TuneCP2_13TeV-madgraphMLM-pythia8-AOD"],
               #["Autumn18Fastsig", "RunIIAutumn18FS.SMS-T1btbt-LLC1_ctau10to200-mGluino-1000to2800-mLSP0to2800_TuneCP2_13TeV-madgraphMLM-pythia8-AOD"],

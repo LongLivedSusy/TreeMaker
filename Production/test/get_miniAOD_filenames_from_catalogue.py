@@ -9,9 +9,11 @@ import time
 
 # retrieve miniAOD file name from text file catalogue
 # format:
-# [AOD file]
+# [AOD file 1]
 # corresponding miniAOD file 1
 # corresponding miniAOD file 2
+# [AOD file 2]
+# ...
 
 parser = OptionParser()
 parser.add_option('--infile', dest='infile')
@@ -83,36 +85,33 @@ def get_miniAOD_filenames(aod_file_name):
     print "Running edmFileUtil to get run number / lumisec information..."
     if aod_file_name[0:7] == "/store/":
 
-        cmd = "edmFileUtil root://dcache-cms-xrootd.desy.de/%s -e > TMPFILE" % aod_file_name                        
-        status, output = commands.getstatusoutput(cmd)
+        cmd = "edmFileUtil root://dcache-cms-xrootd.desy.de/%s -e" % aod_file_name                        
+        status, outputEdmFileUtil = commands.getstatusoutput(cmd)
 
         if status != 0:
-            cmd = "edmFileUtil root://cmsxrootd.fnal.gov/%s -e > TMPFILE" % aod_file_name
-            status, output = commands.getstatusoutput(cmd)
+            cmd = "edmFileUtil root://cmsxrootd.fnal.gov/%s -e" % aod_file_name
+            status, outputEdmFileUtil = commands.getstatusoutput(cmd)
 
         if status != 0:
+            print status, outputEdmFileUtil
             print "Giving up"
             return
 
-        #print "edmFileUtil root://dcache-cms-xrootd.desy.de/%s -e > TMPFILE" % aod_file_name
-        #os.system("edmFileUtil root://dcache-cms-xrootd.desy.de/%s -e > TMPFILE" % aod_file_name)
     else:
-        print "edmFileUtil %s -e > TMPFILE" % aod_file_name
-        os.system("edmFileUtil file://%s -e > TMPFILE" % aod_file_name)
+        cmd = "edmFileUtil file://%s -e" % aod_file_name
+        status, outputEdmFileUtil = commands.getstatusoutput(cmd)
 
     #write json file for AOD file:
     runs = collections.OrderedDict()
-    with open("TMPFILE", "r") as fin:
-        lines = fin.read()
-        for i, line in enumerate(lines.split("\n")):
-            if i < 7: continue
-            if len(line.split()) == 4:
-                run = int(line.split()[0])
-                lumi = int(line.split()[1])
-                if run not in runs:
-                    runs[run] = []
-                runs[run].append(lumi)
-                runs[run] = sorted(list(set(runs[run])))
+    for i, line in enumerate(outputEdmFileUtil.split("\n")):
+        if i < 7: continue
+        if len(line.split()) == 4:
+            run = int(line.split()[0])
+            lumi = int(line.split()[1])
+            if run not in runs:
+                runs[run] = []
+            runs[run].append(lumi)
+            runs[run] = sorted(list(set(runs[run])))
 
     for run in runs:
         output = []
