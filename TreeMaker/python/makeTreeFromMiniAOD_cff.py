@@ -120,7 +120,12 @@ def makeTreeFromMiniAOD(self,process):
             debug = cms.bool(False),
             isLHE = cms.bool(False)
         )
-        self.VarsDouble.extend(['SusyScan:SusyMotherMass','SusyScan:SusyLSPMass'])
+                
+        # add extra branch, but only for re-made SMS files:
+        if "/sbein/SMS2/" in process.source.fileNames[0]:
+            self.VarsDouble.extend(['SusyScan:SusyMotherMass','SusyScan:SusyLSPMass','SusyScan:SusyCTau'])
+        else:
+            self.VarsDouble.extend(['SusyScan:SusyMotherMass','SusyScan:SusyLSPMass'])
         
         # pMSSM ID for identifying the pMSSM model point
         from TreeMaker.Utils.pmssm_cfi import PmssmProducer

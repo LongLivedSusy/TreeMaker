@@ -10,6 +10,7 @@
 #include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
 #include "SimDataFormats/GeneratorProducts/interface/GenLumiInfoHeader.h"
 #include "TreeMaker/Utils/interface/parse.h"
+#include "FWCore/MessageLogger/interface/MessageLogger.h"
 
 // STL include files
 #include <memory>
@@ -40,7 +41,7 @@ class SusyScanProducer : public edm::stream::EDProducer<> {
 		edm::GetterOfProducts<LHEEventProduct> getterOfProducts_;
 		edm::EDGetTokenT<GenLumiInfoHeader> genLumiHeaderToken_;
 		bool shouldScan_, debug_, isLHE_;
-		double motherMass_, lspMass_;
+		double motherMass_, lspMass_, ctau_;
 };
 
 SusyScanProducer::SusyScanProducer(const edm::ParameterSet& iConfig) : 
@@ -50,11 +51,13 @@ SusyScanProducer::SusyScanProducer(const edm::ParameterSet& iConfig) :
 	debug_(iConfig.getParameter<bool>("debug")),
 	isLHE_(iConfig.getParameter<bool>("isLHE")),
 	motherMass_(0),
-	lspMass_(0)
+	lspMass_(0),
+	ctau_(0)
 {
 	callWhenNewProductsRegistered(getterOfProducts_);
 	produces<double>("SusyMotherMass");
 	produces<double>("SusyLSPMass");
+	produces<double>("SusyCTau");
 }
 
 SusyScanProducer::~SusyScanProducer()
@@ -77,6 +80,7 @@ void SusyScanProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
 		if(!handles.empty()){
 			edm::Handle<LHEEventProduct> product = handles[0];
 			for(LHEEventProduct::comments_const_iterator cit = product->comments_begin(); cit != product->comments_end(); ++cit){
+				
 				size_t found = (*cit).find("model");
 				if(found != std::string::npos){
 					//parse string
@@ -97,6 +101,9 @@ void SusyScanProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
 	auto lspMass = std::make_unique<double>(lspMass_);
 	iEvent.put(std::move(lspMass), "SusyLSPMass");
 	
+	auto ctau = std::make_unique<double>(ctau_);
+	iEvent.put(std::move(ctau), "SusyCTau");	
+		
 }
 
 // ------------ method called when starting to processes a luminosity block  ------------
@@ -125,6 +132,11 @@ SusyScanProducer::fillDescriptions(edm::ConfigurationDescriptions& descriptions)
 
 //parse model comment
 void SusyScanProducer::getModelInfo(std::string comment){
+
+	// FIXME
+	edm::LogInfo("TreeMaker") << "comment=" << comment << "\n";
+
+
 	//strip newline
 	if(comment.back()=='\n') comment.pop_back();
 	
@@ -132,19 +144,57 @@ void SusyScanProducer::getModelInfo(std::string comment){
 	
 	std::vector<std::string> fields;
 	//underscore-delimited data
-	parse::process(comment,'_',fields);
+	parse::process(comment, '_', fields);
 
-	//several possible formats:
-	//model name_mMother_mLSP (1+2 fields)
-	//model name_xChi_mMother_mLSP (1+3 fields)
-	//model name_name_name_mMother_mLSP (3+2 fields)
-	//just take last two values and convert to doubles
+	if (comment.find("ctau") != std::string::npos) {
+
+	    // ctau in configDescription, we're excepting the format of ..._mMother_mLSP_ctau:
+		
+		edm::LogInfo("TreeMaker") << "ctau found\n";
+			
+	    // get mother and LSP mass:
+		std::stringstream sfield1(fields.end()[-2]);
+		sfield1 >> lspMass_;
 	
-	std::stringstream sfield1(fields.end()[-1]);
-	sfield1 >> lspMass_;
+		std::stringstream sfield2(fields.end()[-3]);
+		sfield2 >> motherMass_;
+		
+	    // lifetime:
+	    std::stringstream sfield3(fields.end()[-1]);
+		edm::LogInfo("TreeMaker") << sfield3.str() << "\n";
+
+	    std::vector<std::string> fields2;
+	    // sfield3 now of the format e.g. "ctau-200cm"
+	    parse::process(sfield3.str(), '-', fields2);
+        
+	    std::stringstream sfield4(fields2.end()[-1]);
+	    // sfield4 now of the format e.g. "200cm"
+		edm::LogInfo("TreeMaker") << sfield4.str() << "\n";
+        
+	    std::vector<std::string> fields3;
+	    parse::process(sfield4.str(), 'c', fields3);
+	    std::stringstream sfield5(fields3[0]);
+	    
+		edm::LogInfo("TreeMaker") << sfield5.str() << "\n";
+		
+	    sfield5 >> ctau_;
+		
+	} else {
+		
+		//several possible formats:
+		//model name_mMother_mLSP (1+2 fields)
+		//model name_xChi_mMother_mLSP (1+3 fields)
+		//model name_name_name_mMother_mLSP (3+2 fields)
+		//just take last two values and convert to doubles
 	
-	std::stringstream sfield2(fields.end()[-2]);
-	sfield2 >> motherMass_;
+		std::stringstream sfield1(fields.end()[-1]);
+		sfield1 >> lspMass_;
+	
+		std::stringstream sfield2(fields.end()[-2]);
+		sfield2 >> motherMass_;
+		
+	}
+
 }
 
 //define this as a plug-in

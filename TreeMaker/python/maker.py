@@ -101,7 +101,7 @@ class maker:
         if self.dataset!=[] :    
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
-            if "SMS2" in rf:
+            if "/sbein/SMS2/" in rf:
                 # do own miniAOD
                 print "Re-do miniAOD..."
                 miniaodfile = os.getcwd() + "/miniaod_" + "_".join(rf.split("/")[-5:])
@@ -112,7 +112,7 @@ class maker:
                 print "status", status
                 print output
                 if status != 0:
-                    quit()
+                    quit("Error while creating miniAOD file")
                 self.readFiles_sidecar += ["file://" + miniaodfile]
                 switch_primary_secondary_files = True
             elif '/store/' in rf:
