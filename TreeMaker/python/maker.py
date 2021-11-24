@@ -10,6 +10,7 @@ from TreeMaker.TreeMaker.doZinvBkg import doZinvBkg, reclusterZinv
 
 import os
 import commands
+import tempfile
 
 class maker:
     def __init__(self,parameters):
@@ -104,15 +105,15 @@ class maker:
             if "/sbein/SMS2/" in rf:
                 # do own miniAOD
                 print "Re-do miniAOD..."
-                miniaodfile = os.getcwd() + "/miniaod_" + "_".join(rf.split("/")[-5:])
+                miniaodfile = tempfile.gettempdir() + "/miniaod_" + "_".join(rf.split("/")[-5:])
                 logfile = miniaodfile.replace(".root", ".log")
                 cmd = "../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile=%s --nev %s > %s" % (rf, miniaodfile, self.numevents, logfile)
                 print cmd
                 status, output = commands.getstatusoutput(cmd)
                 print "status", status
-                print output
-                if status != 0:
-                    quit("Error while creating miniAOD file")
+                #print output
+                #if status != 0:
+                #    quit("Error while creating miniAOD file")
                 self.readFiles_sidecar += ["file://" + miniaodfile]
                 switch_primary_secondary_files = True
             elif '/store/' in rf:

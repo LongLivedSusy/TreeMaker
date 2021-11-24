@@ -24,14 +24,14 @@ def dochunks(l, n):
 #miniAOD_path = "/nfs/dust/cms/user/beinsam/CommonSamples/MC_BSM/CompressedHiggsino/RadiativeMu/"
 #pyfilename = "../python/PrivateSamples/sam_CompressedHiggsino.py"
 
-#miniAOD_path = "/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/SMS-T1btbt-LLChipm/*/*/*/*.root"
+#miniAOD_path = "/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIAutumn18.SMS-T1btbt-LLChipm/*/*/*/*.root"
 #pyfilename = "../python/PrivateSamples/sam_resms-T1btbt-LLChipm-AOD.py"
 
-#miniAOD_path = "/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/SMS-T2bt-LLChipm/*/*/*/*.root"
-#filename = "../python/PrivateSamples/sam_resms-T2bt-LLChipm-AOD.py"
+miniAOD_path = "/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIAutumn18.SMS-T2bt-LLChipm/*/*/*/*.root"
+pyfilename = "../python/PrivateSamples/sam_resms-T2bt-LLChipm-AOD.py"
 
-miniAOD_path = "/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/SMS-T2tb-LLChipm/*/*/*/*.root"
-pyfilename = "../python/PrivateSamples/sam_resms-T2tb-LLChipm-AOD.py"
+#miniAOD_path = "/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIAutumn18.SMS-T2tb-LLChipm/*/*/*/*.root"
+#pyfilename = "../python/PrivateSamples/sam_resms-T2tb-LLChipm-AOD.py"
 
 #all_filenames = natsorted(glob.glob(miniAOD_path + "/step3_higgsino_susyall*MINIAODSIM.root"))
 all_filenames = natsorted(glob.glob(miniAOD_path))

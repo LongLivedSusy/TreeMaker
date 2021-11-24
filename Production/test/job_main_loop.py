@@ -60,7 +60,8 @@ if __name__ == "__main__":
     parser.add_option('--arguments', dest='arguments')
     (options, args) = parser.parse_args()
 
-    redo_miniaod = False
+    redo_miniaod = True
+    copy_miniaod = False
     copy_aod_file = False
     check_already_produced = True
 
@@ -127,7 +128,7 @@ if __name__ == "__main__":
         cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file_mod
         status, output = runcmd(cmd)
                     
-        if status == 0:
+        if status == 0 and copy_miniaod:
             # copy all necessary files manually:
             print "Copy miniAOD file(s)..."
             with open("info_miniaods", "r") as fin:
@@ -141,12 +142,7 @@ if __name__ == "__main__":
             with open("info_miniaods", "w") as fin:
                 fin.write(",".join(miniaod_list))
         
-        elif status == 123:
-            print "Lumisection was masked (empty JSON)"
-            runcmd("rm *.root")
-            continue
-
-        elif redo_miniaod:
+        elif status != 0 and redo_miniaod:
             print "cannot get the miniAOD file name..."
             #runcmd("rm *.root")
             #continue
@@ -164,8 +160,14 @@ if __name__ == "__main__":
                 job_return_status = status_redo
                 continue   
 
+        elif status == 123:
+            print "Lumisection was masked (empty JSON)"
+            runcmd("rm *.root")
+            continue
+            
         else:
             job_return_status = status
+            print "miniAOD error"
             runcmd("rm *.root")
             continue
         
