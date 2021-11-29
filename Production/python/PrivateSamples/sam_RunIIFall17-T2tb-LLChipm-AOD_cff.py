@@ -1,10 +1,10 @@
 import FWCore.ParameterSet.Config as cms
-    
-    maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
-    readFiles = cms.untracked.vstring()
-    secFiles = cms.untracked.vstring()
-    source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
-    readFiles.extend( [
+
+maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+readFiles = cms.untracked.vstring()
+secFiles = cms.untracked.vstring()
+source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
+readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211120_185349/0000/SUS-RunIIFall17FSPremix-00201_1.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211120_185349/0000/SUS-RunIIFall17FSPremix-00201_2.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211120_185349/0000/SUS-RunIIFall17FSPremix-00201_3.root',
@@ -39250,6 +39250,7 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1007.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1008.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1009.root',
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1010.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1011.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1012.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1013.root',
@@ -39426,9 +39427,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1187.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1189.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1190.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1191.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1191.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1192.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1193.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1194.root',
@@ -39682,9 +39683,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1470.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1471.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1472.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1473.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1473.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1474.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1475.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1476.root',
@@ -39938,9 +39939,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1760.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1761.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1762.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1763.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1763.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1764.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1765.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0001/SUS-RunIIFall17FSPremix-00201_1766.root',
@@ -40194,9 +40195,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2074.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2075.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2076.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2077.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2077.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2078.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2079.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2080.root',
@@ -40450,9 +40451,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2406.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2407.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2408.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2409.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2409.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2410.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2411.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2412.root',
@@ -40706,9 +40707,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2681.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2682.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2683.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2684.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2684.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2685.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2686.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2687.root',
@@ -40962,9 +40963,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2941.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2942.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2943.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2944.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2944.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2945.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2946.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0002/SUS-RunIIFall17FSPremix-00201_2947.root',
@@ -41218,9 +41219,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3219.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3220.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3221.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3222.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3222.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3223.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3224.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3225.root',
@@ -41474,9 +41475,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3505.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3506.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3507.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3508.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3508.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3509.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3510.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3511.root',
@@ -41730,9 +41731,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3787.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3788.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3789.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3790.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3790.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3791.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3792.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0003/SUS-RunIIFall17FSPremix-00201_3793.root',
@@ -41986,9 +41987,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4082.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4083.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4084.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4085.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4085.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4086.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4087.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4088.root',
@@ -42242,9 +42243,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4377.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4378.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4379.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4380.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4380.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4381.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4382.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4383.root',
@@ -42498,9 +42499,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4699.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4700.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4701.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4702.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4702.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4704.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4705.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4706.root',
@@ -42754,9 +42755,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4971.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4972.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4973.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4974.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4974.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4975.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4976.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0004/SUS-RunIIFall17FSPremix-00201_4977.root',
@@ -43010,9 +43011,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5256.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5257.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5258.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5259.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5259.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5260.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5261.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5262.root',
@@ -43266,9 +43267,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5566.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5567.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5569.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5570.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5570.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5571.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5572.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5573.root',
@@ -43522,9 +43523,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5895.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5896.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5897.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5898.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5898.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5900.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5901.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0005/SUS-RunIIFall17FSPremix-00201_5902.root',
@@ -43778,9 +43779,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6181.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6182.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6183.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6184.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6184.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6185.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6186.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6187.root',
@@ -44034,9 +44035,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6459.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6461.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6463.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6464.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6464.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6465.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6466.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6467.root',
@@ -44290,9 +44291,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6764.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6765.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6766.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6767.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6767.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6768.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6769.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0006/SUS-RunIIFall17FSPremix-00201_6770.root',
@@ -44546,9 +44547,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7085.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7086.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7087.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7088.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7088.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7089.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7090.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7092.root',
@@ -44802,9 +44803,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7364.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7365.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7366.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7367.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7367.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7368.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7369.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7370.root',
@@ -45058,9 +45059,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7646.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7647.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7648.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7649.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7649.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7650.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7651.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7652.root',
@@ -45314,9 +45315,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7928.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7929.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7930.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7931.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7931.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7932.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7933.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0007/SUS-RunIIFall17FSPremix-00201_7934.root',
@@ -45570,9 +45571,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8241.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8242.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8243.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8244.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8244.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8245.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8246.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8247.root',
@@ -45826,9 +45827,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8505.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8508.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8509.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8515.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8515.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8516.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8517.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8518.root',
@@ -46082,9 +46083,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8796.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8797.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8798.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8799.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8799.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8800.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8801.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0008/SUS-RunIIFall17FSPremix-00201_8802.root',
@@ -46338,9 +46339,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9050.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9051.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9052.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9054.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9054.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9055.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9056.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9057.root',
@@ -46594,9 +46595,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9318.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9319.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9320.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9321.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9321.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9322.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9323.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9324.root',
@@ -46850,9 +46851,9 @@ readFiles.extend( [
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9588.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9589.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9590.root',
-       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9591.root',
 ] )
 readFiles.extend( [
+       'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9591.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9592.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9593.root',
        'file:///pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/ctau10to200-mStop-400to1750-mLSP0to1650/211128_160245/0009/SUS-RunIIFall17FSPremix-00201_9594.root',
