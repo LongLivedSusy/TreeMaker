@@ -13,6 +13,12 @@ parser.add_option('--nev', dest='nev', default=-1)
 parser.add_option('--sl6', dest='sl6', action="store_true")
 (options, args) = parser.parse_args()
 
+# check if already in singularity
+if "SINGULARITY_ENVIRONMENT" in os.environ:
+    options.sl6 = False
+else:
+    options.sl6 = True
+
 print 'Creating miniAOD file for AOD:', options.infile
 
 if not '://' in options.infile:
@@ -22,6 +28,12 @@ if '/data/' in options.infile or '_data_' in options.infile:
     is_data = True
 else:
     is_data = False
+
+if 'Autumn18FS' in options.infile or 'Fall17FS' in options.infile:
+    is_fastsim = True
+else:
+    is_fastsim = False
+
 
 # the process name (RECO, PAT) is specified in scenarios.py
 
@@ -33,6 +45,7 @@ conditions = {
                 #'RunIIFall17': {'version': 'CMSSW_9_4_6_patch1', 'tag': '94X_mc2017_realistic_v11', 'era': 'Run2_2017', 'arch': 'slc6_amd64_gcc700'},
                 'RunIIFall17': {'version': 'CMSSW_9_4_6_patch1', 'tag': '94X_mc2017_realistic_v14', 'era': 'Run2_2017', 'arch': 'slc6_amd64_gcc700'},
 
+                'RunIIFall17FS': {'version': 'CMSSW_9_4_19', 'tag': '94X_mc2017_realistic_v15', 'era': 'Run2_2017', 'arch': 'slc6_amd64_gcc700', 'custom_args': 'miniAOD-prod --runUnscheduled --eventcontent MINIAODSIM --datatier MINIAODSIM --step PAT --geometry DB:Extended --fast'},
                 'RunIIAutumn18FS': {'version': 'CMSSW_10_2_11_patch1', 'tag': '102X_upgrade2018_realistic_v15', 'era': 'Run2_2018', 'arch': 'slc6_amd64_gcc700', 'custom_args': 'miniAOD-prod --runUnscheduled --eventcontent MINIAODSIM --datatier MINIAODSIM --step PAT --geometry DB:Extended --fast'},
                 
                 'Run2016B*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'arch': 'slc6_amd64_gcc700', 'custom_args': miniaod_args_2016},
@@ -56,6 +69,10 @@ era = ""
 custom_args = ""
 scram_arch = ""
 for condition in conditions:
+    
+    if is_fastsim and "FS" not in condition:
+        continue
+    
     count = 0
     for subcondition in condition.split("*"):
         if subcondition in options.infile:
