@@ -46,6 +46,8 @@ conditions = {
                 'RunIIFall17': {'version': 'CMSSW_9_4_6_patch1', 'tag': '94X_mc2017_realistic_v14', 'era': 'Run2_2017', 'arch': 'slc6_amd64_gcc700'},
 
                 'RunIIFall17FS': {'version': 'CMSSW_9_4_19', 'tag': '94X_mc2017_realistic_v15', 'era': 'Run2_2017', 'arch': 'slc6_amd64_gcc700', 'custom_args': 'miniAOD-prod --runUnscheduled --eventcontent MINIAODSIM --datatier MINIAODSIM --step PAT --geometry DB:Extended --fast'},
+                'RunIIFall17__': {'version': 'CMSSW_9_4_19', 'tag': '94X_mc2017_realistic_v15', 'era': 'Run2_2017', 'arch': 'slc6_amd64_gcc700', 'custom_args': 'miniAOD-prod --runUnscheduled --eventcontent MINIAODSIM --datatier MINIAODSIM --step PAT --geometry DB:Extended --fast'},
+
                 'RunIIAutumn18FS': {'version': 'CMSSW_10_2_11_patch1', 'tag': '102X_upgrade2018_realistic_v15', 'era': 'Run2_2018', 'arch': 'slc6_amd64_gcc700', 'custom_args': 'miniAOD-prod --runUnscheduled --eventcontent MINIAODSIM --datatier MINIAODSIM --step PAT --geometry DB:Extended --fast'},
                 
                 'Run2016B*07Aug17': {'version': 'CMSSW_9_4_9', 'tag': '94X_dataRun2_v10', 'era': 'Run2_2016_HIPM,run2_miniAOD_80XLegacy', 'arch': 'slc6_amd64_gcc700', 'custom_args': miniaod_args_2016},
