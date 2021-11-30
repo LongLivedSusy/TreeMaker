@@ -72,7 +72,7 @@ custom_args = ""
 scram_arch = ""
 for condition in conditions:
     
-    if is_fastsim and "FS" not in condition:
+    if is_fastsim and not ("FS" in condition or "__" in condition):
         continue
     
     count = 0
