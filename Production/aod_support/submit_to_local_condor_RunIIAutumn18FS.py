@@ -35,6 +35,7 @@ for campaign in campaigns:
             file_name = "-".join(file_name.split("/")[-5:])
             file_name = file_name.replace(".root", "")
             file_name = file_name.replace("RunIIAutumn18.", "RunIIAutumn18FSv2.")
+            file_name = file_name.replace("RunIIAutumn18__SMS-T2tb", "RunIIAutumn18FSv2.SMS-T2tbv2")
 
             cmsrun = """source /cvmfs/cms.cern.ch/cmsset_default.sh; cd /afs/desy.de/user/k/kutznerv/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/test/;
                       eval `scramv1 runtime -sh`;
@@ -59,6 +60,5 @@ cmds = list(chunks(cmds, 25))
 for i in range(len(cmds)):
     cmds[i] = "; ".join(cmds[i])
         
-#runParallel(cmds, "multi", use_sl6=True, condorDir="condor2018FSSam")
-runParallel(cmds, "grid", use_sl6=False, condorDir="condor2018FSSam")
+runParallel(cmds, "grid", use_sl6=False, condorDir="condor2018FSSam", confirm=False)
 

@@ -122,7 +122,7 @@ def makeTreeFromMiniAOD(self,process):
         )
                 
         # add extra branch, but only for re-made SMS files:
-        if "/sbein/SMS2/" in process.source.fileNames[0]:
+        if "ctau10to200" in process.source.fileNames[0]:
             self.VarsDouble.extend(['SusyScan:SusyMotherMass','SusyScan:SusyLSPMass','SusyScan:SusyCTau'])
         else:
             self.VarsDouble.extend(['SusyScan:SusyMotherMass','SusyScan:SusyLSPMass'])

@@ -22,12 +22,12 @@ def create_filelist(miniAOD_path, pyfilename):
     
     with open(pyfilename, "w+") as fout:
         header = """import FWCore.ParameterSet.Config as cms
-    
-    maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
-    readFiles = cms.untracked.vstring()
-    secFiles = cms.untracked.vstring()
-    source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
-    """
+
+maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+readFiles = cms.untracked.vstring()
+secFiles = cms.untracked.vstring()
+source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
+"""
     
         fout.write(header)
     

@@ -8,9 +8,9 @@ campaigns = {
                                   "scenario": "Fall17Fastsig",
                                   "cmsswpath": "/nfs/dust/cms/user/kutznerv/shorttrack/treemaker/CMSSW_9_4_11/src",
                                   "inputFilesConfigs": [
-                                                     "sam_RunIIFall17-T2tb-LLChipm-AOD",
                                                      "sam_RunIIFall17-T2bt-LLChipm-AOD",
                                                      "sam_RunIIFall17-T1btbt-LLChipm-AOD",
+                                                     "sam_RunIIFall17-T2tb-LLChipm-AOD",
                                                      ]
                                  },
               }
@@ -36,11 +36,12 @@ for campaign in campaigns:
             file_name = file_name.replace(".root", "")
             file_name = file_name.replace("RunIIFall17__", "RunIIFall17FSv2.")
 
-            cmsrun = """singularity exec --contain --bind /afs:/afs --bind /nfs:/nfs --bind /pnfs:/pnfs --bind /cvmfs:/cvmfs --bind /var/lib/condor:/var/lib/condor --bind /tmp:/tmp --pwd . ~/dust/slc6_latest.sif sh -c 'source /cvmfs/cms.cern.ch/cmsset_default.sh; cd /afs/desy.de/user/k/kutznerv/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/Production/test/;
+            cmsrun = """singularity exec --contain --bind /afs:/afs --bind /nfs:/nfs --bind /pnfs:/pnfs --bind /cvmfs:/cvmfs --bind /var/lib/condor:/var/lib/condor --bind /tmp:/tmp --pwd . ~/dust/slc6_latest.sif sh -c 'source /cvmfs/cms.cern.ch/cmsset_default.sh; cd /afs/desy.de/user/k/kutznerv/dust/shorttrack/treemaker/CMSSW_9_4_11/src/TreeMaker/Production/test/;
                       eval `scramv1 runtime -sh`;
                       cmsRun runMakeTreeFromMiniAOD_cfg.py scenario=%s inputFilesConfig=%s nstart=%s nfiles=1 outfile=%s' ;
                       eval `scram unsetenv -sh`;
                       source /cvmfs/grid.desy.de/etc/profile.d/grid-ui-env.sh;
+                      cd /afs/desy.de/user/k/kutznerv/dust/shorttrack/treemaker/CMSSW_9_4_11/src/TreeMaker/Production/test/;
                       gfal-copy -f %s_RA2AnalysisTree.root %s;
                       rm %s_RA2AnalysisTree.root""" % (campaigns[campaign]["scenario"], this_inputFilesConfig, i, file_name, file_name, output_folder, file_name)
             
@@ -59,5 +60,5 @@ cmds = list(chunks(cmds, 25))
 for i in range(len(cmds)):
     cmds[i] = "; ".join(cmds[i])
         
-runParallel(cmds, "grid", use_sl6=False, condorDir="condor2017FSSam")
+runParallel(cmds, "grid", use_sl6=False, condorDir="condor2017FSSam", confirm=False)
 
