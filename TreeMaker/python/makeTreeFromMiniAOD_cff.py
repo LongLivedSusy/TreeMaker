@@ -219,12 +219,16 @@ def makeTreeFromMiniAOD(self,process):
         self.VectorBool.append("genParticles:TTFlag(GenParticles_TTFlag)")
         self.VectorInt.append("genParticles:LabXYmm(GenParticles_LabXYmm)")
 
-        process.pmssmEventMask = cms.EDProducer("PmssmEventMaskProducer",
-            genCollection = cms.InputTag("prunedGenParticles"),
-        )
         # store gluons for signals with Higgs
-        self.VarsBool.append("pmssmEventMask:EventMask(Pmssm_EventMask)")
-        self.VarsBool.append("pmssmEventMask:EventMaskRoyal(PmssmEventMaskRoyal)")            
+        
+        #Event weight to fix FastSim pre-UL bug
+        if self.fastsim:
+            process.FastSimWeightPR31285To36122 = cms.EDProducer("FastSimWeightPR31285To36122",
+                genCollection = cms.InputTag("prunedGenParticles"),
+                genJetTag = cms.InputTag('slimmedGenJets'),
+                recJetTag = cms.InputTag("slimmedJets")
+            )
+            self.VarsDouble.append("FastSimWeightPR31285To36122")
 
         #GEANT4:
         if self.signal and not self.fastsim:
