@@ -60,8 +60,8 @@ if __name__ == "__main__":
     parser.add_option('--arguments', dest='arguments')
     (options, args) = parser.parse_args()
 
-    redo_miniaod = True
-    copy_miniaod = False
+    redo_miniaod = False
+    copy_miniaod = True
     copy_aod_file = False
     check_already_produced = True
 
@@ -128,19 +128,23 @@ if __name__ == "__main__":
         cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file_mod
         status, output = runcmd(cmd)
                     
-        if status == 0 and copy_miniaod:
-            # copy all necessary files manually:
-            print "Copy miniAOD file(s)..."
-            with open("info_miniaods", "r") as fin:
-                miniaod_list = fin.read().split(",")
-            for i, miniaod in enumerate(miniaod_list):
-                status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % miniaod.replace("\n", ""))
-                if status == 0:
-                    miniaod_list[i] = miniaod_list[i].split("/")[-1]
-            
-            # update miniAOD file list
-            with open("info_miniaods", "w") as fin:
-                fin.write(",".join(miniaod_list))
+        if status == 0:
+            if copy_miniaod:
+                # copy all necessary files manually:
+                print "Copy miniAOD file(s)..."
+                with open("info_miniaods", "r") as fin:
+                    miniaod_list = fin.read().split(",")
+                for i, miniaod in enumerate(miniaod_list):
+                    status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % miniaod.replace("\n", ""))
+                    if status == 0:
+                        miniaod_list[i] = miniaod_list[i].split("/")[-1]
+                
+                # update miniAOD file list
+                with open("info_miniaods", "w") as fin:
+                    fin.write(",".join(miniaod_list))
+
+            else:
+                print "OK, got miniAOD list"
         
         elif status != 0 and redo_miniaod:
             print "cannot get the miniAOD file name..."
