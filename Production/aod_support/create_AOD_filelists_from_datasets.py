@@ -321,7 +321,8 @@ cff_folder = "../python/RunIIFall17FS"
 miniaod_datastreams = [
    #"/SMS-T1btbt-LLC1_ctau10to200-mGluino-1000to2800-mLSP0to2800_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v1/MINIAODSIM",
    #"/SMS-T2tb-LLChipm_ctau10to200-mStop-400to1750-mLSP0to1650_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v1/MINIAODSIM",
-   "/PMSSM_set_2_LL_2_TuneCP2_13TeV-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v2/MINIAODSIM",
+   #"/PMSSM_set_2_LL_2_TuneCP2_13TeV-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v2/MINIAODSIM",
+   "/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v2/MINIAODSIM",
 ]
 
 

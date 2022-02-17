@@ -54,6 +54,7 @@ for campaign in campaigns:
             else:
                 cmds.append(cmsrun.replace("\n", ""))
 
+
 print "There are %s files to process" % len(cmds)
 
 def chunks(lst, n):

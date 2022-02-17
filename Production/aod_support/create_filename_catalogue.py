@@ -100,7 +100,7 @@ def main(treemaker_path, campaign, debug, outfile = ""):
     #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/SMS-T1qqqq-LLChipm_ctau-200*AOD*py" % (treemaker_path, campaign))
     #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/EGamma*AOD*py | grep '#' -v " % (treemaker_path, campaign))
     #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/*AOD*py | grep '#' -v " % (treemaker_path, campaign))
-    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/PMSSM*AOD*py | grep '#' -v " % (treemaker_path, campaign))
+    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/PMSSM_set_2_LL_1*AOD*py | grep '#' -v " % (treemaker_path, campaign))
     #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/METAOD*py" % (treemaker_path, campaign))
     if status != 0:
         print file_names_string
@@ -119,7 +119,7 @@ def main(treemaker_path, campaign, debug, outfile = ""):
     print "Total # of files: %s" % len(file_names)
     print "First file in list: %s" % file_names[0]   
 
-    fout = open("../test/catalogue_%s_ext2.dat" % outfile, "a")
+    fout = open("../test/catalogue_%s_ext4.dat" % outfile, "a")
 
     for i, aod_file_name in enumerate(file_names):
 

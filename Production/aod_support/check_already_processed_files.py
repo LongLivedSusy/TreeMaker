@@ -92,7 +92,7 @@ def is_in_goldenjson(flist, filename):
     return True
     
 
-def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor_old_hashes = True, comment_already_processed_files = True, write = True):
+def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor_old_hashes = True, comment_already_processed_files = True, write = True, check_goldenjson = False):
 
     # read processed files
     processed_files_string = ""
@@ -142,14 +142,14 @@ def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor
                     else:
                         file_contents[i] = file_contents[i].replace("#", "")
 
-                if not mydbs:
+                if check_goldenjson and not mydbs:
                     mydbs = create_dbs_cache(file_contents[i])
                                 
                 if comment_already_processed_files:
                     filename = file_contents[i].split("'")[1]
                     if file_has_been_processed(campaign.split("/")[-1], processed_uuids, filename):
                         file_contents[i] = "#" + file_contents[i]
-                    elif not is_in_goldenjson(mydbs, filename):
+                    elif check_goldenjson and not is_in_goldenjson(mydbs, filename):
                         file_contents[i] = "##" + file_contents[i]
                     file_count += 1
                     
@@ -176,8 +176,7 @@ if __name__ == "__main__":
     if options.submit:
         
         if options.campaign == "all":
-            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"]
-            campaigns = glob.glob("../python/Run201*")
+            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"] + ["../python/RunIIAutumn18FS"]  + ["../python/RunIIFall17FS"]
         else:
             campaigns = glob.glob(options.campaign)
         print "Using campaigns:", campaigns
