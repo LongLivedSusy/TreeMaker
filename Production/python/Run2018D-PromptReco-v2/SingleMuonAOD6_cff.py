@@ -3585,7 +3585,7 @@ readFiles.extend( [
 #'/store/data/Run2018D/SingleMuon/AOD/PromptReco-v2/000/323/755/00000/439218BF-36F8-F846-A214-C19A8C549F6E.root',
 #'/store/data/Run2018D/SingleMuon/AOD/PromptReco-v2/000/323/775/00000/8F8BE8E1-9E94-6B44-AD7A-9BE18065EFAF.root',
 #'/store/data/Run2018D/SingleMuon/AOD/PromptReco-v2/000/323/755/00000/99F36ABC-42B4-A149-8746-A79E746D3345.root',
-'/store/data/Run2018D/SingleMuon/AOD/PromptReco-v2/000/323/778/00000/5692A540-FD66-A440-AE9C-6143049DC014.root',
+#'/store/data/Run2018D/SingleMuon/AOD/PromptReco-v2/000/323/778/00000/5692A540-FD66-A440-AE9C-6143049DC014.root',
 #'/store/data/Run2018D/SingleMuon/AOD/PromptReco-v2/000/323/755/00000/67396CB0-1F7E-1544-8A07-53BC9C48C27E.root',
 ] )
 readFiles.extend( [

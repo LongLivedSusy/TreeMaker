@@ -14,15 +14,16 @@ parser.add_option('--sl6', dest='sl6', action="store_true")
 (options, args) = parser.parse_args()
 
 # check if already in singularity
-if "SINGULARITY_ENVIRONMENT" in os.environ:
-    options.sl6 = False
-else:
-    options.sl6 = True
+#if "SINGULARITY_ENVIRONMENT" in os.environ:
+#    options.sl6 = False
+#else:
+#    options.sl6 = True
 
 print 'Creating miniAOD file for AOD:', options.infile
 
 if not '://' in options.infile:
-    options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
+    #options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
+    options.infile = 'root://dcache-cms-xrootd.desy.de/' + options.infile
 
 if '/data/' in options.infile or '_data_' in options.infile:
     is_data = True
