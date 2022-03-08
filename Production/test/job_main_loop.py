@@ -60,8 +60,8 @@ if __name__ == "__main__":
     parser.add_option('--arguments', dest='arguments')
     (options, args) = parser.parse_args()
 
-    redo_miniaod = False
-    copy_miniaod = True
+    redo_miniaod = True
+    copy_miniaod = False
     copy_aod_file = False
     check_already_produced = True
 
@@ -119,14 +119,16 @@ if __name__ == "__main__":
             aod_file_mod = aod_file
             AODurl = aod_file
             runcmd("echo %s > info_aods" % aod_file)
-           
+        
         # locate miniAOD files...
-        print "\nLocate the corresponding miniAODs..."
-        runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
-        runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
-        runcmd('chmod +x convert_AOD_to_miniAOD.py')
-        cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file_mod
-        status, output = runcmd(cmd)
+        if not redo_miniaod:
+            print "\nLocate the corresponding miniAODs..."
+            runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
+            runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
+            cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file_mod
+            status, output = runcmd(cmd)
+        else:
+            status = -1
                     
         if status == 0:
             if copy_miniaod:
@@ -148,8 +150,6 @@ if __name__ == "__main__":
         
         elif status != 0 and redo_miniaod:
             print "cannot get the miniAOD file name..."
-            #runcmd("rm *.root")
-            #continue
             print "redo miniAOD file..."
             runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/aod_support/convert_AOD_to_miniAOD.py" .')
             runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
