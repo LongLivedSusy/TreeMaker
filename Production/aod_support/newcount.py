@@ -36,6 +36,9 @@ print "To update counts: \n ./check_already_processed_files.py --update_filelist
 print "Dataset \t pending/total \t Available datasets"
 print "========================================================================================"
 
+os.system("cat samples_not_available_* > samples_not_available")
+os.system("cat samples_available_* > samples_available")
+
 for datastream in datastreams:
     for campaign in campaigns:
     

@@ -108,7 +108,7 @@ else:
 jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=%s
-cd $(mktemp -d)
+#cd $(mktemp -d)
 #cd $TMPDIR
 cmsrel CMSBASE
 cd CMSBASE/src

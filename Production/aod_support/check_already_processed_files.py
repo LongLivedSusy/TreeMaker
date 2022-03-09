@@ -193,8 +193,8 @@ if __name__ == "__main__":
                 
                 commands.append("HOME=%s; ./check_already_processed_files.py --campaign %s --specific_aod_file %s" % (homedir, campaign, i))
         print commands[0]
-        #GridEngineTools.runParallel(commands, "multi")
-        GridEngineTools.runParallel(commands, "grid")
+        GridEngineTools.runParallel(commands, "multi")
+        #GridEngineTools.runParallel(commands, "grid")
         #GridEngineTools.runParallel([commands[0]], "grid")
 
     else:
