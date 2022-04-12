@@ -87,9 +87,11 @@ if __name__ == "__main__":
     print "numstart", numstart
 
     for i_file, aod_file in enumerate(aod_files):
-                   
+        
         # construct output file name from input AOD file:
         # example: /store/data/Run2018C/EGamma/AOD/17Sep2018-v1/100001/6300647F-B9D5-3348-B8BF-71F26C664BA5.root
+        
+        aod_file = aod_file.replace("\n", "")
         
         aodfile_uuid = aod_file.split("/")[-2] + "-" + aod_file.split("/")[-1].replace(".root", "")
         outfile = "_".join(outfile_general.split("_")[:-2]) + "_" + aodfile_uuid + "_RA2AnalysisTree"
@@ -106,10 +108,10 @@ if __name__ == "__main__":
         # copy all necessary files manually:
         if copy_aod_file:
             print "Copy AOD file..."
-            status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./%s" % (aod_file.replace("\n", ""), aod_file.replace("\n", "").replace("/", "_")))
+            status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./%s" % (aod_file, aod_file.replace("/", "_")))
             if status == 0:
-                runcmd("echo %s > info_aods" % aod_file.replace("\n", "").replace("/", "_"))
-                aod_file_mod = aod_file.replace("\n", "").replace("/", "_")
+                runcmd("echo %s > info_aods" % aod_file.replace("/", "_"))
+                aod_file_mod = aod_file.replace("/", "_")
                 AODurl = "file://" + aod_file_mod
             else:
                 aod_file_mod = aod_file
@@ -119,41 +121,37 @@ if __name__ == "__main__":
             aod_file_mod = aod_file
             AODurl = aod_file
             runcmd("echo %s > info_aods" % aod_file)
-        
+           
         # locate miniAOD files...
-        if not redo_miniaod:
-            print "\nLocate the corresponding miniAODs..."
-            runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
-            runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
-            cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file_mod
-            status, output = runcmd(cmd)
-        else:
-            status = -1
+        print "\nLocate the corresponding miniAODs..."
+        runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
+        runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
+        runcmd('chmod +x convert_AOD_to_miniAOD.py')
+        #cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file_mod
+        cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file
+        status, output = runcmd(cmd)
                     
-        if status == 0:
-            if copy_miniaod:
-                # copy all necessary files manually:
-                print "Copy miniAOD file(s)..."
-                with open("info_miniaods", "r") as fin:
-                    miniaod_list = fin.read().split(",")
-                for i, miniaod in enumerate(miniaod_list):
-                    status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % miniaod.replace("\n", ""))
-                    if status == 0:
-                        miniaod_list[i] = miniaod_list[i].split("/")[-1]
-                
-                # update miniAOD file list
-                with open("info_miniaods", "w") as fin:
-                    fin.write(",".join(miniaod_list))
-
-            else:
-                print "OK, got miniAOD list"
+        if status == 0 and copy_miniaod:
+            # copy all necessary files manually:
+            print "Copy miniAOD file(s)..."
+            with open("info_miniaods", "r") as fin:
+                miniaod_list = fin.read().split(",")
+            for i, miniaod in enumerate(miniaod_list):
+                status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % miniaod.replace("\n", ""))
+                if status == 0:
+                    miniaod_list[i] = miniaod_list[i].split("/")[-1]
+            
+            # update miniAOD file list
+            with open("info_miniaods", "w") as fin:
+                fin.write(",".join(miniaod_list))
         
         elif status != 0 and redo_miniaod:
             print "cannot get the miniAOD file name..."
+            #runcmd("rm *.root")
+            #continue
             print "redo miniAOD file..."
             runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/aod_support/convert_AOD_to_miniAOD.py" .')
             runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
-            runcmd('chmod +x convert_AOD_to_miniAOD.py')
             status_redo, output = runcmd("./convert_AOD_to_miniAOD.py --infile=%s --outfile miniaod.root" % (AODurl))
             print output
             with open("info_miniaods", "w") as fin:
@@ -226,3 +224,4 @@ if __name__ == "__main__":
             time.sleep(120)
 
     quit(job_return_status)
+                                                                                                                                                             
