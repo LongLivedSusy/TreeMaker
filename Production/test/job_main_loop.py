@@ -60,15 +60,21 @@ if __name__ == "__main__":
     parser.add_option('--arguments', dest='arguments')
     (options, args) = parser.parse_args()
 
-    redo_miniaod = True
-    copy_miniaod = False
-    copy_aod_file = False
+    redo_miniaod = False
+    copy_miniaod = True
+    copy_aod_file = True
     check_already_produced = True
 
     job_return_status = 0
 
     # cleanup
     runcmd("rm info_* *root")
+
+    if os.environ['SCRAM_ARCH'] == "slc6_amd64_gcc700" and os.environ['CMSSW_VERSION'] == "CMSSW_10_2_7":
+        print "Applying segfault antidote..."
+        cmd = "tar -xf $CMSSW_BASE/src/TreeMaker/Production/test/sanelibs-naf-sl6.tgz -C $CMSSW_BASE"
+        status, output = runcmd(cmd)
+        print output
 
     print "run cmsRun the first time. The exit code 78 is expected:"
     cmd = "cmsRun runMakeTreeFromMiniAOD_cfg.py %s" % options.arguments
@@ -224,4 +230,4 @@ if __name__ == "__main__":
             time.sleep(120)
 
     quit(job_return_status)
-                                                                                                                                                             
+
