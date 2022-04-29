@@ -116,7 +116,7 @@ class maker:
                 #    quit("Error while creating miniAOD file")
                 self.readFiles_sidecar += ["file://" + miniaodfile]
                 switch_primary_secondary_files = True
-            elif '/store/' in rf:
+            elif ('/store/' in rf) and not 'inMINI' in rf:
                 # check if miniAOD file is present:
                 if not os.path.exists("info_miniaods"):
                     os.system("echo %s > info_aodfilenames" % ",".join(self.readFiles))
