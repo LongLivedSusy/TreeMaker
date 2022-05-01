@@ -120,7 +120,7 @@ cd -
 COMMAND
 ''' % scram_arch
 
-outfileid = outfile.split("/")[-1].replace(".root", "")
+outfileid = options.outfile.split("/")[-1].replace(".root", "")
 
 fjob = open('/tmp/createMiniAOD_%s.sh' % outfileid,'w')
 fjob.write(jobscript.replace('CMSBASE',cmssw_version).replace('COMMAND',command))
