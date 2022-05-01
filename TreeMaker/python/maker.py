@@ -78,9 +78,9 @@ class maker:
         
         # temporary redirector fix
         #self.getParamDefault("redir", "root://cmsxrootd.fnal.gov/")
-        self.getParamDefault("redir", "root://dcache-cms-xrootd.desy.de/")
+        #self.getParamDefault("redir", "root://dcache-cms-xrootd.desy.de/")
         #self.getParamDefault("redir", "root://cmsxrootd-kit.gridka.de/")
-        #self.getParamDefault("redir", "root://xrootd-cms.infn.it/")
+        self.getParamDefault("redir", "root://xrootd-cms.infn.it/")
         #self.getParamDefault("redir", "file:///pnfs/desy.de/cms/tier2/")
         # handle site name usage
         if self.redir[0]=="T":

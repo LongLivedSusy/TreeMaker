@@ -258,8 +258,9 @@ class Scenario:
             )
         elif sname == "2018PromptReco":
             self.set_vars(
-                globaltag="102X_dataRun2_Prompt_v11",
-                tagname="RECO",
+                #globaltag="102X_dataRun2_Prompt_v11",
+                globaltag="102X_dataRun2_Prompt_v1",
+                tagname="PAT",
                 hlttagname="HLT",
                 jsonfile="data/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt",
                 jecfile="data/jec/Fall17_17Nov2017_V32_102X_DATA",

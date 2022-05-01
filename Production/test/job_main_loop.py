@@ -60,9 +60,9 @@ if __name__ == "__main__":
     parser.add_option('--arguments', dest='arguments')
     (options, args) = parser.parse_args()
 
-    redo_miniaod = False
-    copy_miniaod = True
-    copy_aod_file = True
+    redo_miniaod = True
+    copy_miniaod = False
+    copy_aod_file = False
     check_already_produced = True
 
     job_return_status = 0
@@ -128,33 +128,41 @@ if __name__ == "__main__":
             AODurl = aod_file
             runcmd("echo %s > info_aods" % aod_file)
            
-        # locate miniAOD files...
-        print "\nLocate the corresponding miniAODs..."
-        runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
-        runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
-        runcmd('chmod +x convert_AOD_to_miniAOD.py')
-        #cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file_mod
-        cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file
-        status, output = runcmd(cmd)
-                    
-        if status == 0 and copy_miniaod:
-            # copy all necessary files manually:
-            print "Copy miniAOD file(s)..."
-            with open("info_miniaods", "r") as fin:
-                miniaod_list = fin.read().split(",")
-            for i, miniaod in enumerate(miniaod_list):
-                status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % miniaod.replace("\n", ""))
-                if status == 0:
-                    miniaod_list[i] = miniaod_list[i].split("/")[-1]
-            
-            # update miniAOD file list
-            with open("info_miniaods", "w") as fin:
-                fin.write(",".join(miniaod_list))
-        
-        elif status != 0 and redo_miniaod:
-            print "cannot get the miniAOD file name..."
-            #runcmd("rm *.root")
-            #continue
+        if not redo_miniaod:
+            # locate miniAOD files...
+            print "\nLocate the corresponding miniAODs..."
+            runcmd('cp $CMSSW_BASE/src/TreeMaker/Production/test/catalogue*.dat .')
+            runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/test/get_miniAOD_filenames_from_catalogue.py" .')
+            runcmd('chmod +x convert_AOD_to_miniAOD.py')
+            cmd = './get_miniAOD_filenames_from_catalogue.py --infile=%s' % aod_file
+            status, output = runcmd(cmd)
+                        
+            if status == 0 and copy_miniaod:
+                # copy all necessary files manually:
+                print "Copy miniAOD file(s)..."
+                with open("info_miniaods", "r") as fin:
+                    miniaod_list = fin.read().split(",")
+                for i, miniaod in enumerate(miniaod_list):
+                    status, output = runcmd("xrdcp root://xrootd-cms.infn.it/%s ./" % miniaod.replace("\n", ""))
+                    if status == 0:
+                        miniaod_list[i] = miniaod_list[i].split("/")[-1]
+                
+                # update miniAOD file list
+                with open("info_miniaods", "w") as fin:
+                    fin.write(",".join(miniaod_list))
+
+            elif status == 123:
+                print "Lumisection was masked (empty JSON)"
+                runcmd("rm *.root")
+                continue
+
+            else:
+                job_return_status = status
+                print "miniAOD error"
+                runcmd("rm *.root")
+                continue
+
+        else:
             print "redo miniAOD file..."
             runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/aod_support/convert_AOD_to_miniAOD.py" .')
             runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
@@ -168,17 +176,6 @@ if __name__ == "__main__":
                 runcmd("rm *.root")
                 job_return_status = status_redo
                 continue   
-
-        elif status == 123:
-            print "Lumisection was masked (empty JSON)"
-            runcmd("rm *.root")
-            continue
-            
-        else:
-            job_return_status = status
-            print "miniAOD error"
-            runcmd("rm *.root")
-            continue
         
         print "run cmsRun the second time to run with miniaod.root in sidecar:"
         runcmd("echo %s > info_outfilename" % outfile)
