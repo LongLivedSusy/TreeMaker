@@ -105,7 +105,9 @@ class maker:
             if "/sbein/SMS2/" in rf:
                 # do own miniAOD
                 print "Re-do miniAOD..."
-                miniaodfile = tempfile.gettempdir() + "/miniaod_" + "_".join(rf.split("/")[-5:])
+                #miniaodfile = tempfile.gettempdir() + "/miniaod_" + "_".join(rf.split("/")[-5:])
+                miniaodfile = "/nfs/dust/cms/user/kutznerv/SMS2-miniaod/" + "_".join(rf.split("/")[-5:])
+                miniaodfile = miniaodfile.replace("__", "_")
                 logfile = miniaodfile.replace(".root", ".log")
                 cmd = "../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile=%s --nev %s > %s" % (rf, miniaodfile, self.numevents, logfile)
                 print cmd

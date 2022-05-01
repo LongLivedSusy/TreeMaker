@@ -120,7 +120,9 @@ cd -
 COMMAND
 ''' % scram_arch
 
-fjob = open('createMiniAOD.sh','w')
+outfileid = outfile.split("/")[-1].replace(".root", "")
+
+fjob = open('/tmp/createMiniAOD_%s.sh' % outfileid,'w')
 fjob.write(jobscript.replace('CMSBASE',cmssw_version).replace('COMMAND',command))
 fjob.close()
 
@@ -130,7 +132,7 @@ print "Now running cmsDriver command in %s environment:\n%s\n" % (cmssw_version,
 if options.sl6 and "slc6" in scram_arch:
     print "SL6 enabled"
     cwd = os.getcwd()
-    status, output = commands.getstatusoutput("singularity exec --contain --bind /afs:/afs --bind /nfs:/nfs --bind /pnfs:/pnfs --bind /cvmfs:/cvmfs --bind /var/lib/condor:/var/lib/condor --bind /tmp:/tmp --pwd . ~/dust/slc6_latest.sif sh -c 'cd %s; sh createMiniAOD.sh'" % cwd)
+    status, output = commands.getstatusoutput("singularity exec --contain --bind /afs:/afs --bind /nfs:/nfs --bind /pnfs:/pnfs --bind /cvmfs:/cvmfs --bind /var/lib/condor:/var/lib/condor --bind /tmp:/tmp --pwd . ~/dust/slc6_latest.sif sh -c 'cd %s; sh /tmp/createMiniAOD_%s.sh'" % (cwd, outfileid))
     print output
 else:
     status, output = commands.getstatusoutput('sh createMiniAOD.sh')
