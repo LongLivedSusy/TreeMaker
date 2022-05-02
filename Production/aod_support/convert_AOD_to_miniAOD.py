@@ -108,8 +108,7 @@ else:
 jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=%s
-#cd $(mktemp -d)
-#cd $TMPDIR
+cd $(mktemp -d)
 cmsrel CMSBASE
 cd CMSBASE/src
 eval `scramv1 runtime -sh`
@@ -135,7 +134,7 @@ if options.sl6 and "slc6" in scram_arch:
     status, output = commands.getstatusoutput("singularity exec --contain --bind /afs:/afs --bind /nfs:/nfs --bind /pnfs:/pnfs --bind /cvmfs:/cvmfs --bind /var/lib/condor:/var/lib/condor --bind /tmp:/tmp --pwd . ~/dust/slc6_latest.sif sh -c 'cd %s; sh /tmp/createMiniAOD_%s.sh'" % (cwd, outfileid))
     print output
 else:
-    status, output = commands.getstatusoutput('sh createMiniAOD.sh')
+    status, output = commands.getstatusoutput('/tmp/createMiniAOD_%s.sh' % outfileid)
     print output
 
 print 'Output status:', status
