@@ -25,7 +25,7 @@ if not '://' in options.infile:
     #options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
     options.infile = 'root://dcache-cms-xrootd.desy.de/' + options.infile
 
-if '/data/' in options.infile or '_data_' in options.infile or 'Run201' in options.infile:
+if '/data/' in options.infile or '_data_' in options.infile:
     is_data = True
 else:
     is_data = False
@@ -109,6 +109,7 @@ jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=%s
 cd $(mktemp -d)
+#cd $TMPDIR
 cmsrel CMSBASE
 cd CMSBASE/src
 eval `scramv1 runtime -sh`
@@ -121,7 +122,7 @@ COMMAND
 
 outfileid = options.outfile.split("/")[-1].replace(".root", "")
 
-fjob = open('/tmp/createMiniAOD_%s.sh' % outfileid,'w')
+fjob = open('createMiniAOD_%s.sh' % outfileid, 'w')
 fjob.write(jobscript.replace('CMSBASE',cmssw_version).replace('COMMAND',command))
 fjob.close()
 
@@ -131,10 +132,10 @@ print "Now running cmsDriver command in %s environment:\n%s\n" % (cmssw_version,
 if options.sl6 and "slc6" in scram_arch:
     print "SL6 enabled"
     cwd = os.getcwd()
-    status, output = commands.getstatusoutput("singularity exec --contain --bind /afs:/afs --bind /nfs:/nfs --bind /pnfs:/pnfs --bind /cvmfs:/cvmfs --bind /var/lib/condor:/var/lib/condor --bind /tmp:/tmp --pwd . ~/dust/slc6_latest.sif sh -c 'cd %s; sh /tmp/createMiniAOD_%s.sh'" % (cwd, outfileid))
+    status, output = commands.getstatusoutput("singularity exec --contain --bind /afs:/afs --bind /nfs:/nfs --bind /pnfs:/pnfs --bind /cvmfs:/cvmfs --bind /var/lib/condor:/var/lib/condor --bind /tmp:/tmp --pwd . ~/dust/slc6_latest.sif sh -c 'cd %s; sh createMiniAOD_%s.sh'" % (cwd, outfileid))
     print output
 else:
-    status, output = commands.getstatusoutput('/tmp/createMiniAOD_%s.sh' % outfileid)
+    status, output = commands.getstatusoutput('sh createMiniAOD_%s.sh' % outfileid)
     print output
 
 print 'Output status:', status
