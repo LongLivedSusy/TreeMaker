@@ -108,15 +108,15 @@ else:
 jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=%s
+currentdir=$(pwd)
 cd $(mktemp -d)
-#cd $TMPDIR
 cmsrel CMSBASE
 cd CMSBASE/src
 eval `scramv1 runtime -sh`
 echo "running in path: $(pwd)"
 echo "running in CMSSW_VERSION: $CMSSW_VERSION"
 echo "running in CMSSW_BASE: $CMSSW_BASE"
-cd -
+cd $currentdir
 COMMAND
 ''' % scram_arch
 

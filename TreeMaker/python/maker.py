@@ -105,19 +105,16 @@ class maker:
             if "/sbein/SMS2/" in rf:
                 # do own miniAOD
                 print "Re-do miniAOD..."
-                #miniaodfile = tempfile.gettempdir() + "/miniaod_" + "_".join(rf.split("/")[-5:])
-                miniaodfile = "/nfs/dust/cms/user/kutznerv/SMS2-miniaod/" + "_".join(rf.split("/")[-5:])
+                miniaodfile = tempfile.gettempdir() + "/miniaod_" + "_".join(rf.split("/")[-5:])
+                #miniaodfile = "/tmp/miniaod_" + "_".join(rf.split("/")[-5:])
+                os.system("touch %s" % miniaodfile)
+                #miniaodfile = "/nfs/dust/cms/user/kutznerv/SMS2-miniaod/" + "_".join(rf.split("/")[-5:])
                 miniaodfile = miniaodfile.replace("__", "_")
-                logfile = miniaodfile.replace(".root", ".log")
-                if not os.path.exists(miniaodfile):
-                    cmd = "../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile=%s --nev %s &> %s" % (rf, miniaodfile, self.numevents, logfile)
-                    print cmd
-                    status, output = commands.getstatusoutput(cmd)
-                    print "status", status
-                    print "*** MiniAOD log"
-                    with open(logfile, "r") as fin:
-                        print fin.read()
-                    print "*** MiniAOD log"
+                #if not os.path.exists(miniaodfile):
+                cmd = "../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile=%s --nev %s" % (rf, miniaodfile, self.numevents)
+                print cmd
+                status, output = commands.getstatusoutput(cmd)
+                print "status", status
                 self.readFiles_sidecar += ["file://" + miniaodfile]
                 switch_primary_secondary_files = True
             elif ('/store/' in rf) and not 'inMINI' in rf:
