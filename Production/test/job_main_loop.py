@@ -60,7 +60,7 @@ if __name__ == "__main__":
     parser.add_option('--arguments', dest='arguments')
     (options, args) = parser.parse_args()
 
-    redo_miniaod = True
+    redo_miniaod = False
     copy_miniaod = False
     copy_aod_file = False
     check_already_produced = True
@@ -78,6 +78,10 @@ if __name__ == "__main__":
     with open("info_aodfilenames", "r") as fin:
         aod_files = fin.read().replace("\n", "").split(",")
     print "Will loop over files:", str(aod_files)
+
+    # redo miniAODs for 2018D MET (due to corrupt miniAODs present):
+    if "2018D" in aod_files[0] and "MET" in aod_files[0]:
+        redo_miniaod = True
 
     outfile_general = ""
     with open("info_outfilename", "r") as fin:
