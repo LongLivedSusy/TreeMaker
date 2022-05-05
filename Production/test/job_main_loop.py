@@ -220,11 +220,8 @@ if __name__ == "__main__":
 
         runcmd("rm *.root")
         if job_return_status == 0:
-            print "Success!"
-            break
-        else:
-            print "Failed!"
-            time.sleep(120)
-
+            print "Successfully copied file"
+        
+    print "Finished job"
     quit(job_return_status)
 
