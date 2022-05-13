@@ -23,7 +23,8 @@ print 'Creating miniAOD file for AOD:', options.infile
 
 if not '://' in options.infile:
     #options.infile = 'root://cmsxrootd.fnal.gov/' + options.infile
-    options.infile = 'root://dcache-cms-xrootd.desy.de/' + options.infile
+    #options.infile = 'root://dcache-cms-xrootd.desy.de/' + options.infile
+    options.infile = 'root://xrootd-cms.infn.it/' + options.infile
 
 if '/data/' in options.infile or '_data_' in options.infile:
     is_data = True
