@@ -82,6 +82,12 @@ if __name__ == "__main__":
     # redo miniAODs for 2018D MET (due to corrupt miniAODs present):
     if "2018D" in aod_files[0] and "MET" in aod_files[0]:
         redo_miniaod = True
+    if "2018" in aod_file[0] and "MET" in aod_files[0]:
+        redo_miniaod = True
+    if "2018D" in aod_file[0] and "JetHT" in aod_file[0]:
+        redo_miniaod = True
+    if "2018D" in aod_file[0] and "SingleMuon" in aod_file[0]:
+        redo_miniaod = True
 
     outfile_general = ""
     with open("info_outfilename", "r") as fin:
