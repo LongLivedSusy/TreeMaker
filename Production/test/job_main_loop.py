@@ -208,6 +208,7 @@ if __name__ == "__main__":
         
         if status != 0:
             job_return_status = status
+            continue
             
         complete_outfile = options.arguments.split("inputFilesConfig=")[-1].split()[0] + outfile    
         
