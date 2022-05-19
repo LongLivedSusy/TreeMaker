@@ -99,12 +99,17 @@ if cmssw_version == "":
     print "Cannot determine which conditions to use for file", options.infile
     exit(50)
 
+# if necessary, adjust reco label (refer to scenarios.py):
+outrecolabel = "PAT"
+if "17Sep2018" in options.infile or "26Sep2018" in options.infile:
+    outrecolabel = "RECO"
+
 if custom_args != "":
     command = 'cmsDriver.py %s --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (custom_args, global_tag, era, options.infile, options.outfile, options.nev)
 elif is_data:
-    command = 'cmsDriver.py miniAOD-prod -s PAT --processName=PAT --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
+    command = 'cmsDriver.py miniAOD-prod -s %s --processName=PAT --eventcontent MINIAOD --runUnscheduled --data --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (outrecolabel, global_tag, era, options.infile, options.outfile, options.nev)
 else:
-    command = 'cmsDriver.py miniAOD-prod -s PAT --processName=PAT --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (global_tag, era, options.infile, options.outfile, options.nev)
+    command = 'cmsDriver.py miniAOD-prod -s %s --processName=PAT --eventcontent MINIAODSIM --runUnscheduled --mc --conditions %s --era %s --filein %s --fileout file:%s -n %s' % (outrecolabel, global_tag, era, options.infile, options.outfile, options.nev)
 
 jobscript = '''#!/bin/zsh
 source /cvmfs/cms.cern.ch/cmsset_default.sh

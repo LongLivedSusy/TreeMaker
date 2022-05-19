@@ -88,6 +88,11 @@ if __name__ == "__main__":
         redo_miniaod = True
     if "2018D" in aod_file[0] and "SingleMuon" in aod_file[0]:
         redo_miniaod = True
+    if "EGamma" in aod_file[0]:
+        redo_miniaod = True
+
+    if redo_miniaod:
+        copy_aod_file = True
 
     outfile_general = ""
     with open("info_outfilename", "r") as fin:
