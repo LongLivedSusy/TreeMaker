@@ -40,11 +40,11 @@ for campaign in campaigns:
 
             cmsrun = """singularity exec --contain --bind /afs:/afs --bind /nfs:/nfs --bind /pnfs:/pnfs --bind /cvmfs:/cvmfs --bind /var/lib/condor:/var/lib/condor --bind /tmp:/tmp --pwd . ~/dust/slc6_latest.sif sh -c 'source /cvmfs/cms.cern.ch/cmsset_default.sh; cd /afs/desy.de/user/k/kutznerv/dust/shorttrack/treemaker/CMSSW_9_4_11/src/TreeMaker/Production/test/;
                       eval `scramv1 runtime -sh`;
-                      cmsRun runMakeTreeFromMiniAOD_cfg.py scenario=%s inputFilesConfig=%s nstart=%s nfiles=1 outfile=%s' ;
+                      cmsRun runMakeTreeFromMiniAOD_cfg.py scenario=%s inputFilesConfig=%s nstart=%s nfiles=1 outfile=%s;
                       source /cvmfs/grid.desy.de/etc/profile.d/grid-ui-env.sh;
                       cd /afs/desy.de/user/k/kutznerv/dust/shorttrack/treemaker/CMSSW_9_4_11/src/TreeMaker/Production/test/;
                       rootls %s_RA2AnalysisTree.root:TreeMaker2 | grep PreSelection && (eval `scram unsetenv -sh`; gfal-copy -f %s_RA2AnalysisTree.root %s) || echo "Failed!";
-                      rm %s_RA2AnalysisTree.root""" % (campaigns[campaign]["scenario"], this_inputFilesConfig, i, file_name, file_name, file_name, output_folder, file_name)
+                      rm %s_RA2AnalysisTree.root'""" % (campaigns[campaign]["scenario"], this_inputFilesConfig, i, file_name, file_name, file_name, output_folder, file_name)
             
             # check if outputfile already exists...
             outfile = "%s/%s_RA2AnalysisTree.root" % (output_folder.replace("srm://dcache-se-cms.desy.de", ""), file_name)
@@ -54,7 +54,6 @@ for campaign in campaigns:
             else:
                 cmds.append(cmsrun.replace("\n", ""))
 
-
 print "There are %s files to process" % len(cmds)
 
 def chunks(lst, n):
@@ -62,9 +61,14 @@ def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
         
-cmds = list(chunks(cmds, 30))
-for i in range(len(cmds)):
-    cmds[i] = "; ".join(cmds[i])
-        
-runParallel(cmds, "grid", use_sl6=False, condorDir="condor2017FSSam", confirm=False)
+#cmds = list(chunks(cmds, 10))
+#for i in range(len(cmds)):
+#    cmds[i] = "; ".join(cmds[i])
+
+cmds = cmds[:4999]
+
+print len(cmds)
+bigchunks = list(chunks(cmds, 4999))
+for i_bigchunk, bigchunk in enumerate(bigchunks):
+    runParallel(bigchunk, "grid", use_sl6=False, condorDir="condor2017FSSam_%s" % i_bigchunk, confirm=False)
 

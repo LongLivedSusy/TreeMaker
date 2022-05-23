@@ -5,7 +5,7 @@ import commands
 
 # create AOD file lists from exisiting miniAOD file lists. Configuration:
 
-check_dataset_availablity = True
+check_dataset_availablity = False
 write_file_lists = False
 
 #campaign = "Run2016*"
@@ -26,7 +26,6 @@ write_file_lists = False
 #campaign = "Run2018D-PromptReco*"
 #datastreams = ["MET", "EGamma", "SingleMuon", "JetHT"]
 
-
 campaigns = ["Run2016*", "Run2017*", "Run2018A-17Sep2018-v1*", "Run2018B-17Sep2018-v1*", "Run2018C-17Sep2018-v1*", "Run2018D-PromptReco*"]
 datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
 
@@ -43,6 +42,7 @@ for campaign in campaigns:
     
         streams = glob.glob("../python/%s/*_cff.py" % campaign)
         for stream in streams:
+            if "AOD" in stream: continue
             datastreams.append( stream.split("/")[-1].replace("_cff.py", "") )
         print "using all datastreams:", str(datastreams)
     
@@ -52,6 +52,13 @@ for campaign in campaigns:
             datastream = "EGamma"
     
         input_files = glob.glob("../python/%s/%s_cff.py" % (campaign, datastream))
+
+        #FIXME
+        if ("Run2017E" in input_files[0] or "Run2018B" in input_files[0]) and "JetHT" in datastream:
+            print "input_files[0]", input_files[0]
+            continue
+        else:
+            continue
     
         for ifile in sorted(input_files):
     

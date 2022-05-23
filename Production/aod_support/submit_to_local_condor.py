@@ -115,7 +115,6 @@ for campaign in campaigns:
 
             cmsrun = "cmsRun runMakeTreeFromMiniAOD_cfg.py scenario=%s inputFilesConfig=%s nstart=%s nfiles=1 outfile=%s" % (campaigns[campaign]["scenario"], this_inputFilesConfig, i, file_name)
 
-            #cmds.append( """identifier23=$RANDOM$RANDOM; cd %s/TreeMaker/Production; eval `scramv1 runtime -sh`; cp -r test /tmp/test-$identifier23; ln -s /tmp/test-$identifier23 test-$identifier23; cd test-$identifier23; rm info_*; tar -xf catalogues.tar.gz; %s; ./get_miniAOD_filenames_from_catalogue.py --infile=$(cat info_aodfilenames); rm catalogues*; %s && mv *root %s/; cd ..; rm -rf /tmp/test-$identifier23; rm test-$identifier23""" % (campaigns[campaign]["cmsswpath"], cmsrun, cmsrun, output_folder) )
             cmds.append( """identifier=$RANDOM$RANDOM; cd %s/TreeMaker/Production; eval `scramv1 runtime -sh`; cp -r test test-$identifier; cd test-$identifier; rm info_*; tar -xf catalogues.tar.gz; %s; ./get_miniAOD_filenames_from_catalogue.py --infile=$(cat info_aodfilenames); rm catalogues*; %s; mv *root %s/""" % (campaigns[campaign]["cmsswpath"], cmsrun, cmsrun, output_folder) )
 
 def chunks(lst, n):
@@ -127,8 +126,5 @@ cmds = list(chunks(cmds, 10))
 for i in range(len(cmds)):
     cmds[i] = "; ".join(cmds[i])
         
-#runParallel(cmds, "grid", use_sl6=True, condorDir="condor2018Drest")
-
-cmds = [cmds[0]]
-runParallel(cmds, "single", use_sl6=True)
+runParallel(cmds, "multi", use_sl6=True)
 

@@ -92,7 +92,7 @@ def is_in_goldenjson(flist, filename):
     return True
     
 
-def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor_old_hashes = True, comment_already_processed_files = True, write = True, check_goldenjson = False):
+def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor_old_hashes_lumi = True, honor_old_hashes = True, comment_already_processed_files = True, write = True, check_goldenjson = False):
 
     # read processed files
     processed_files_string = ""
@@ -136,7 +136,12 @@ def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor
                 # existing hashes...
                 #if len([s for s in fnames if file_contents[i].split("'")[1] in s])>0:
                 #    file_contents[i] = file_contents[i].replace("#", "")
-                if "#" in file_contents[i]:
+                if "##" in file_contents[i]:
+                    if honor_old_hashes_lumi:
+                        continue
+                    else:
+                        file_contents[i] = file_contents[i].replace("#", "")
+                elif "#" in file_contents[i]:
                     if honor_old_hashes:
                         continue
                     else:
@@ -164,6 +169,7 @@ if __name__ == "__main__":
     parser = OptionParser()
     parser.add_option("--update_filelist", dest="update_filelist", action="store_true")
     parser.add_option("--campaign", dest="campaign", default="all")
+    parser.add_option("--runmode", dest="runmode", default="multi")
     parser.add_option("--submit", dest="submit", action="store_true")
     parser.add_option("--processed_files", dest="processed_files", default="finished_ntuples.dat")
     parser.add_option("--specific_aod_file", dest="specific_aod_file", default=-1)    
@@ -176,7 +182,8 @@ if __name__ == "__main__":
     if options.submit:
         
         if options.campaign == "all":
-            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"] + ["../python/RunIIAutumn18FS"]  + ["../python/RunIIFall17FS"]
+            campaigns = glob.glob("../python/Run201*")
+            #campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"] + ["../python/RunIIAutumn18FS"]  + ["../python/RunIIFall17FS"]
         else:
             campaigns = glob.glob(options.campaign)
         print "Using campaigns:", campaigns
@@ -189,13 +196,10 @@ if __name__ == "__main__":
             for i, aod_filelist in enumerate(aod_filelists):
                 
                 #FIXME
-                #if "EGamma" not in aod_filelist: continue
-                
+                #if "MET" in aod_filelist and "2018D" in aod_filelist:
                 commands.append("HOME=%s; ./check_already_processed_files.py --campaign %s --specific_aod_file %s" % (homedir, campaign, i))
-        print commands[0]
-        GridEngineTools.runParallel(commands, "multi")
-        #GridEngineTools.runParallel(commands, "grid")
-        #GridEngineTools.runParallel([commands[0]], "grid")
+    
+        GridEngineTools.runParallel(commands, options.runmode)
 
     else:
         campaigns = options.campaign.split(",")

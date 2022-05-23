@@ -21,12 +21,14 @@ def get_userlist():
 
 def get_all_files():
 
-    all_files = []
-    for username in get_userlist():
-        print "Checking for files of %s..." % username
-        all_files += glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3*/*.root" % username)
+    #all_files = []
+    #for username in get_userlist():
+    #    print "Checking for files of %s..." % username
+    #    all_files += glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3*/*.root" % username)
     #all_files += glob.glob("/pnfs/desy.de/cms/tier2/store/user/vkutzner/NtupleHub/ProductionRun2v3_akshansh/*.root")
-    return all_files
+    #return all_files
+
+    return glob.glob("/pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v3*/*.root")
 
 
 d = {}
