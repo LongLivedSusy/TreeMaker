@@ -102,22 +102,7 @@ class maker:
         if self.dataset!=[] :    
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
-            if "/sbein/SMS2/" in rf:
-                # do own miniAOD
-                print "Re-do miniAOD..."
-                miniaodfile = tempfile.gettempdir() + "/miniaod_" + "_".join(rf.split("/")[-5:])
-                #miniaodfile = "/tmp/miniaod_" + "_".join(rf.split("/")[-5:])
-                os.system("touch %s" % miniaodfile)
-                #miniaodfile = "/nfs/dust/cms/user/kutznerv/SMS2-miniaod/" + "_".join(rf.split("/")[-5:])
-                miniaodfile = miniaodfile.replace("__", "_")
-                #if not os.path.exists(miniaodfile):
-                cmd = "../aod_support/convert_AOD_to_miniAOD.py --infile=%s --outfile=%s --nev %s" % (rf, miniaodfile, self.numevents)
-                print cmd
-                status, output = commands.getstatusoutput(cmd)
-                print "status", status
-                self.readFiles_sidecar += ["file://" + miniaodfile]
-                switch_primary_secondary_files = True
-            elif ('/store/' in rf) and not 'inMINI' in rf:
+            if ('/store/' in rf) and not 'inMINI' in rf:
                 # check if miniAOD file is present:
                 if not os.path.exists("info_miniaods"):
                     os.system("echo %s > info_aodfilenames" % ",".join(self.readFiles))
@@ -141,7 +126,8 @@ class maker:
                             
                    
                     # corresponding json mask (union of golden JSON and AOD file)    
-                    self.jsonfile = "lumisecs_union.json"
+                    if "Run201" in rf:
+                        self.jsonfile = "lumisecs_union.json"
                         
                     switch_primary_secondary_files = True
 
