@@ -94,6 +94,11 @@ if __name__ == "__main__":
     if redo_miniaod:
         copy_aod_file = True
 
+    if "PMSSM" in aod_files[0]:
+        redo_miniaod = True
+        copy_miniaod = False
+        copy_aod_file = False
+    
     outfile_general = ""
     with open("info_outfilename", "r") as fin:
         outfile_general = fin.read().split("\n")[0]
