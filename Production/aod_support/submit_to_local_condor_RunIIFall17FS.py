@@ -34,12 +34,10 @@ campaigns = {
 
 cmds = []
 output_folder = "srm://dcache-se-cms.desy.de/pnfs/desy.de/cms/tier2/store/user/vkutzner/NtupleHub/ProductionRun2v3/"
-redo_miniaod = False
+redo_miniaod = True
 
 for campaign in campaigns:
-
     print campaign
-
     for inputFilesConfig in campaigns[campaign]["inputFilesConfigs"]:
         print inputFilesConfig
 
@@ -97,11 +95,11 @@ def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
         
-cmds = list(chunks(cmds, 3))
+cmds = list(chunks(cmds, 10))
 for i in range(len(cmds)):
     cmds[i] = "; ".join(cmds[i])
 
-cmds = cmds[:4000]
+cmds = cmds[:2500]
 #cmds = cmds[:1]
 
 print len(cmds)

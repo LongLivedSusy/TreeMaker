@@ -14,6 +14,7 @@ from os.path import expanduser
 # to be run at DESY
 
 def create_processed_filelist():
+    #os.system("find /pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v3*/ -exec readlink -e '{}' \; > finished_ntuples_fullpath.dat")
     os.system("ls /pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/ProductionRun2v3*/ > finished_ntuples.dat")
 
 
@@ -92,7 +93,7 @@ def is_in_goldenjson(flist, filename):
     return True
     
 
-def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor_old_hashes_lumi = True, honor_old_hashes = True, comment_already_processed_files = True, write = True, check_goldenjson = False):
+def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor_old_hashes_lumi = True, honor_old_hashes = False, comment_already_processed_files = True, write = True, check_goldenjson = False):
 
     # read processed files
     processed_files_string = ""
@@ -182,8 +183,9 @@ if __name__ == "__main__":
     if options.submit:
         
         if options.campaign == "all":
-            campaigns = glob.glob("../python/Run201*")
-            #campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"] + ["../python/RunIIAutumn18FS"]  + ["../python/RunIIFall17FS"]
+            #campaigns = glob.glob("../python/Run201*")
+            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"] + ["../python/RunIIAutumn18FS"]  + ["../python/RunIIFall17FS"]
+            #campaigns = ["../python/RunIIAutumn18FS"]  + ["../python/RunIIFall17FS"]
         else:
             campaigns = glob.glob(options.campaign)
         print "Using campaigns:", campaigns

@@ -40,24 +40,37 @@ def get_all_blocks(check_sites_immediately = True):
         blocks.append(block)
         aodblocks[pending_aod] = block
 
+        #status, output = commands.getstatusoutput("grep '%s' missing_blocks_nonavailable.*.rucio" % block)
+        #if status == 0:
+        #    print "Should be there:", pending_aod
+
+        if True:            
+            desypath = "/pnfs/desy.de/cms/tier2" + pending_aod.replace("'", "")
+            if os.path.exists(desypath):
+                #print "There:", pending_aod
+                targetpath = "/afs/desy.de/user/k/kutznerv/dust/%s/" % '/'.join(desypath.replace('/pnfs/desy.de/cms/tier2/store/', 'store/').split('/')[:-1])
+                cmd = "mkdir -p %s && cp %s %s" % (targetpath, desypath, targetpath)
+                os.system("echo '%s' >> copy_to_dust" % cmd)
+
     if False:
         with open("missing_blocks_with_aods", "w") as outfile:
             for aod in aodblocks:
                 outfile.write(aod + ': ' + aodblocks[aod] + '\n')
 
-    unique_blocks = list(set(blocks))
-    print "blocks", blocks
-    print "unique_blocks", unique_blocks
-    print len(blocks), len(unique_blocks)
+    if True:
+        unique_blocks = list(set(blocks))
+        #print "blocks", blocks
+        #print "unique_blocks", unique_blocks
+        print len(blocks), len(unique_blocks)
 
-    with open("missing_blocks_perfile.may29", "w") as outfile:
-        for unique_block in unique_blocks:
-            outfile.write(unique_block + '\n')
+        with open("missing_blocks_perfile.oct20", "w") as outfile:
+            for unique_block in unique_blocks:
+                outfile.write(unique_block + '\n')
 
 
 def get_block_sites():
 
-    with open("missing_blocks_perfile.may29", "r") as infile:
+    with open("missing_blocks_perfile.oct20", "r") as infile:
         blocks = infile.read()
         blocks = blocks.split('\n')
 
@@ -68,7 +81,7 @@ def get_block_sites():
             if i_block%20 == 0:
                 print i_block
 
-            status, output = commands.getstatusoutput('grep %s missing_blocks_sites_wholelist.may29' % block)
+            status, output = commands.getstatusoutput('grep %s missing_blocks_sites_wholelist.oct20' % block)
             if status == 0:
                 continue
 
@@ -83,7 +96,7 @@ def get_block_sites():
 
             sites = output.split("\n")
             outstring = block + ": " + ",".join(sites)
-            os.system("echo %s >> missing_blocks_sites_wholelist.may29" % outstring)
+            os.system("echo %s >> missing_blocks_sites_wholelist.oct20" % outstring)
 
             #if i_block>0 and i_block%15==0:
             #    print "Sleeping"
@@ -94,7 +107,7 @@ def check_block_availability():
 
     blocks_sites_nonavailable = []
 
-    with open("missing_blocks_sites_wholelist.may29", "r") as infile:
+    with open("missing_blocks_sites_wholelist.oct20", "r") as infile:
         blocks = infile.read().split("\n")
         for line in blocks:
 
@@ -102,19 +115,19 @@ def check_block_availability():
             block = line.split(":")[0]
             sites = line.split(":")[1].split(",")
 
-            #status, output = commands.getstatusoutput("grep '%s' missing_blocks_perfile.may29" % block)
+            #status, output = commands.getstatusoutput("grep '%s' missing_blocks_perfile.june1" % block)
             #if status != 0:
             #    continue
 
             block_only_on_tape = True
             for site in sites:
-                if "Tape" not in site:
+                if "Tape" not in site and "T2_BR_SPRACE" not in site:
                     block_only_on_tape = False
                     break
 
             block_only_at_desy = True
             for site in sites:
-                if "Tape" not in site and "DESY" not in site and "Testing" not in site and "testing" not in site:
+                if "Tape" not in site and "DESY" not in site and "Testing" not in site and "testing" not in site and "T2_BR_SPRACE" not in site:
                     print "block elsewhere:", block
                     block_only_on_tape = False
                     break
@@ -123,10 +136,10 @@ def check_block_availability():
                 blocks_sites_nonavailable.append(block)
                 print block
 
-    with open("missing_blocks_nonavailable.may29", "w") as outfile:
+    with open("missing_blocks_nonavailable.june1", "w") as outfile:
         outfile.write("\n".join(blocks_sites_nonavailable))
 
-    with open("missing_blocks_nonavailable.may29.rucio", "w") as outfile:
+    with open("missing_blocks_nonavailable.june1.rucio", "w") as outfile:
         for block in blocks_sites_nonavailable:
             outfile.write("rucio add-rule --ask-approval --lifetime 691200 cms:%s 1 T2_DE_DESY\n" % block)
 
@@ -149,7 +162,7 @@ def free_copied_blocks():
 
 
 get_all_blocks()
-get_block_sites()  
-check_block_availability()
+#get_block_sites()  
+#check_block_availability()
 #free_copied_blocks()
 
