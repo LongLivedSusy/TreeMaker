@@ -1,5 +1,5 @@
 flist = {'scenario':
-'2018ReReco17Sep',
+'2018ReReco17SepAOD',
 'samples':
 [
 ['Run2018B-17Sep2018-v1.JetHTAOD'],
@@ -8,4 +8,7 @@ flist = {'scenario':
 ['Run2018B-17Sep2018-v1.EGammaAOD0'],
 ['Run2018B-17Sep2018-v1.EGammaAOD1'],
 ['Run2018B-17Sep2018-v1.EGammaAOD2'],
+['Run2018B-17Sep2018-v1.JetHTAOD90'],
+['Run2018B-17Sep2018-v1.METAOD90'],
+['Run2018B-17Sep2018-v1.SingleMuonAOD90'],
 ]}

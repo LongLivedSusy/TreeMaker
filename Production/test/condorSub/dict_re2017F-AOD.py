@@ -7,5 +7,9 @@ flist = {
         ['Run2017F-31Mar2018-v1.SingleElectronAOD'],
         ['Run2017F-31Mar2018-v1.SingleMuonAOD0'],
         ['Run2017F-31Mar2018-v1.SingleMuonAOD1'],
+        ['Run2017F-17Jul2018-v1.JetHTAOD90'],
+        ['Run2017F-17Jul2018-v1.METAOD90'],
+        ['Run2017F-17Jul2018-v1.SingleElectronAOD90'],
+        ['Run2017F-17Jul2018-v1.SingleMuonAOD90'],
     ]
 }
