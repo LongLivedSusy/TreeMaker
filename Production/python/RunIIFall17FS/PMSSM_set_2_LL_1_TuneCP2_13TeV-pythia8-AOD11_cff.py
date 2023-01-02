@@ -4201,7 +4201,7 @@ readFiles.extend( [
 #'/store/mc/RunIIFall17FSPremix/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/AODSIM/GridpackScan_94X_mc2017_realistic_v15-v2/2500019/5657F4F7-D821-EC11-980A-3CECEF6E5602.root',
 #'/store/mc/RunIIFall17FSPremix/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/AODSIM/GridpackScan_94X_mc2017_realistic_v15-v2/2500021/E221C084-D921-EC11-A926-3CECEF1A1436.root',
 #'/store/mc/RunIIFall17FSPremix/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/AODSIM/GridpackScan_94X_mc2017_realistic_v15-v2/2500026/3AD1DAF5-AF21-EC11-BC8F-0CC47AFCC6D6.root',
-'/store/mc/RunIIFall17FSPremix/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/AODSIM/GridpackScan_94X_mc2017_realistic_v15-v2/2500028/9864F6A7-BE21-EC11-BE19-0CC47AFF04A0.root',
+#'/store/mc/RunIIFall17FSPremix/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/AODSIM/GridpackScan_94X_mc2017_realistic_v15-v2/2500028/9864F6A7-BE21-EC11-BE19-0CC47AFF04A0.root',
 #'/store/mc/RunIIFall17FSPremix/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/AODSIM/GridpackScan_94X_mc2017_realistic_v15-v2/2500007/C0E6F409-F521-EC11-9278-3CECEF6E562C.root',
 #'/store/mc/RunIIFall17FSPremix/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/AODSIM/GridpackScan_94X_mc2017_realistic_v15-v2/2500007/B61175CC-F521-EC11-BBF2-3CECEF6EFE24.root',
 #'/store/mc/RunIIFall17FSPremix/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/AODSIM/GridpackScan_94X_mc2017_realistic_v15-v2/2500023/8603D441-CE21-EC11-AB0F-0CC47AFCC3B6.root',
