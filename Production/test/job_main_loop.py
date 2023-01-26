@@ -63,7 +63,7 @@ if __name__ == "__main__":
     redo_miniaod = False
     copy_miniaod = False
     copy_aod_file = False
-    check_already_produced = True
+    check_already_produced = False
 
     job_return_status = 0
 
@@ -172,11 +172,12 @@ if __name__ == "__main__":
 
             elif status != 0:
                 job_return_status = status
-                print "miniAOD error"
-                runcmd("rm *.root")
-                continue
+                print "miniAOD lookup error"
+                #runcmd("rm *.root")
+                #continue
+                redo_miniaod = True
 
-        else:
+        if redo_miniaod:
             print "redo miniAOD file..."
             runcmd('cp "$CMSSW_BASE/src/TreeMaker/Production/aod_support/convert_AOD_to_miniAOD.py" .')
             runcmd('chmod +x get_miniAOD_filenames_from_catalogue.py')
