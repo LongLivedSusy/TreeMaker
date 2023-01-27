@@ -5,7 +5,7 @@ readFiles = cms.untracked.vstring()
 secFiles = cms.untracked.vstring()
 source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
-       '/store/data/Run2017E/SingleMuon/AOD/17Nov2017-v1/60001/EC905558-AEDD-E711-A09B-02163E01423A.root',
+#       '/store/data/Run2017E/SingleMuon/AOD/17Nov2017-v1/60001/EC905558-AEDD-E711-A09B-02163E01423A.root',
 #       '/store/data/Run2017E/SingleMuon/AOD/17Nov2017-v1/70001/5CDACC9C-76DC-E711-A93B-0025907DE22C.root',
 #       '/store/data/Run2017E/SingleMuon/AOD/17Nov2017-v1/60001/1CDD54E1-64DC-E711-A523-02163E01419D.root',
 #       '/store/data/Run2017E/SingleMuon/AOD/17Nov2017-v1/60002/88D0A662-95DD-E711-A3AC-02163E019BCF.root',
