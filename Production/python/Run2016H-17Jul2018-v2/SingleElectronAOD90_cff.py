@@ -22,7 +22,7 @@ readFiles.extend( [
 #       '/store/data/Run2016H/SingleElectron/AOD/07Aug17-v1/70000/EE759FF4-1185-E711-AED4-00215E2EAD28.root',
 #       '/store/data/Run2016H/SingleElectron/AOD/07Aug17-v1/70001/F21E2B6F-9986-E711-B143-0025905A48EC.root',
 #       '/store/data/Run2016H/SingleElectron/AOD/07Aug17-v1/70002/C2D6C39D-C286-E711-927F-0025905A60EE.root',
-       '/store/data/Run2016H/SingleElectron/AOD/07Aug17-v1/70002/C0A6BB6A-B786-E711-BF75-0CC47AD98CF8.root',
+#       '/store/data/Run2016H/SingleElectron/AOD/07Aug17-v1/70002/C0A6BB6A-B786-E711-BF75-0CC47AD98CF8.root',
 #       '/store/data/Run2016H/SingleElectron/AOD/07Aug17-v1/70002/AE3698A1-DF86-E711-B871-0242AC130002.root',
 #       '/store/data/Run2016H/SingleElectron/AOD/07Aug17-v1/50001/4A5A5509-6E87-E711-AFEF-0242AC130002.root',
 #       '/store/data/Run2016H/SingleElectron/AOD/07Aug17-v1/110001/1A8B4C67-5586-E711-B4FC-002590FD5A48.root',

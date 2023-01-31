@@ -10,4 +10,8 @@ flist = {'scenario':
 ['Run2016H-17Jul2018-v2.METAOD90'],
 ['Run2016H-17Jul2018-v2.SingleElectronAOD90'],
 ['Run2016H-17Jul2018-v2.SingleMuonAOD90'],
+['Run2016H-17Jul2018-v2.JetHTAOD91'],
+['Run2016H-17Jul2018-v2.SingleElectronAOD91'],
+['Run2016H-17Jul2018-v2.SingleMuonAOD91'],
 ]}
+
