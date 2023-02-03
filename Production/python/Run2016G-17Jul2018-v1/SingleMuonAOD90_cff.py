@@ -18,7 +18,7 @@ readFiles.extend( [
 #       '/store/data/Run2016G/SingleMuon/AOD/07Aug17-v1/00002/5690F76A-0FAF-E711-BD25-02163E013FA0.root',
 #       '/store/data/Run2016G/SingleMuon/AOD/07Aug17-v1/00002/5250754A-14AF-E711-BA3A-02163E016497.root',
 #       '/store/data/Run2016G/SingleMuon/AOD/07Aug17-v1/00002/5690F76A-0FAF-E711-BD25-02163E013FA0.root',
-       '/store/data/Run2016G/SingleMuon/AOD/07Aug17-v1/110001/5E40CBC2-AB98-E711-BF74-A4BF0112BD44.root',
+#       '/store/data/Run2016G/SingleMuon/AOD/07Aug17-v1/110001/5E40CBC2-AB98-E711-BF74-A4BF0112BD44.root',
 #       '/store/data/Run2016G/SingleMuon/AOD/07Aug17-v1/10000/006BDBC9-C996-E711-BB94-001E677925AC.root',
 #       '/store/data/Run2016G/SingleMuon/AOD/07Aug17-v1/110001/A4E6E854-9C98-E711-9DBC-00259073E496.root',
 #       '/store/data/Run2016G/SingleMuon/AOD/07Aug17-v1/110000/F61468C2-2F98-E711-AAA4-00259073E4CC.root',
