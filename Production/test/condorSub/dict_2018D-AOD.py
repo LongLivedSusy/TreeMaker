@@ -39,10 +39,10 @@ flist = {'scenario':
 ['Run2018D-PromptReco-v2.EGammaAOD12'],
 ['Run2018D-PromptReco-v2.EGammaAOD13'],
 ['Run2018D-PromptReco-v2.JetHTAOD90'],
-['Run2018D-PromptReco-v2.METAOD90'],
+#['Run2018D-PromptReco-v2.METAOD90'],
 ['Run2018D-PromptReco-v2.SingleMuonAOD90'],
 ['Run2018D-PromptReco-v2.EGammaAOD91'],
 ['Run2018D-PromptReco-v2.JetHTAOD91'],
-['Run2018D-PromptReco-v2.METAOD91'],
+#['Run2018D-PromptReco-v2.METAOD91'],
 ['Run2018D-PromptReco-v2.SingleMuonAOD91'],
 ]}
