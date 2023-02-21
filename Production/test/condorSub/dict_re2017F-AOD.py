@@ -14,6 +14,7 @@ flist = {
         #['Run2017F-31Mar2018-v1.JetHTAOD91'],
         #['Run2017F-31Mar2018-v1.SingleElectronAOD91'],
         ['Run2017F-31Mar2018-v1.SingleMuonAOD91'],
+       ['Run2017F-31Mar2018-v1.SingleMuonAOD92'],
     ]
 }
 

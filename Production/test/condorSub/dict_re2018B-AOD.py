@@ -11,6 +11,6 @@ flist = {'scenario':
 ['Run2018B-17Sep2018-v1.JetHTAOD90'],
 #['Run2018B-17Sep2018-v1.SingleMuonAOD90'],
 #['Run2018B-17Sep2018-v1.EGammaAOD91'],
-#['Run2018B-17Sep2018-v1.JetHTAOD91'],
+['Run2018B-17Sep2018-v1.JetHTAOD92'],
 #['Run2018B-17Sep2018-v1.METAOD91'],
 ]}
