@@ -94,7 +94,7 @@ def do_queries(aod_file_name, campaign, debug = True):
     return miniaod_filenames
 
 
-def main(treemaker_path, campaign, debug, outfile = ""):
+def main(treemaker_path, campaign, debug, outfile = "", check_if_already_queried = False):
     
     # check for VOMS proxy:
     status, file_names_string = commands.getstatusoutput("voms-proxy-info -exists")
@@ -130,10 +130,12 @@ def main(treemaker_path, campaign, debug, outfile = ""):
         print "%s / %s done" % (i, len(file_names))
 
         # check if we already have the info:
-        status, ignore = commands.getstatusoutput("grep %s ../test/catalogue*.dat" % (aod_file_name))
-        if status == 0: 
-            print "already there", aod_file_name
-            continue
+        if check_if_already_queried:
+            # this can take some time when grepping large file name catalogues
+            status, ignore = commands.getstatusoutput("grep %s ../test/catalogue*.dat" % (aod_file_name))
+            if status == 0: 
+                print "already there", aod_file_name
+                continue
 
         file_has_issues = False
 
