@@ -41,6 +41,36 @@ def create_dbs_cache(sample_aod_file):
     print "DONE"
     
     return data
+
+
+def dbs_query_per_file(sample_aod_file):
+    
+    print "Querying per file...", sample_aod_file
+
+    if "'" in sample_aod_file:
+        sample_aod_file = sample_aod_file.split("'")[1]
+
+    jsondict = das_client.get_data("lumi file=%s" % sample_aod_file)
+
+    data = jsondict["data"]
+    file_json = {}
+    for i_data in data:
+        run = i_data["lumi"][0]["run_number"]
+        lumi = i_data["lumi"][0]["lumi_section_num"]
+        if run in file_json:
+            file_json[run] += [lumi]
+        else:
+            file_json[run] = [lumi]
+ 
+        #test
+        if len(i_data["lumi"]) > 1:
+            print "warn", i_data["lumi"]
+            quit()
+
+    for run in file_json:
+        file_json[run] = sorted(file_json[run])
+   
+    return file_json
         
 
 #status, fnames = commands.getstatusoutput("cat yeah2.log")
@@ -58,6 +88,8 @@ def is_in_goldenjson(flist, filename):
     # for MC:
     if "Run201" not in filename:
         return True 
+
+
     
     # for Data:
     for i_flist in flist:
@@ -93,6 +125,64 @@ def is_in_goldenjson(flist, filename):
     return True
     
 
+def json_contains_subset_of_goldenjson(aodname):
+
+    if "'" in aodname:
+        aodname = aodname.split("'")[1]
+
+    # for MC:
+    if "Run201" not in aodname:
+        return 1 
+
+    # file lumi info not available
+    status, output = commands.getstatusoutput("grep '%s' dbs.cache.separated" % aodname)
+    output = output.split("\n")
+    if status == 0:
+        filejson = {}
+        for line in output:
+            runoutput = line.split('"run": [{"run_number": ')[1]
+            runoutput = runoutput.split('}]')[0]
+            run = int(runoutput)
+            lumioutput = line.split('"lumi": [{"number": ')[1]
+            lumioutput = lumioutput.split('}]')[0]
+            lumis = eval(lumioutput)
+            filejson[run] = lumis
+        print "redid json:", str(filejson)
+    else:
+        filejson = dbs_query_per_file(aodname)
+        
+    if len(filejson) == 0:
+        print "giving up", aodname, output
+        return 3
+
+    file_in_golden_json = False
+    for run in filejson:
+        if not (str(run) in golden16 or str(run) in golden17 or str(run) in golden18):
+            continue
+
+        lumi_golden = []
+        for golden in [golden16, golden17, golden18]:
+            if str(run) in golden:
+                lumi_golden = golden[str(run)]
+                break
+
+        for lumi in filejson[run]:
+            for interval in lumi_golden:
+                if int(lumi) >= int(interval[0]) and int(lumi) <= int(interval[1]):
+                    file_in_golden_json = True
+                    break
+
+    #print file_in_golden_json, filejson
+
+    if file_in_golden_json:
+        return 1
+    else:
+        return 0
+
+    # return True if any part of the json is contained in the golden JSON
+
+    
+
 def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor_old_hashes_lumi = True, honor_old_hashes = False, comment_already_processed_files = True, write = True, check_goldenjson = False):
 
     # read processed files
@@ -105,11 +195,14 @@ def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor
         if len(processed_files[i].split("_"))>1:
             processed_files[i] = processed_files[i].split("_")[-2]
 
-    processed_uuids = "\n".join(processed_files)
+    processed_uuids = set(processed_files)
+
+    #processed_uuids = "\n".join(processed_files)
 
     print "%s/*AOD*_cff.py" % campaign
 
     aod_filelists = sorted(glob.glob("%s/*AOD*_cff.py" % campaign))
+    #aod_filelists = sorted(glob.glob("%s/*AOD91*_cff.py" % campaign))
     
     mydbs = False
         
@@ -130,6 +223,9 @@ def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor
         # check if file is in processed_files        
         file_contents = file_contents.split("\n")
         file_count = 0
+
+        #dataset = ""
+
         for i in range(len(file_contents)):
             ignore_file = False
             if ".root" in file_contents[i]:
@@ -137,7 +233,19 @@ def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor
                 # existing hashes...
                 #if len([s for s in fnames if file_contents[i].split("'")[1] in s])>0:
                 #    file_contents[i] = file_contents[i].replace("#", "")
-                if "##" in file_contents[i]:
+
+                #file_contents[i] = file_contents[i].split("'")[1]
+                #file_contents[i] = "    '%s'," % file_contents[i].split("'")[2]
+
+                ##FIXME
+                #if "###" in file_contents[i]:
+                #    file_contents[i] = file_contents[i].replace("#", "")
+
+                if "###" in file_contents[i]:
+                    if not check_goldenjson:
+                        continue
+                    
+                elif "##" in file_contents[i]:
                     if honor_old_hashes_lumi:
                         continue
                     else:
@@ -148,15 +256,31 @@ def main(campaign, processed_files, specific_aod_file = -1, debug = False, honor
                     else:
                         file_contents[i] = file_contents[i].replace("#", "")
 
-                if check_goldenjson and not mydbs:
-                    mydbs = create_dbs_cache(file_contents[i])
+                #file_contents[i] = file_contents[i].replace("#", "")
+
+                #new
+                #if dataset == "":
+                #    jsondict = das_client.get_data("dataset file=%s" % file_contents[i])
+                #    dataset = jsondict["data"][0]["dataset"][0]["name"]
+
+                #if check_goldenjson and not mydbs:
+                #    mydbs = create_dbs_cache(file_contents[i])
+                #filejson = dbs_query_per_file(file_contents[i])
                                 
                 if comment_already_processed_files:
                     filename = file_contents[i].split("'")[1]
                     if file_has_been_processed(campaign.split("/")[-1], processed_uuids, filename):
                         file_contents[i] = "#" + file_contents[i]
-                    elif check_goldenjson and not is_in_goldenjson(mydbs, filename):
-                        file_contents[i] = "##" + file_contents[i]
+                    #elif check_goldenjson and not is_in_goldenjson(mydbs, filename):
+                    elif check_goldenjson:
+                        #filejson = dbs_query_per_file(file_contents[i])
+                        #if not json_contains_subset_of_goldenjson(filejson):
+                        #    file_contents[i] = "##" + file_contents[i]
+                        json_status = json_contains_subset_of_goldenjson(file_contents[i])
+                        if json_status == 0:
+                            file_contents[i] = "##" + file_contents[i]
+                        elif json_status == 3:
+                            file_contents[i] = file_contents[i] + " ### no run/lumi info"
                     file_count += 1
                     
         if write:
@@ -183,8 +307,8 @@ if __name__ == "__main__":
     if options.submit:
         
         if options.campaign == "all":
-            #campaigns = glob.glob("../python/Run201*")
-            campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"] + ["../python/RunIIAutumn18FS"]  + ["../python/RunIIFall17FS"]
+            campaigns = glob.glob("../python/Run201*")
+            #campaigns = glob.glob("../python/Run201*") + ["../python/RunIIFall17MiniAODv2"] + ["../python/Summer16"] + ["../python/RunIISummer16MiniAODv3"] + ["../python/RunIIAutumn18FS"]  + ["../python/RunIIFall17FS"]
             #campaigns = ["../python/RunIIAutumn18FS"]  + ["../python/RunIIFall17FS"]
         else:
             campaigns = glob.glob(options.campaign)
@@ -195,13 +319,19 @@ if __name__ == "__main__":
         commands = []
         for campaign in campaigns:
             aod_filelists = sorted(glob.glob("%s/*AOD*_cff.py" % campaign))
+            #aod_filelists = sorted(glob.glob("%s/*AOD91*_cff.py" % campaign))
+            #aod_filelists = sorted(glob.glob("%s/*PMSSM*AOD*_cff.py" % campaign))
             for i, aod_filelist in enumerate(aod_filelists):
                 
+                print aod_filelist
+
                 #FIXME
                 #if "MET" in aod_filelist and "2018D" in aod_filelist:
                 commands.append("HOME=%s; ./check_already_processed_files.py --campaign %s --specific_aod_file %s" % (homedir, campaign, i))
-    
-        GridEngineTools.runParallel(commands, options.runmode)
+
+        #FIXME
+        #commands = [commands[-1]]
+        GridEngineTools.runParallel(commands, options.runmode, ncores_percentage=1.0)
 
     else:
         campaigns = options.campaign.split(",")

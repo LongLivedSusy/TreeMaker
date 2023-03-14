@@ -47,18 +47,27 @@ def dataset_is_correct_miniAOD(i_File, dataset):
         return False
 
 
-def do_queries(aod_file_name, debug):
+def do_queries(aod_file_name, campaign, debug = True):
 
     miniaod_filenames = []
 
     # first check children for miniAODs:
+    print "do children", aod_file_name
     children = dbs.listFileChildren(logical_file_name = aod_file_name )
     if debug: print "children", children
 
+    # children: is a list of dicts
+
     if children and len(children)>0:  
-        child_filenames = children[0]["child_logical_file_name"]
+        child_filenames = [x["child_logical_file_name"] for x in children]
         for child in child_filenames:
             if dataset_is_correct_miniAOD(aod_file_name, child):
+                
+                # veto RunIISummer16MiniAODv3 for Summer16 campaign (DTrack analysis uses RunIISummer16MiniAODv2)
+                if "Summer16" in campaign and campaign != "RunIISummer16MiniAODv3" and campaign != "Summer16v3Fast":
+                    if "RunIISummer16MiniAODv2" not in child:
+                        continue
+                
                 miniaod_filenames.append(child)
 
     # if no matches have been found, check children of parent files for matching miniAODs:
@@ -67,6 +76,8 @@ def do_queries(aod_file_name, debug):
         if debug: print "parents", parents
         if parents and len(parents)>0:
             parents_filenames = parents[0]["parent_logical_file_name"]
+
+            if isinstance(parents_filenames, str): parents_filenames = [parents_filenames]
 
             for parent_filename in parents_filenames:
                 cousins = dbs.listFileChildren(logical_file_name = parent_filename )
@@ -92,16 +103,9 @@ def main(treemaker_path, campaign, debug, outfile = ""):
         return
         
     if outfile == "":
-        #outfile = campaign
-        outfile = campaign + "_more"
+        outfile = campaign
 
-    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/SMS-T2bt*AOD*py" % (treemaker_path, campaign))
-    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/RunIISummer16MiniAODv3Fast/SMS-T2bt*AOD*py" % (treemaker_path))
-    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/SMS-T1qqqq-LLChipm_ctau-200*AOD*py" % (treemaker_path, campaign))
-    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/EGamma*AOD*py | grep '#' -v " % (treemaker_path, campaign))
-    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/*AOD*py | grep '#' -v " % (treemaker_path, campaign))
-    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/PMSSM_set_2_LL_1*AOD*py | grep '#' -v " % (treemaker_path, campaign))
-    #status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/METAOD*py" % (treemaker_path, campaign))
+    status, file_names_string = commands.getstatusoutput("grep '.root' %s/Production/python/%s*/*AOD*py | grep '#' -v " % (treemaker_path, campaign))
     if status != 0:
         print file_names_string
         return
@@ -119,8 +123,7 @@ def main(treemaker_path, campaign, debug, outfile = ""):
     print "Total # of files: %s" % len(file_names)
     print "First file in list: %s" % file_names[0]   
 
-    fout = open("../test/catalogue_%s_ext4.dat" % outfile, "a")
-
+    output = ""
     for i, aod_file_name in enumerate(file_names):
 
         #if (i % 100 == 0 and i > 0) or debug:
@@ -128,56 +131,54 @@ def main(treemaker_path, campaign, debug, outfile = ""):
 
         # check if we already have the info:
         status, ignore = commands.getstatusoutput("grep %s ../test/catalogue*.dat" % (aod_file_name))
-        if status == 0: continue
+        if status == 0: 
+            print "already there", aod_file_name
+            continue
 
         file_has_issues = False
 
-        #try:
-        print "aod_file_name", aod_file_name
-        miniaod_filenames = do_queries(aod_file_name, debug)
-        print "miniaod_filenames", miniaod_filenames
-        #except Exception as e:
-        #    print "Got error with file (# %s)" % i, aod_file_name
-        #    print str(e)
-        #    file_has_issues = True
-            
-    	if not miniaod_filenames:
-     	    print "Got error with file (# %s)" % i, aod_file_name
+        miniaod_filenames = False
+        try:
+            #print "aod_file_name", aod_file_name
+            miniaod_filenames = do_queries(aod_file_name, campaign, debug)
+            #print "miniaod_filenames", miniaod_filenames
+        except Exception as e:
+            print "Got error with file (# %s)" % i, aod_file_name
+            print str(e)
             file_has_issues = True
-
-        if file_has_issues:
-            os.system("echo %s >> files_with_issues.%s" % (aod_file_name, outfile))
             continue
+            
+    	#if not miniaod_filenames:
+     	#    print "Got error with file (# %s)" % i, aod_file_name
+        #    file_has_issues = True
+
+        #if file_has_issues:
+        #    os.system("echo %s >> files_with_issues_ext90.%s" % (aod_file_name, outfile))
+        #    continue
 
         output = "[%s]\n%s\n" % (aod_file_name, "\n".join(miniaod_filenames))
-        fout.write(output)
+        print output
 
-        if i % 100 == 0 and i > 0:
-            print aod_file_name, str(miniaod_filenames)
-            fout.flush()
         if i % 1000 == 0 and i > 0:
             print "Pausing..."
-            time.sleep(60)
+            time.sleep(200)
             print "Resuming..."
-         
+        
+    fout = open("../test/catalogue_%s.dat" % outfile, "a")
+    fout.write(output)
     fout.close()
  
 
 if __name__ == "__main__":
 
     parser = OptionParser()
-    parser.add_option('--campaign', dest = 'campaign')
-    parser.add_option('--treemaker_path', dest = 'treemaker_path')
+    parser.add_option('--campaign', dest = 'campaign', default = "all")
+    parser.add_option('--treemaker_path', dest = 'treemaker_path', default = "~/dust/shorttrack/treemaker/CMSSW_10_2_7/src/TreeMaker/")
     parser.add_option('--debug', action = "store_true", dest = 'debug')
     (options, args) = parser.parse_args()
 
     if options.campaign == "all":
         for campaign in [
-                          "Run2018D-PromptReco-v2",
-                          "Run2018A-17Sep2018-v1",
-                          "Run2018B-17Sep2018-v1",
-                          "Run2018C-17Sep2018-v1",
-                          "Run2018D-PromptReco-v1",
                           "Run2016B-17Jul2018_ver1-v1",
                           "Run2016B-17Jul2018_ver2-v1",
                           "Run2016B-17Jul2018_ver2-v2",
@@ -193,6 +194,11 @@ if __name__ == "__main__":
                           "Run2017D-31Mar2018-v1",
                           "Run2017E-31Mar2018-v1",
                           "Run2017F-31Mar2018-v1",
+                          "Run2018D-PromptReco-v2",
+                          "Run2018A-17Sep2018-v1",
+                          "Run2018B-17Sep2018-v1",
+                          "Run2018C-17Sep2018-v1",
+                          "Run2018D-PromptReco-v1",
         ]:
             main(options.treemaker_path, campaign, options.debug)
         

@@ -6,7 +6,7 @@ import commands
 # create AOD file lists from exisiting miniAOD file lists. Configuration:
 
 check_dataset_availablity = False
-write_file_lists = False
+write_file_lists = True
 
 #campaign = "Run2016*"
 #datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
@@ -26,8 +26,20 @@ write_file_lists = False
 #campaign = "Run2018D-PromptReco*"
 #datastreams = ["MET", "EGamma", "SingleMuon", "JetHT"]
 
-campaigns = ["Run2016*", "Run2017*", "Run2018A-17Sep2018-v1*", "Run2018B-17Sep2018-v1*", "Run2018C-17Sep2018-v1*", "Run2018D-PromptReco*"]
-datastreams = ["MET", "SingleElectron", "SingleMuon", "JetHT"]
+campaigns = [
+               "Run2016*",
+               "Run2017*",
+               "Run2018A-17Sep2018-v1*",
+               "Run2018B-17Sep2018-v1*",
+               "Run2018C-17Sep2018-v1*",
+               "Run2018D-PromptReco*",
+            ]
+datastreams = [
+               "MET",
+               "SingleElectron",
+               "SingleMuon",
+               "JetHT",
+              ]
 
 # Some particular issues regarding DAS entries for Run2018 datasets (state from Feb 19 2019):
 #
@@ -54,12 +66,12 @@ for campaign in campaigns:
         input_files = glob.glob("../python/%s/%s_cff.py" % (campaign, datastream))
 
         #FIXME
-        if ("Run2017E" in input_files[0] or "Run2018B" in input_files[0]) and "JetHT" in datastream:
-            print "input_files[0]", input_files[0]
-            continue
-        else:
-            continue
-    
+        #if ("Run2017E" in input_files[0] or "Run2018B" in input_files[0]) and "JetHT" in datastream:
+        #    print "input_files[0]", input_files[0]
+        #    continue
+        #else:
+        #    continue
+
         for ifile in sorted(input_files):
     
             # ignore already prepared folders, special HEM rerecos:
@@ -192,6 +204,9 @@ for campaign in campaigns:
                 else:
                     pyfilename = cff_folder + "/" + identifier + "AOD%s_cff.py" % ichunk
     
+                #FIXME
+                #pyfilename = pyfilename.replace("_cff.py", "_cff_redone.py")
+
                 with open(pyfilename, "w+") as fout:
                     header = """import FWCore.ParameterSet.Config as cms
     
