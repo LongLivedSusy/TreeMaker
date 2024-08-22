@@ -214,6 +214,13 @@ def makeTreeFromMiniAOD(self,process):
         self.VectorBool.append("genParticles:TTFlag(GenParticles_TTFlag)")
         self.VectorInt.append("genParticles:LabXYmm(GenParticles_LabXYmm)")
 
+        if self.fastsim:
+            process.FastSimWeightPR31285To36122 = cms.EDProducer("FastSimWeightPR31285To36122",
+                genCollection = cms.InputTag("prunedGenParticles"),
+                genJetTag = cms.InputTag('slimmedGenJets'),
+                recJetTag = cms.InputTag("slimmedJets")
+            )
+            self.VarsDouble.append("FastSimWeightPR31285To36122")
         #GEANT4:
         if self.signal and not self.fastsim:
             process.genParticlesPlusGeant = cms.EDProducer("GenParticlesProducer",

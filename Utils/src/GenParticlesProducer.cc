@@ -134,7 +134,14 @@ void GenParticlesProducer::produce(edm::StreamID, edm::Event& iEvent, const edm:
             //     
             //}
   	        float displacement_cm = sqrt(std::pow(iPart.vx()-daughter1->vx(),2)+std::pow(iPart.vy()-daughter1->vy(),2));
-            //std::cout << "displacement_cm " << displacement_cm << std::endl;
+		if (0 && abs(iPart.pdgId())==1000024){
+		  std::cout << "displacement_cm " << displacement_cm << std::endl;
+		  std::cout << "numberOfDaughters_cm " << iPart.numberOfDaughters() << ", named " << daughter1->pdgId() << std::endl;
+		  std::cout << "daughter status=" << daughter1->status() << ", mother status=" << iPart.status() << std::endl;
+		  std::cout << "displacement_cm " << displacement_cm << std::endl;
+		  std::cout << "numberOfGrandDaughters_cm " << daughter1->numberOfDaughters() << std::endl;		  
+
+		}
             int displacementMM = displacement_cm*10.0;
   	        LabXYmm_vec->push_back(displacementMM);
             //std::cout << "LabXYmm_vec " << displacementMM << std::endl;

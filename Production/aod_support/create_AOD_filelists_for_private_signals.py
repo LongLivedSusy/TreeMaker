@@ -21,10 +21,10 @@ def dochunks(l, n):
 #miniAOD_path = "/nfs/dust/cms/user/beinsam/LongLiveTheChi/Production/FastScans/step3_test_higgsino_susyall_mChipm105GeV_dm0p36GeV_pu_inMINIAODSIM.root"
 #pyfilename = "../python/PrivateSamples/sam_fasthiggsino.py"
 
-miniAOD_path = "/nfs/dust/cms/user/beinsam/CommonSamples/MC_BSM/CompressedHiggsino/RadiativeMu/"
-pyfilename = "../python/PrivateSamples/sam_CompressedHiggsino.py"
+miniAOD_path = "/nfs/dust/cms/user/beinsam/CommonSamples/MC_BSM/CompressedHiggsino/RadiativeMu_2016Fast/v2/"
+pyfilename = "../python/PrivateSamples/sam_CompressedHiggsino_cff.py"
 
-all_filenames = natsorted(glob.glob(miniAOD_path + "/step3_higgsino_susyall*MINIAODSIM.root"))
+all_filenames = natsorted(glob.glob(miniAOD_path + "/higgsino*MINIAODSIM.root"))
 chunks = list(dochunks(all_filenames, 254))
 
 with open(pyfilename, "w+") as fout:

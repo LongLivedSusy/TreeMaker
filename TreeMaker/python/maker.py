@@ -92,11 +92,11 @@ class maker:
                 self.readFiles.extend( readFilesImport[self.nstart:(self.nstart+self.nfiles)] )
 
         switch_primary_secondary_files = False
-
-        if self.dataset!=[] :    
+        
+        if self.dataset!=[] :
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
-            if '/store/' in rf:
+            if '/store/' in rf and False:
                 # check if miniAOD file is present:
                 if not os.path.exists("info_miniaods"):
                     os.system("echo %s > info_aodfilenames" % ",".join(self.readFiles))
@@ -121,7 +121,7 @@ class maker:
             else:
                 # private production: now miniAOD as primary file
             	shpingy = rf.replace('mini','').replace('step4','step3').replace('_inMINIAODSIM','')
-            	self.readFiles_sidecar.append(shpingy)
+            	if shpingy!=self.readFiles[0]: self.readFiles_sidecar.append(shpingy)
 
         if os.path.exists("info_aods"):
             self.readFiles = cms.untracked.vstring()
@@ -129,14 +129,15 @@ class maker:
             with open("info_aods", "r") as fin:
                 aod_list = fin.read().split(",")
             for aod in aod_list:
-                self.readFiles += ["root://cmsxrootd.fnal.gov/%s" % aod.replace("\n", "")]
-
+                ##sam#self.readFiles += ["root://cmsxrootd.fnal.gov/%s" % aod.replace("\n", "")]
+		self.readFiles += ["%s" % aod.replace("\n", "")]
             print "using new readFiles:", self.readFiles
 
         if os.path.exists("info_outfilename"):
             with open("info_outfilename", "r") as fin:
                 self.outfile = fin.read().replace("\n", "")
 
+        print('curiously2', self.readFiles)
         self.readFiles = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles]
         self.readFiles_sidecar = [(self.redir if val[0:6]=="/store" else "")+val for val in self.readFiles_sidecar]
 

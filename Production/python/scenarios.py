@@ -83,7 +83,7 @@ class Scenario:
             self.set_vars(
                 globaltag="94X_mcRun2_asymptotic_v3",
                 tagname="PAT",
-                hlttagname="HLT",
+                hlttagname="PAT",
                 geninfo=True,
                 fastsim=True,
                 signal=True,
