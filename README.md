@@ -39,7 +39,7 @@ The following installation instructions assume the user wants to process 2016, 2
 
 For 2016 and 2017:
 ```
-wget https://raw.githubusercontent.com/LongLivedSusy/TreeMaker/Run2_2017_autominiaod/setup.sh
+wget https://raw.githubusercontent.com/LongLivedSusy/TreeMaker/Run2_2017_aodv2/setup.sh
 chmod +x setup.sh
 ./setup.sh
 cd CMSSW_9_4_11/src/

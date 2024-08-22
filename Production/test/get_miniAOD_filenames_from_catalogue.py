@@ -9,9 +9,11 @@ import time
 
 # retrieve miniAOD file name from text file catalogue
 # format:
-# [AOD file]
+# [AOD file 1]
 # corresponding miniAOD file 1
 # corresponding miniAOD file 2
+# [AOD file 2]
+# ...
 
 parser = OptionParser()
 parser.add_option('--infile', dest='infile')
@@ -27,6 +29,20 @@ def read_catalogue(aod_file_name):
         miniaod_filenames = output.split("\n")
         
         if miniaod_filenames == ['']: continue
+
+        # both prompt reco and rereco in catalogue, select only prompt reco for 2018D:
+        if "Run2018D" in miniaod_filenames[0]:
+            updated_miniaod_filenames = []
+            for miniaod_filename in miniaod_filenames:
+                if "PromptReco" in miniaod_filename:
+                    updated_miniaod_filenames.append(miniaod_filename)
+            miniaod_filenames = updated_miniaod_filenames
+        if "Run2018" in miniaod_filenames[0] and "17Sep2018" in miniaod_filenames[0]:
+            updated_miniaod_filenames = []
+            for miniaod_filename in miniaod_filenames:
+                if "17Sep2018" in miniaod_filename:
+                    updated_miniaod_filenames.append(miniaod_filename)
+            miniaod_filenames = updated_miniaod_filenames
 
         # fix for multiple versions of miniAOD files present in catalogue:
         miniaod_v1_present = False
@@ -45,6 +61,7 @@ def read_catalogue(aod_file_name):
             miniaod_filenames = [x for x in miniaod_filenames if not "-v1/" in x and not "-v2/" in x]
         
         if len(miniaod_filenames) > 0 and miniaod_filenames != ['']:
+            print "Found in ", catalogue_name
             return list(set(miniaod_filenames))
     
     quit("No miniaod file name(s) found")
@@ -53,6 +70,10 @@ def read_catalogue(aod_file_name):
 def get_miniAOD_filenames(aod_file_name):
     
     miniaod_filenames = read_catalogue(aod_file_name)  
+    
+    for i, miniaod_filename in enumerate(miniaod_filenames):
+        miniaod_filenames[i] = miniaod_filenames[i].replace("[", "").replace("]", "") 
+    
     print "miniaod_filenames", miniaod_filenames
     os.system("echo %s > info_miniaods" % ",".join(miniaod_filenames))
 
@@ -63,25 +84,34 @@ def get_miniAOD_filenames(aod_file_name):
     #first, get start / end of AOD file:
     print "Running edmFileUtil to get run number / lumisec information..."
     if aod_file_name[0:7] == "/store/":
-        print "edmFileUtil root://cmsxrootd.fnal.gov/%s -e > TMPFILE" % aod_file_name
-        os.system("edmFileUtil root://cmsxrootd.fnal.gov/%s -e > TMPFILE" % aod_file_name)
+
+        cmd = "edmFileUtil root://dcache-cms-xrootd.desy.de/%s -e" % aod_file_name                        
+        status, outputEdmFileUtil = commands.getstatusoutput(cmd)
+
+        if status != 0:
+            cmd = "edmFileUtil root://cmsxrootd.fnal.gov/%s -e" % aod_file_name
+            status, outputEdmFileUtil = commands.getstatusoutput(cmd)
+
+        if status != 0:
+            print status, outputEdmFileUtil
+            print "Giving up"
+            return
+
     else:
-        print "edmFileUtil %s -e > TMPFILE" % aod_file_name
-        os.system("edmFileUtil %s -e > TMPFILE" % aod_file_name)
+        cmd = "edmFileUtil file://%s -e" % aod_file_name
+        status, outputEdmFileUtil = commands.getstatusoutput(cmd)
 
     #write json file for AOD file:
     runs = collections.OrderedDict()
-    with open("TMPFILE", "r") as fin:
-        lines = fin.read()
-        for i, line in enumerate(lines.split("\n")):
-            if i < 7: continue
-            if len(line.split()) == 4:
-                run = int(line.split()[0])
-                lumi = int(line.split()[1])
-                if run not in runs:
-                    runs[run] = []
-                runs[run].append(lumi)
-                runs[run] = sorted(list(set(runs[run])))
+    for i, line in enumerate(outputEdmFileUtil.split("\n")):
+        if i < 7: continue
+        if len(line.split()) == 4:
+            run = int(line.split()[0])
+            lumi = int(line.split()[1])
+            if run not in runs:
+                runs[run] = []
+            runs[run].append(lumi)
+            runs[run] = sorted(list(set(runs[run])))
 
     for run in runs:
         output = []

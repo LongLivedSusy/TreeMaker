@@ -16,6 +16,12 @@ miniaod_datastreams = [
     "/DYJetsToLL_M-5to50_HT-100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM", 
 ]
 
+cff_folder = "Run2018BMET"
+miniaod_datastreams = [
+    "/MET/Run2018B-17Sep2018-v1/AOD", 
+]
+
+
 for dataset in miniaod_datastreams:
 
     # get only unique entries in list:

@@ -120,7 +120,12 @@ def makeTreeFromMiniAOD(self,process):
             debug = cms.bool(False),
             isLHE = cms.bool(False)
         )
-        self.VarsDouble.extend(['SusyScan:SusyMotherMass','SusyScan:SusyLSPMass'])
+                
+        # add extra branch, but only for re-made SMS files:
+        if "ctau10to200" in process.source.fileNames[0]:
+            self.VarsDouble.extend(['SusyScan:SusyMotherMass','SusyScan:SusyLSPMass','SusyScan:SusyCTau'])
+        else:
+            self.VarsDouble.extend(['SusyScan:SusyMotherMass','SusyScan:SusyLSPMass'])
         
         # pMSSM ID for identifying the pMSSM model point
         from TreeMaker.Utils.pmssm_cfi import PmssmProducer
@@ -214,6 +219,9 @@ def makeTreeFromMiniAOD(self,process):
         self.VectorBool.append("genParticles:TTFlag(GenParticles_TTFlag)")
         self.VectorInt.append("genParticles:LabXYmm(GenParticles_LabXYmm)")
 
+        # store gluons for signals with Higgs
+        
+        #Event weight to fix FastSim pre-UL bug
         if self.fastsim:
             process.FastSimWeightPR31285To36122 = cms.EDProducer("FastSimWeightPR31285To36122",
                 genCollection = cms.InputTag("prunedGenParticles"),
@@ -221,6 +229,7 @@ def makeTreeFromMiniAOD(self,process):
                 recJetTag = cms.InputTag("slimmedJets")
             )
             self.VarsDouble.append("FastSimWeightPR31285To36122")
+
         #GEANT4:
         if self.signal and not self.fastsim:
             process.genParticlesPlusGeant = cms.EDProducer("GenParticlesProducer",

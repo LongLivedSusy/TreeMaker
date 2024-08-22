@@ -46,4 +46,3 @@ for ijob, minifile in enumerate(minilist):
     if not test: os.system(command)
     #else: break
 
-

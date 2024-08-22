@@ -218,6 +218,22 @@ class Scenario:
                 era="Run2_2018",
                 localera="TM2018",
             )
+        elif sname == "Autumn18Fastsig":
+            self.set_vars(
+                globaltag="102X_upgrade2018_realistic_v16",
+                tagname="PAT",
+                hlttagname="RECO",
+                geninfo=True,
+                signal=True,
+                fastsim=True,
+                jecfile="data/jec/Fall17_17Nov2017_V32_94X_MC",
+                jerfile="data/jer/Fall17_V3_94X_MC",
+                #pufile="TreeMaker/Production/test/data/PileupHistograms_0118_63mb_pm5.root",
+                #temporary fix: old PU file from Fall17Sig
+                pufile="TreeMaker/Production/test/data/PileupHistograms_0328_63mb_pm5.root",
+                era="Run2_2018",
+                localera="TM2018",
+            )
         elif sname == "2018B26Sep":
             self.set_vars(
                 globaltag="102X_dataRun2_PromptLike_v7",
@@ -242,8 +258,9 @@ class Scenario:
             )
         elif sname == "2018PromptReco":
             self.set_vars(
-                globaltag="102X_dataRun2_Prompt_v11",
-                tagname="RECO",
+                #globaltag="102X_dataRun2_Prompt_v11",
+                globaltag="102X_dataRun2_Prompt_v1",
+                tagname="PAT",
                 hlttagname="HLT",
                 jsonfile="data/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt",
                 jecfile="data/jec/Fall17_17Nov2017_V32_102X_DATA",
@@ -254,7 +271,7 @@ class Scenario:
         elif sname == "2018ReReco17Sep":
             self.set_vars(
                 globaltag="102X_dataRun2_Sep2018Rereco_v1",
-                tagname="RECO",
+                tagname="PAT",
                 hlttagname="HLT",
                 jsonfile="data/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt",
                 jecfile="data/jec/Fall17_17Nov2017_V32_102X_DATA",

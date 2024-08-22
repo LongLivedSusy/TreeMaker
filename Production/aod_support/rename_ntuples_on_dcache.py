@@ -16,6 +16,9 @@ use_cache = True
 
 def get_userlist():
 
+    #FIXME
+    #return ["spak"]
+
     userlist = []
     hub_folders = glob.glob("/pnfs/desy.de/cms/tier2/store/user/*/NtupleHub/")
     for hub_folder in hub_folders:
@@ -26,7 +29,14 @@ def get_userlist():
 
 def get_all_processed_files(dcache_user, selector = ""):
 
-    return glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3/%s*root" % (dcache_user, selector))
+    # all:
+    return glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3*/%s*root" % (dcache_user, selector))
+
+    # Data:
+    #return glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3*/Run201%s*root" % (dcache_user, selector))
+
+    # MC:
+    #return glob.glob("/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3*/Summer16*root" % (dcache_user, selector))
 
 
 def get_replacement_map(selector = "", recreate = False):
@@ -201,7 +211,8 @@ def rename_file(original_file_name, message, dryrun, selector, recreate):
             print "Error when using cache"
             print cmd
             print output
-            quit()
+            return
+            #quit()
 
         data = json.loads(output)
 
@@ -323,7 +334,9 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
 
     if options.stats:
+        print "Getting files"
         users = get_userlist()
+        files_oldscheme_all = []
         for user in users:
             files = get_all_processed_files(user, selector = options.selector)
             files_renamed = []
@@ -333,7 +346,13 @@ if __name__ == "__main__":
                     files_renamed.append(file_name)
                 else:
                     files_oldscheme.append(file_name)
-            print "User %s:\t renamed: %s \t old scheme: %s" % ( user, len(files_renamed), len(files_oldscheme) )
+                    files_oldscheme_all.append(file_name)
+
+            print "User %s:\tall: %s \t renamed: %s \t old scheme: %s" % ( user, len(files), len(files_renamed), len(files_oldscheme) )
+
+        for ifile in files_oldscheme_all:
+            print ifile
+
         quit()
 
     replacement_map = get_replacement_map(selector = options.selector, recreate = options.recreate)
@@ -377,7 +396,7 @@ if __name__ == "__main__":
 
         print "Creating directory for files using old naming scheme"
         for username in get_userlist():
-            cmd = "gfal-mkdir srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/ProductionRun2v3_disabled" % username
+            cmd = "gfal-mkdir srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/%s/NtupleHub/disabled_ProductionRun2v3" % username
             status, output = commands.getstatusoutput(cmd)
             if status == 17:
                 print "Folder exists, that's fine"
@@ -394,7 +413,7 @@ if __name__ == "__main__":
 
         for i_file_name, file_name in enumerate(files_oldscheme):
             print "%s / %s" % (i_file_name, len(files_oldscheme))
-            cmd = "gfal-rename srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s" % (file_name, file_name.replace("ProductionRun2v3", "ProductionRun2v3_disabled"))
+            cmd = "gfal-rename srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=%s" % (file_name, file_name.replace("ProductionRun2v3", "disabled_ProductionRun2v3"))
             print cmd
             status, output = commands.getstatusoutput(cmd)
             os.system("echo '%s' >> move.log" % cmd)

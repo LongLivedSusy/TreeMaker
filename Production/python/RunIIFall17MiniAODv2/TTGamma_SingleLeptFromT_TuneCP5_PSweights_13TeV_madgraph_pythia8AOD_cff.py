@@ -375,7 +375,7 @@ readFiles.extend( [
 '/store/mc/RunIIFall17DRPremix/TTGamma_SingleLeptFromT_TuneCP5_PSweights_13TeV_madgraph_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/963CC73E-D233-E811-976D-A4BF01158B40.root',
 '/store/mc/RunIIFall17DRPremix/TTGamma_SingleLeptFromT_TuneCP5_PSweights_13TeV_madgraph_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/CE9723E9-3C34-E811-AAFB-44A842CFCA00.root',
 '/store/mc/RunIIFall17DRPremix/TTGamma_SingleLeptFromT_TuneCP5_PSweights_13TeV_madgraph_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/8E3B0CAB-7132-E811-BAD4-0CC47A7C35C8.root',
-'/store/mc/RunIIFall17DRPremix/TTGamma_SingleLeptFromT_TuneCP5_PSweights_13TeV_madgraph_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/5E0E4089-7132-E811-B236-0025905B85A2.root',
+#'/store/mc/RunIIFall17DRPremix/TTGamma_SingleLeptFromT_TuneCP5_PSweights_13TeV_madgraph_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/5E0E4089-7132-E811-B236-0025905B85A2.root',
 #'/store/mc/RunIIFall17DRPremix/TTGamma_SingleLeptFromT_TuneCP5_PSweights_13TeV_madgraph_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/06B83079-7132-E811-849D-0025905B85FC.root',
 #'/store/mc/RunIIFall17DRPremix/TTGamma_SingleLeptFromT_TuneCP5_PSweights_13TeV_madgraph_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/3E0C522D-1735-E811-9E31-1866DA85D9A7.root',
 #'/store/mc/RunIIFall17DRPremix/TTGamma_SingleLeptFromT_TuneCP5_PSweights_13TeV_madgraph_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/A84201F5-3C34-E811-BD9C-D8D385AF8AEA.root',

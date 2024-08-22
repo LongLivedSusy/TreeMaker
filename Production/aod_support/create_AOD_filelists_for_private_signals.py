@@ -12,39 +12,73 @@ def dochunks(l, n):
         # Create an index range for l of n items:
         yield l[i:i+n]
 
-#miniAOD_path = "/nfs/dust/cms/user/kutznerv/DisappTrksSignalMC/CMSSW10/miniAODSIM/"
-#pyfilename = "../python/PrivateSamples/g1800_chi1400_27_200970_CMSSW10_cff.py"
 
-#miniAOD_path = "/nfs/dust/cms/user/kutznerv/DisappTrksSignalMC/CMSSW8/miniAODSIM/"
-#pyfilename = "../python/PrivateSamples/g1800_chi1400_27_200970_CMSSW8_cff.py"
-
-#miniAOD_path = "/nfs/dust/cms/user/beinsam/LongLiveTheChi/Production/FastScans/step3_test_higgsino_susyall_mChipm105GeV_dm0p36GeV_pu_inMINIAODSIM.root"
-#pyfilename = "../python/PrivateSamples/sam_fasthiggsino.py"
-
-miniAOD_path = "/nfs/dust/cms/user/beinsam/CommonSamples/MC_BSM/CompressedHiggsino/RadiativeMu_2016Fast/v2/"
-pyfilename = "../python/PrivateSamples/sam_CompressedHiggsino_cff.py"
-
-all_filenames = natsorted(glob.glob(miniAOD_path + "/higgsino*MINIAODSIM.root"))
-chunks = list(dochunks(all_filenames, 254))
-
-with open(pyfilename, "w+") as fout:
-    header = """import FWCore.ParameterSet.Config as cms
+#<<<<<<< HEAD
+##miniAOD_path = "/nfs/dust/cms/user/kutznerv/DisappTrksSignalMC/CMSSW8/miniAODSIM/"
+##pyfilename = "../python/PrivateSamples/g1800_chi1400_27_200970_CMSSW8_cff.py"
+#
+##miniAOD_path = "/nfs/dust/cms/user/beinsam/LongLiveTheChi/Production/FastScans/step3_test_higgsino_susyall_mChipm105GeV_dm0p36GeV_pu_inMINIAODSIM.root"
+##pyfilename = "../python/PrivateSamples/sam_fasthiggsino.py"
+#
+#miniAOD_path = "/nfs/dust/cms/user/beinsam/CommonSamples/MC_BSM/CompressedHiggsino/RadiativeMu_2016Fast/v2/"
+#pyfilename = "../python/PrivateSamples/sam_CompressedHiggsino_cff.py"
+#
+#all_filenames = natsorted(glob.glob(miniAOD_path + "/higgsino*MINIAODSIM.root"))
+#chunks = list(dochunks(all_filenames, 254))
+#
+#with open(pyfilename, "w+") as fout:
+#    header = """import FWCore.ParameterSet.Config as cms
+#=======
+def create_filelist(miniAOD_path, pyfilename):
+    
+    #all_filenames = natsorted(glob.glob(miniAOD_path + "/step3_higgsino_susyall*MINIAODSIM.root"))
+    all_filenames = natsorted(glob.glob(miniAOD_path))
+    
+    chunks = list(dochunks(all_filenames, 254))
+    
+    with open(pyfilename, "w+") as fout:
+        header = """import FWCore.ParameterSet.Config as cms
+#>>>>>>> 857d73f3b6a108e8f1bf30ce29934bbb0af5ace4
 
 maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 readFiles = cms.untracked.vstring()
 secFiles = cms.untracked.vstring()
 source = cms.Source("PoolSource", fileNames = readFiles, secondaryFileNames = secFiles)
 """
+    
+        fout.write(header)
+    
+        for chunk in chunks:
+            fout.write("readFiles.extend( [\n")
+            for ifile in chunk:
+                if ifile != "":
+                    fout.write("       'file://%s',\n" % ifile)
+            fout.write("] )\n")
+            
+    print "%s written!" % pyfilename
 
-    fout.write(header)
 
-    for chunk in chunks:
-        fout.write("readFiles.extend( [\n")
-        for ifile in chunk:
-            if ifile != "":
-                fout.write("       'file://%s',\n" % ifile)
-        fout.write("] )\n")
-        
-print "%s written!" % pyfilename
+#create_filelist("/nfs/dust/cms/user/kutznerv/DisappTrksSignalMC/CMSSW10/miniAODSIM/", "../python/PrivateSamples/g1800_chi1400_27_200970_CMSSW10_cff.py")
+#create_filelist("/nfs/dust/cms/user/kutznerv/DisappTrksSignalMC/CMSSW8/miniAODSIM/", "../python/PrivateSamples/g1800_chi1400_27_200970_CMSSW8_cff.py")
+#create_filelist("/nfs/dust/cms/user/beinsam/LongLiveTheChi/Production/FastScans/step3_test_higgsino_susyall_mChipm105GeV_dm0p36GeV_pu_inMINIAODSIM.root", "../python/PrivateSamples/sam_fasthiggsino.py")
+#create_filelist("/nfs/dust/cms/user/beinsam/CommonSamples/MC_BSM/CompressedHiggsino/RadiativeMu/", "../python/PrivateSamples/sam_CompressedHiggsino.py")
 
+#create_filelist("/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIAutumn18.SMS-T1btbt-LLChipm/*/*/*/*.root", "../python/PrivateSamples/sam_RunIIAutumn18-T1btbt-LLChipm-AOD_cff.py")
+#create_filelist("/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIAutumn18.SMS-T2bt-LLChipm/*/*/*/*.root", "../python/PrivateSamples/sam_RunIIAutumn18-T2bt-LLChipm-AOD_cff.py")
+#create_filelist("/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIAutumn18__SMS-T2tb-LLChipm/*/*/*/*.root", "../python/PrivateSamples/sam_RunIIAutumn18-T2tb-LLChipm-AOD_cff.py")
 
+#create_filelist("/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T1btbt-LLChipm/*/*/*/*.root", "../python/PrivateSamples/sam_RunIIFall17-T1btbt-LLChipm-AOD_cff.py")
+#create_filelist("/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2bt-LLChipm/*/*/*/*.root", "../python/PrivateSamples/sam_RunIIFall17-T2bt-LLChipm-AOD_cff.py")
+#create_filelist("/pnfs/desy.de/cms/tier2/store/user/sbein/SMS2/RunIIFall17__SMS-T2tb-LLChipm/*/*/*/*.root", "../python/PrivateSamples/sam_RunIIFall17-T2tb-LLChipm-AOD_cff.py")
+
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part1/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part1-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part2/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part2-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part3/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part3-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part4/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part4-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part5/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part5-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part6/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part6-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part7/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part7-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part8/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part8-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part9/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part9-AOD_cff.py")
+create_filelist("/pnfs/desy.de/cms/tier2/store/user/mmrowiet/SUS-RunIIFall17FS_PMSSM_set_semiLL_part10/pMSSM_Fall17FS_set_semiLL/RunIIFall17FS_AODSIM/*/*/*root", "../python/RunIIFall17FS/PMSSM_set_semiLL_part10-AOD_cff.py")

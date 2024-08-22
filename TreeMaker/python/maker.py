@@ -9,6 +9,8 @@ from TreeMaker.TreeMaker.doLostLeptonBkg import doLostLeptonBkg
 from TreeMaker.TreeMaker.doZinvBkg import doZinvBkg, reclusterZinv
 
 import os
+import commands
+import tempfile
 
 class maker:
     def __init__(self,parameters):
@@ -75,7 +77,11 @@ class maker:
         self.getParamDefault("localera",self.scenario.localera)
         
         # temporary redirector fix
-        self.getParamDefault("redir", "root://cmsxrootd.fnal.gov/")
+        #self.getParamDefault("redir", "root://cmsxrootd.fnal.gov/")
+        #self.getParamDefault("redir", "root://dcache-cms-xrootd.desy.de/")
+        #self.getParamDefault("redir", "root://cmsxrootd-kit.gridka.de/")
+        self.getParamDefault("redir", "root://xrootd-cms.infn.it/")
+        #self.getParamDefault("redir", "file:///pnfs/desy.de/cms/tier2/")
         # handle site name usage
         if self.redir[0]=="T":
             self.redir = "root://cmsxrootd.fnal.gov//store/test/xrootd/"+self.redir
@@ -96,7 +102,7 @@ class maker:
         if self.dataset!=[] :
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
-            if '/store/' in rf and False:
+            if ('/store/' in rf) and not 'inMINI' in rf:
                 # check if miniAOD file is present:
                 if not os.path.exists("info_miniaods"):
                     os.system("echo %s > info_aodfilenames" % ",".join(self.readFiles))
@@ -109,10 +115,19 @@ class maker:
                     with open("info_miniaods", "r") as fin:
                         miniaod_list = fin.read().split(",")
                     for miniaod in miniaod_list:
-                        self.readFiles_sidecar += ["root://cmsxrootd.fnal.gov/%s" % miniaod.replace("\n", "")]
+                        if "/" in miniaod:
+                            #self.readFiles_sidecar += ["file:///pnfs/desy.de/cms/tier2/%s" % miniaod.replace("\n", "")]
+                            self.readFiles_sidecar += ["root://xrootd-cms.infn.it/%s" % miniaod.replace("\n", "")]
+                            #self.readFiles_sidecar += ["root://cmsxrootd.fnal.gov/%s" % miniaod.replace("\n", "")]
+                            #self.readFiles_sidecar += ["root://dcache-cms-xrootd.desy.de/%s" % miniaod.replace("\n", "")]
+                            #self.readFiles_sidecar += ["root://cmsxrootd-kit.gridka.de/%s" % miniaod.replace("\n", "")]
+                        else:
+                            self.readFiles_sidecar += ["file://" + miniaod.replace("\n", "")]
+                            
                    
                     # corresponding json mask (union of golden JSON and AOD file)    
-                    self.jsonfile = "lumisecs_union.json"
+                    if "Run201" in rf:
+                        self.jsonfile = "lumisecs_union.json"
                         
                     switch_primary_secondary_files = True
 
@@ -129,8 +144,22 @@ class maker:
             with open("info_aods", "r") as fin:
                 aod_list = fin.read().split(",")
             for aod in aod_list:
-                ##sam#self.readFiles += ["root://cmsxrootd.fnal.gov/%s" % aod.replace("\n", "")]
+#<<<<<<< HEA
+#                ##sam#self.readFiles += ["root://cmsxrootd.fnal.gov/%s" % aod.replace("\n", "")]
+#----------
 		self.readFiles += ["%s" % aod.replace("\n", "")]
+#=======
+                if "/" in aod:
+                    self.readFiles += ["root://xrootd-cms.infn.it/%s" % aod.replace("\n", "")]
+                    #self.readFiles += ["file:///pnfs/desy.de/cms/tier2/%s" % aod.replace("\n", "")]
+                    #self.readFiles += ["root://cmsxrootd.fnal.gov/%s" % aod.replace("\n", "")]
+                    #self.readFiles += ["root://dcache-cms-xrootd.desy.de/%s" % aod.replace("\n", "")]
+                    #self.readFiles += ["root://cmsxrootd-kit.gridka.de/%s" % aod.replace("\n", "")]
+                else:
+                    self.readFiles += ["file://" + aod.replace("\n", "")]
+                    
+
+>>>>>>> 857d73f3b6a108e8f1bf30ce29934bbb0af5ace4
             print "using new readFiles:", self.readFiles
 
         if os.path.exists("info_outfilename"):

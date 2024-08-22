@@ -5,9 +5,9 @@ import commands
 
 # create AOD file lists from exisiting miniAOD file lists. Configuration:
 
-check_dataset_availablity = True
+check_dataset_availablity = False
 
-cff_folder = "RunIIAutumn18MiniAOD"
+cff_folder = "../python/RunIIAutumn18MiniAOD"
 miniaod_datastreams = [
     "/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM",
     "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM",
@@ -84,7 +84,7 @@ miniaod_datastreams = [
     "/WW_TuneCP5_PSweights_13TeV-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM",
 ]
 
-cff_folder = "RunIISummer16MiniAODv3"
+cff_folder = "../python/RunIISummer16MiniAODv3"
 miniaod_datastreams = [
     "/DYJetsToLL_M-5to50_HT-70to100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM",
     "/DYJetsToLL_M-5to50_HT-600toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM",
@@ -93,7 +93,7 @@ miniaod_datastreams = [
     "/DYJetsToLL_M-5to50_HT-100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM", 
 ]
 
-cff_folder = "RunIIFall17MiniAODv2"
+cff_folder = "../python/RunIIFall17MiniAODv2"
 miniaod_datastreams = [
     "/SMS-T1qqqq-LLChipm_ctau-10_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-PUFall18Fast_102X_upgrade2018_realistic_v15-v2/MINIAODSIM",
     "/SMS-T1qqqq-LLChipm_ctau-10_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15-v1/MINIAODSIM",
@@ -247,7 +247,7 @@ miniaod_datastreams = [
     "/SMS-T1qqqq-LLChipm_ctau-50_mLSP-975_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_longlived_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM",
 ]
 
-cff_folder = "RunIISummer16MiniAODv3"
+cff_folder = "../python/RunIISummer16MiniAODv3"
 miniaod_datastreams = [
     "/SMS-T2bt-LLChipm_ctau-200_mLSP-1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_longlived_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM",
     "/SMS-T2bt-LLChipm_ctau-200_mLSP-1100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_longlived_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM",
@@ -296,6 +296,34 @@ miniaod_datastreams = [
     #"/SMS-T2qq-LLChipm_ctau-200_mLSP-975_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_longlived_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM",
 ]
 
+
+cff_folder = "../python/RunIISummer16MiniAODv3Fast"
+miniaod_datastreams = [
+   ##"/SMS-T1qqqq-LLChipm_ctau-200_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15-v1/MINIAODSIM",
+   "/SMS-T1qqqq-LLChipm_ctau-200_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15_ext1-v1/MINIAODSIM",
+   "/SMS-T1qqqq-LLChipm_ctau-50_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15_ext1-v1/MINIAODSIM",
+   ##"/SMS-T1qqqq-LLChipm_ctau-10_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15_ext1-v1/MINIAODSIM",
+   ##"/SMS-T1qqqq-LLChipm_ctau-50_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_94X_mc2017_realistic_v15-v1/MINIAODSIM",
+]
+
+
+cff_folder = "../python/RunIIAutumn18FS"
+miniaod_datastreams = [
+   "/PMSSM_set_1_LL_TuneCP2_13TeV-pythia8/RunIIAutumn18MiniAOD-PUFall18Fast_GridpackScan_102X_upgrade2018_realistic_v15-v1/MINIAODSIM",
+]
+
+cff_folder = "../python/RunIIAutumn18FS"
+miniaod_datastreams = [
+   "/SMS-T1btbt-LLC1_ctau10to200-mGluino-1000to2800-mLSP0to2800_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-PUFall18Fast_GridpackScan_102X_upgrade2018_realistic_v15-v1/MINIAODSIM",
+]
+
+cff_folder = "../python/RunIIFall17FS"
+miniaod_datastreams = [
+   #"/SMS-T1btbt-LLC1_ctau10to200-mGluino-1000to2800-mLSP0to2800_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v1/MINIAODSIM",
+   #"/SMS-T2tb-LLChipm_ctau10to200-mStop-400to1750-mLSP0to1650_TuneCP2_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v1/MINIAODSIM",
+   #"/PMSSM_set_2_LL_2_TuneCP2_13TeV-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v2/MINIAODSIM",
+   "/PMSSM_set_2_LL_1_TuneCP2_13TeV-pythia8/RunIIFall17MiniAODv2-PUFall17Fast_GridpackScan_94X_mc2017_realistic_v15-v2/MINIAODSIM",
+]
 
 
 
@@ -349,7 +377,8 @@ for dataset in miniaod_datastreams:
                 os.system('echo "%s" >> samples_available' % item)
 
     # FIXME: only collect missing samples
-           
+    continue
+         
     # create python configuration:
     all_filenames = ""
     for item in complete_output:
@@ -375,6 +404,13 @@ for dataset in miniaod_datastreams:
     for ichunk, filechunks in enumerate(chunks_per_submission_file):
 
         identifier = dataset.split("/")[1]
+
+        if "ext1" in dataset:
+            identifier += "ext1"
+        elif "ext2" in dataset:
+            identifier += "ext2"
+        elif "ext3" in dataset:
+            identifier += "ext3"
 
         if len(chunks_per_submission_file) == 1:
             pyfilename = cff_folder + "/" + identifier + "-AOD_cff.py"
