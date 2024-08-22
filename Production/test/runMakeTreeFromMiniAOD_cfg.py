@@ -1,12 +1,19 @@
 import sys
 
+print 'in the stall'
+
 # Read parameters
 from TreeMaker.Utils.CommandLineParams import CommandLineParams
 parameters = CommandLineParams()
 
+print 'in the gate'
+
 from TreeMaker.TreeMaker.maker import maker
+
+print 'through the carrot stand'
 theMaker = maker(parameters)
 
+print 'out of the gate'
 # run-only parameters
 reportfreq=parameters.value("reportfreq",1000)
 dump=parameters.value("dump",False)
@@ -36,6 +43,7 @@ if len(theMaker.localera)>0:
 	eralist.append(getattr(TMeras,theMaker.localera))
 process = cms.Process("RA2EventSelection",*eralist)
 
+print 'made it here'
 # configure geometry & conditions
 process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
@@ -84,3 +92,6 @@ process = theMaker.makeTreeFromMiniAOD(process)
 if dump:
     print process.dumpPython()
     sys.exit(0)
+
+
+print 'made it here'
