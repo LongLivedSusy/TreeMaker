@@ -102,14 +102,14 @@ class maker:
         if self.dataset!=[] :
             self.readFiles.extend( [self.dataset] )
         for irf, rf in enumerate(self.readFiles):
-            if ('/store/' in rf) and not 'inMINI' in rf:
+            if ('/store/' in rf) and False:#not 'inMINI' in rf:
                 # check if miniAOD file is present:
                 if not os.path.exists("info_miniaods"):
                     os.system("echo %s > info_aodfilenames" % ",".join(self.readFiles))
                     os.system("echo %s > info_outfilename" % self.outfile)
                     os.system("echo %s > info_jsonfilename" % self.jsonfile)
                     os.system("echo %s > info_nev" % self.numevents)
-                    quit(78)
+                    exit(78)#quit(78)
                 else:                   
                     miniaod_list = ""
                     with open("info_miniaods", "r") as fin:
@@ -159,7 +159,7 @@ class maker:
                     self.readFiles += ["file://" + aod.replace("\n", "")]
                     
 
->>>>>>> 857d73f3b6a108e8f1bf30ce29934bbb0af5ace4
+#>>>>>>> 857d73f3b6a108e8f1bf30ce29934bbb0af5ace4
             print "using new readFiles:", self.readFiles
 
         if os.path.exists("info_outfilename"):
