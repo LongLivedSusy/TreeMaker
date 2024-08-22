@@ -109,7 +109,7 @@ class maker:
                     os.system("echo %s > info_outfilename" % self.outfile)
                     os.system("echo %s > info_jsonfilename" % self.jsonfile)
                     os.system("echo %s > info_nev" % self.numevents)
-                    quit(78)
+                    exit(78)#quit(78)
                 else:                   
                     miniaod_list = ""
                     with open("info_miniaods", "r") as fin:
